@@ -1,0 +1,4 @@
+sudo apt  install docker-compose
+
+sudo snap install docker          # version 20.10.24, or
+sudo apt  install docker-compose 
