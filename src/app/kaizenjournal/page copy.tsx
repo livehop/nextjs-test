@@ -1,7 +1,12 @@
 "use client";
+import React, { useState } from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import Paging from '@/components/kaizenjournal/Paging';
+import Data from '@/components/kaizenjournal/Data';
+import { classNames } from '@/infra/utils/classNames';
+import SidePanel from '@/components/kaizenjournal/SidePanel';
 
 const user = {
     name: 'Sylvain Castonguay',
@@ -10,26 +15,24 @@ const user = {
         'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
-    { name: 'Reports', href: '#', current: false },
+    { name: 'Kaizen Dashboard', href: '#', current: true },
+    { name: 'Access Logs', href: '#', current: false },
+    { name: 'Employee Search', href: '#', current: false },
 ]
 const userNavigation = [
-    { name: 'Your Profile', href: '#' },
+    { name: 'My Profile', href: '#' },
     { name: 'Settings', href: '#' },
     { name: 'Sign out', href: '#' },
 ]
 
-function classNames(...classes: any) {
-    return classes.filter(Boolean).join(' ')
-}
 
-export default function Example() {
+
+
+
+const page = () => {
+    const [open, setOpen] = useState(false)
     return (
         <>
-
             <div className="min-h-full">
                 <Disclosure as="nav" className="bg-gray-800">
                     {({ open }) => (
@@ -39,9 +42,9 @@ export default function Example() {
                                     <div className="flex items-center">
                                         <div className="flex-shrink-0">
                                             <img
-                                                className="h-8 w-auto"
-                                                src="/logo.svg"
-                                                alt=""
+                                                className="h-8 w-8"
+                                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                                                alt="Ge Aerospace"
                                             />
                                         </div>
                                         <div className="hidden md:block">
@@ -186,15 +189,51 @@ export default function Example() {
                     )}
                 </Disclosure>
 
+
+
                 <header className="bg-white shadow">
-                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+                    <div className="max-w-7xl px-2 py-6 sm:px-6 lg:px-8">
+                        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Le Journal Kaizen Unique</h1>
                     </div>
                 </header>
                 <main>
-                    <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
+
+
+
+                    <div className="mt-8 px-4 sm:px-6 lg:px-8">
+                        <div className="sm:flex sm:items-center">
+                            <div className="sm:flex-auto">
+                                <h1 className="text-base font-semibold leading-6 text-gray-900">Identification</h1>
+                                <p className="mt-2 text-sm text-gray-700">
+                                    Pour modifier ou annoter un point, faire un CLIQUE DROIT sur la ligne désirée. La modification du fichier Excel n'affecte pas la base de données.
+                                </p>
+                            </div>
+                            <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                                <button
+                                    onClick={() => setOpen(!open)}
+                                    type="button"
+                                    className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                >
+                                    Ajout
+                                </button>
+                            </div>
+                        </div>
+                        <div className="mt-8 flow-root px-20">
+                            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                                    <SidePanel open={open} setOpen={setOpen} />
+                                    <Data />
+                                </div>
+                            </div>
+                        </div>
+                        <div className='px-28'>
+                            <Paging />
+                        </div>
+                    </div>
                 </main>
             </div>
         </>
     )
 }
+
+export default page

@@ -4,3 +4,6 @@ docker-compose build
 docker-compose up
 # to stop the docker image
 docker-compose down
+
+
+zFCL3yih
