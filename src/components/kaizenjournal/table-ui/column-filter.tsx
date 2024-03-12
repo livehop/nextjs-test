@@ -1,14 +1,19 @@
+"use client";
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import React from 'react'
+import React, { useState } from 'react'
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
-import useColumnFilter, { Column } from '../hooks/useColumnFilter'
-
+import { DisplayColumn, getDefaultDisplayColumns } from '@/infra/models/DisplayColumn'
+import { getToggledColumns } from '@/lib/utils/arrayutils'
+import { observer } from 'mobx-react-lite'
+import { useStore } from '@/infra/stores/Store';
 
 
 const ColumnsFilter = () => {
+    const { columnStore } = useStore();
+    const { columns, toggleColVisibility } = columnStore;
 
-    const columns = useColumnFilter();
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -28,12 +33,12 @@ const ColumnsFilter = () => {
                     .map((column) => {
                         return (
                             <DropdownMenuCheckboxItem
-                                key={column.id}
+                                key={column.title}
                                 className="capitalize"
-                                checked={column.getIsVisible()}
-                                onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                                checked={column.isVisible}
+                                onCheckedChange={(value) => toggleColVisibility(column, !!value)}
                             >
-                                {column.id}
+                                {column.title}
                             </DropdownMenuCheckboxItem>
                         )
                     })}
@@ -42,4 +47,4 @@ const ColumnsFilter = () => {
     )
 }
 
-export default ColumnsFilter
+export default observer(ColumnsFilter)

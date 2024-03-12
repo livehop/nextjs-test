@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import useColumnFilter from '../hooks/useColumnFilter';
 import ColumnsFilter from './column-filter';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';

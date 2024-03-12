@@ -1,5 +1,4 @@
 "use client";
-import { Column } from '@/components/kaizenjournal/hooks/useColumnFilter';
 import { makeAutoObservable } from 'mobx';
 
 
@@ -13,7 +12,6 @@ export default class SortingStore {
     sortedColumn = 'id';
     sortedOrder = DESC;
     loading: boolean = false;
-    displayColumns: Column[] = [];
 
     toggleSorting = (column: string, isDesc: boolean) => {
         this.sortedColumn = column;

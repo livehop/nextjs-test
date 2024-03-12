@@ -20,8 +20,9 @@ type ColumnHeaderProps = {
 }
 
 const ColumnHeader = ({ title, className }: ColumnHeaderProps) => {
-    const { sortingStore } = useStore();
+    const { sortingStore, columnStore } = useStore();
     const { getSortedState, toggleSorting } = sortingStore;
+    const { hideVisibility } = columnStore;
     return (
         <div className={cn("flex items-center", className)}>
             <DropdownMenu>
@@ -29,7 +30,7 @@ const ColumnHeader = ({ title, className }: ColumnHeaderProps) => {
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="-ml-3 h-8 data-[state=open]:bg-accent"
+                        className="-ml-3 h-6 data-[state=open]:bg-accent"
                     >
                         <span>{title}</span>
                         {getSortedState(title) === DESC ? (
@@ -51,7 +52,7 @@ const ColumnHeader = ({ title, className }: ColumnHeaderProps) => {
                         Desc
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => console.log("remove column")}>
+                    <DropdownMenuItem onClick={() => hideVisibility(title)}>
                         <EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
                         Hide
                     </DropdownMenuItem>

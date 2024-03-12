@@ -6,6 +6,12 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect } from 'react'
 import { FaCircle } from "react-icons/fa6";
 import ColumnHeader from './table-ui/column-header';
+import SingleColHeader from '../ui/table/SingleColHeader';
+import TwoColHeader from '../ui/table/TwoColHeader';
+import FourColHeader from '../ui/table/FourColHeader';
+import { isColumnVisible } from '@/lib/utils/arrayutils';
+import SkeletonData from './SkeletonData';
+import DataBody from './DataBody';
 
 
 
@@ -68,14 +74,15 @@ const GetCoteIndiceColor = (kaizenRecord: KaizenDocument) => {
 
 
 const DataSticky = () => {
-    const { kaizenStore } = useStore();
+    const { kaizenStore, columnStore } = useStore();
+    const { columns } = columnStore;
+
     const { kaizenDocuments, loading, loadKaizenDocuments, setEditDocumentId, setCurrentSortOrder, currentSortOrder } = kaizenStore;
     useEffect(() => {
         loadKaizenDocuments();
         console.log('Data useEffect')
     }, []);
 
-    if (loading) return <div>Loading...</div>
     return (
         <div className="border-2 border-blue-200 px-4 sm:px-6 lg:px-8">
             <div className="mt-2 flow-root">
@@ -84,94 +91,18 @@ const DataSticky = () => {
                         <table className="min-w-full border-separate border-spacing-0">
                             <thead>
                                 <tr>
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
-                                    >
-                                        <ColumnHeader title="ID" className='flex gap-1 items-center' />
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell"
-                                    >
-                                        <ColumnHeader title="Equipe" className='flex gap-1 items-center' />
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell"
-                                    >
-                                        <ColumnHeader title="Sectuer" className='flex gap-1 items-center' />
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
-                                    >
-                                        <ColumnHeader title="Problematique" className='flex gap-1 items-center' />
-                                    </th>
+                                    <SingleColHeader title="Id" />
+                                    <SingleColHeader title="Equipe" />
+                                    <SingleColHeader title="Sectuer" />
+                                    <SingleColHeader title="Problematique" />
+                                    <TwoColHeader title1="Inscrit_Par" title2="Inscrit_Date" />
+                                    <TwoColHeader title1="Categorie" title2="Sous Categorie" />
+                                    <TwoColHeader title1="Indice" title2="Cote Indice" />
+                                    <SingleColHeader title="Solution" />
+                                    <SingleColHeader title="Point Focal" />
 
-
-
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
-                                    >
-                                        <ColumnHeader title="Inscrit_Par" className='flex gap-1 items-center' />
-                                        <ColumnHeader title="Inscrit_Date" className='flex gap-1 items-center' />
-                                    </th>
-
-
-
-
-
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
-                                    >
-                                        <ColumnHeader title="Categorie" className='flex gap-1 items-center' />
-                                        <ColumnHeader title="Sous Categorie" className='flex gap-1 items-center' />
-                                    </th>
-
-
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
-                                    >
-                                        <ColumnHeader title="Indice" />
-                                        <ColumnHeader title="Cote Indice" />
-                                    </th>
-
-
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
-                                    >
-                                        <ColumnHeader title="Solution" className='flex gap-1 items-center' />
-                                    </th>
-
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
-                                    >
-                                        <ColumnHeader title="Point Focal" className='flex gap-1 items-center' />
-                                    </th>
-
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
-                                    >
-                                        <ColumnHeader title="Suivi " className={GetColoredTextClass(1)} />
-                                        <ColumnHeader title="Debut " className={GetColoredTextClass(2)} />
-                                        <ColumnHeader title="Fin Planfie " className={GetColoredTextClass(3)} />
-                                        <ColumnHeader title="Complete " className={GetColoredTextClass(4)} />
-                                    </th>
-
-                                    <th
-                                        scope="col"
-                                        className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
-                                    >
-                                        <ColumnHeader title="Etat" />
-                                    </th>
-
+                                    <FourColHeader title1="Suivi" title2="Debut" title3="Fin Planfie" title4="Complete" />
+                                    <SingleColHeader title="Etat" />
                                     <th
                                         scope="col"
                                         className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-3 pr-4 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8"
@@ -181,43 +112,7 @@ const DataSticky = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {kaizenDocuments?.data.map((kaizen, index) => (
-                                    <tr key={kaizen.id}>
-                                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">{kaizen.id}</td>
-                                        <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                                            {kaizen.equipe.nomEquipe}
-                                        </td>
-                                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{kaizen.secteur.name}</td>
-                                        <td className="text-sm text-gray-500 max-w-[600px] line-clamp-3 ">{kaizen.problematique}</td>
-                                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">{kaizen.inscritPar}<br />{kaizen.inscritDate?.split('T')[0]}</td>
-                                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">{kaizen.categorie.name} <br /> {kaizen.sousCategorie.description}</td>
-                                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                                            <div className='flex gap-1 items-center justify-start'>
-                                                <FaCircle size={10} color={GetIndiceColor(kaizen)} />
-                                                {GetIndice(kaizen)}
-                                            </div>
-                                            <div className='flex gap-1 items-center justify-start'>
-                                                <FaCircle size={10} color={GetCoteIndiceColor(kaizen)} />
-                                                {GetCoteIndice(kaizen)}
-                                            </div>
-                                        </td>
-                                        <td className="text-sm text-gray-500 max-w-[600px] line-clamp-3">{kaizen.solution}</td>
-                                        <td className="px-2 py-2 text-sm text-gray-500">{kaizen.focalContactName}</td>
-                                        <td className="px-2 py-2 text-xs text-gray-500">
-                                            {GetColoredText(GetDate(kaizen.suiviDate), 1)}<br />
-                                            {GetColoredText(GetDate(kaizen.debutDate), 2)}<br />
-                                            {GetColoredText(GetDate(kaizen.finPlaniFieDate), 3)}<br />
-                                            {GetColoredText(GetDate(kaizen.completeDate), 4)}
-                                        </td>
-                                        <td className="px-2 py-2 text-sm text-gray-500">{GetColoredText(kaizen.etat.name, kaizen.etat.etatPriorite)}</td>
-
-                                        <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                            <a onClick={() => { setEditDocumentId(kaizen.id) }} href="#" className="text-green-800 hover:text-indigo-900">
-                                                Edit<span className="sr-only">, {kaizen.id}</span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                ))}
+                                <DataBody />
                             </tbody>
                         </table>
                     </div>
