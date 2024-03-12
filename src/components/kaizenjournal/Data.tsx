@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { FaCircle } from "react-icons/fa6";
 import { Bars3Icon, BellIcon, ArrowDownIcon } from '@heroicons/react/24/outline'
 import { SortOrder } from '@/infra/models/Ui';
+import ColumnHeader from './table-ui/column-header';
 
 const transactions = [
     {
@@ -19,6 +20,17 @@ const transactions = [
     },
     // More transactions...
 ]
+
+
+const GetColoredTextClass = (urgency: number) => {
+    if (urgency === 1) return 'text-pink-700';
+    if (urgency === 2) return 'text-orange-700';
+    if (urgency === 3) return 'text-indigo-700';
+    if (urgency === 4) return 'text-violet-700';
+    if (urgency === 5) return 'text-teal-700';
+    if (urgency === 6) return 'text-green-700';
+    return 'text-rose-700';
+}
 
 
 const GetColoredText = (text: string, urgency: number) => {
@@ -78,113 +90,103 @@ const Data = () => {
     if (loading) return <div>Loading...</div>
 
     return (
-        <div className='overflow-x-auto'>
+        <div className='border-2 border-blue-200 p-2 min-w-full overflow-x-auto'>
             <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                     <tr>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                        >
-                            <div className='flex gap-1 items-center' onClick={() => setCurrentSortOrder(SortOrder.ID)}>
+                        <th>
+                            <ColumnHeader title="ID" className='flex gap-1 items-center' />
+                            {/* <div className='flex gap-1 items-center' onClick={() => setCurrentSortOrder(SortOrder.ID)}>
                                 ID {currentSortOrder === SortOrder.ID && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
                         </th>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                            <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Equipe)}>
+                        <th>
+                            <ColumnHeader title="Equipe" className='flex gap-1 items-center' />
+                            {/* <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Equipe)}>
                                 Equipe {currentSortOrder === SortOrder.Equipe && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
 
                         </th>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                            <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Sectuer)}>
+                        <th>
+                            <ColumnHeader title="Sectuer" className='flex gap-1 items-center' />
+
+                            {/* <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Sectuer)}>
                                 Sectuer{currentSortOrder === SortOrder.Sectuer && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
                         </th>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                            <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Problematique)}>
+                        <th>
+                            <ColumnHeader title="Problematique" className='flex gap-1 items-center' />
+
+                            {/* <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Problematique)}>
                                 Problematique {currentSortOrder === SortOrder.Problematique && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
 
                         </th>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                            <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Inscrit_Par)}>
+                        <th>
+                            <ColumnHeader title="Inscrit_Par" className='flex gap-1 items-center' />
+                            <ColumnHeader title="Inscrit_Date" className='flex gap-1 items-center' />
+                            {/* <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Inscrit_Par)}>
                                 Inscrit_Par {currentSortOrder === SortOrder.Inscrit_Par && <ArrowDownIcon className='h-4 w-4' />}
                             </div> <br />
                             <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Inscrit_Date)}>
                                 Date {currentSortOrder === SortOrder.Inscrit_Date && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
 
                         </th>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                            <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Categorie)}>
+                        <th>
+                            <ColumnHeader title="Categorie" className='flex gap-1 items-center' />
+                            <ColumnHeader title="Sous Categorie" className='flex gap-1 items-center' />
+                            {/* <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Categorie)}>
                                 Categorie {currentSortOrder === SortOrder.Categorie && <ArrowDownIcon className='h-4 w-4' />}
                             </div> <br />
                             <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.SousCategorie)}>
                                 Sous Categorie{currentSortOrder === SortOrder.SousCategorie && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
                         </th>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                            <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Indice)}>
+                        <th>
+                            <ColumnHeader title="Indice" />
+                            <ColumnHeader title="Cote Indice" />
+
+                            {/* <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Indice)}>
                                 Indice{currentSortOrder === SortOrder.Indice && <ArrowDownIcon className='h-4 w-4' />}
                             </div>
                             <br />
                             <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.CoteIndice)}>
                                 Cote Indice{currentSortOrder === SortOrder.CoteIndice && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
                         </th>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                            <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Solution)}>
+                        <th className="px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
+                            <ColumnHeader title="Solution" className='flex gap-1 items-center' />
+                            {/* <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Solution)}>
                                 Solution{currentSortOrder === SortOrder.Solution && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
 
                         </th>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                            <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.PointFocal)}>
+                        <th className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
+                            <ColumnHeader title="Point Focal" className='flex gap-1 items-center' />
+                            {/* <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.PointFocal)}>
                                 Point Focal{currentSortOrder === SortOrder.PointFocal && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
+                        </th>
+                        <th
+                            scope="col"
+                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                            <ColumnHeader title="Suivi " className={GetColoredTextClass(1)} />
+                            <ColumnHeader title="Debut " className={GetColoredTextClass(2)} />
+                            <ColumnHeader title="Fin Planfie " className={GetColoredTextClass(3)} />
+                            <ColumnHeader title="Complete " className={GetColoredTextClass(4)} />
 
                         </th>
                         <th
                             scope="col"
                             className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
                         >
-                            {GetColoredText('Suivi', 1)}<br />
-                            {GetColoredText('Debut', 2)}<br />
-                            {GetColoredText('Fin Planfie', 3)}<br />
-                            {GetColoredText('Complete', 4)}
-                        </th>
-                        <th
-                            scope="col"
-                            className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                            <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Etat)}>
+                            <ColumnHeader title="Etat" />
+
+                            {/* <div className='flex gap-1 items-center cursor-pointer' onClick={() => setCurrentSortOrder(SortOrder.Etat)}>
                                 Etat {currentSortOrder === SortOrder.Etat && <ArrowDownIcon className='h-4 w-4' />}
-                            </div>
+                            </div> */}
 
                         </th>
                         <th scope="col" className="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
@@ -203,7 +205,7 @@ const Data = () => {
                                 {kaizen.equipe.nomEquipe}
                             </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{kaizen.secteur.name}</td>
-                            <td className=" w-px-4 px-2 py-2 text-sm text-gray-500">{kaizen.problematique}</td>
+                            <td className="px-2 py-2 text-sm text-gray-500 max-w-[600px]  line-clamp-3 ">{kaizen.problematique}</td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">{kaizen.inscritPar}<br />{kaizen.inscritDate?.split('T')[0]}</td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">{kaizen.categorie.name} <br /> {kaizen.sousCategorie.description}</td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
@@ -216,15 +218,15 @@ const Data = () => {
                                     {GetCoteIndice(kaizen)}
                                 </div>
                             </td>
-                            <td className=" px-2 py-2 text-sm text-gray-500">{kaizen.solution}</td>
-                            <td className=" px-2 py-2 text-sm text-gray-500">{kaizen.focalContactName}</td>
-                            <td className=" px-2 py-2 text-xs text-gray-500">
+                            <td className="px-2 py-2 text-sm text-gray-500 max-w-[600px] line-clamp-3">{kaizen.solution}</td>
+                            <td className="px-2 py-2 text-sm text-gray-500">{kaizen.focalContactName}</td>
+                            <td className="px-2 py-2 text-xs text-gray-500">
                                 {GetColoredText(GetDate(kaizen.suiviDate), 1)}<br />
                                 {GetColoredText(GetDate(kaizen.debutDate), 2)}<br />
                                 {GetColoredText(GetDate(kaizen.finPlaniFieDate), 3)}<br />
                                 {GetColoredText(GetDate(kaizen.completeDate), 4)}
                             </td>
-                            <td className=" px-2 py-2 text-sm text-gray-500">{GetColoredText(kaizen.etat.name, kaizen.etat.etatPriorite)}</td>
+                            <td className="px-2 py-2 text-sm text-gray-500">{GetColoredText(kaizen.etat.name, kaizen.etat.etatPriorite)}</td>
 
                             <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                 <a onClick={() => { setEditDocumentId(kaizen.id) }} href="#" className="text-green-800 hover:text-indigo-900">

@@ -20,8 +20,8 @@ const EquipeDropDown = () => {
     return (
         <Listbox value={activeEquipe} onChange={(value) => { console.log("on change gets called " + value); setActiveEquipeWithNumber(value) }}>
             {({ open }) => (
-                <>
-                    <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Equipe</Listbox.Label>
+                <div className='flex gap-2 my-2 items-center'>
+                    <Listbox.Label className="block text-lg font-medium leading-6 text-gray-900">Equipe : </Listbox.Label>
 
                     <div className="relative">
                         <div className="inline-flex divide-x divide-lime-700 rounded-md shadow-sm">
@@ -74,7 +74,7 @@ const EquipeDropDown = () => {
                             </Listbox.Options>
                         </Transition>
                     </div>
-                </>
+                </div>
             )}
         </Listbox>
     )

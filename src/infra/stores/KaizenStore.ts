@@ -6,9 +6,6 @@ import { store } from './Store';
 import { Categorie, Equipe, Etat, KaizenDocument, Secteur, SousCategorie } from '../models';
 import { SortOrder } from '../models/Ui';
 
-
-
-
 export default class KaizenStore {
     constructor() {
         makeAutoObservable(this);
@@ -34,6 +31,19 @@ export default class KaizenStore {
     activeSousCategorie: SousCategorie | null = null;
 
     loading: boolean = false;
+
+
+    get hasAnyFiltersSet() {
+        return store.equipeStore.selectedValues.length > 0 ||
+            store.secteurStore.selectedValues.length > 0 ||
+            store.etatStore.selectedValues.length > 0
+    }
+
+    resetSearchFilters = () => {
+        store.equipeStore.clearAllSelectedItems();
+        store.secteurStore.clearAllSelectedItems();
+        store.etatStore.clearAllSelectedItems();
+    }
 
 
     setCurrentSortOrder = (sortOrder: SortOrder) => {

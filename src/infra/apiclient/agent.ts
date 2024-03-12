@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { store } from '../stores/Store';
 import { ILoginForm, IRegisterForm, IUpdatePasswordForm, IUser, IUserDetail, IUserRole } from '../models/User';
 import { Categorie, Employee, Equipe, Etat, KaizenDocument, KaizenLog, PagedResult, Secteur, SousCategorie } from '../models';
+import { IdValue } from '../models/IdValue';
 
 export const token_key = 'Brisk_JWT';
 
@@ -125,18 +126,24 @@ const employees = {
 
 const equipement = {
     list: (): Promise<PagedResult<Equipe>> => requests.get('/equipement'),
+    valuelist: (): Promise<IdValue[]> => requests.get('/equipement/valuelist'),
 }
 
 const etat = {
     list: (): Promise<PagedResult<Etat>> => requests.get('/etat'),
+    valuelist: (): Promise<IdValue[]> => requests.get('/etat/valuelist'),
 }
 
 const secteur = {
     list: (): Promise<PagedResult<Secteur>> => requests.get('/secteur'),
+    valuelist: (): Promise<IdValue[]> => requests.get('/secteur/valuelist'),
 }
 
 const souscategorie = {
     list: (): Promise<PagedResult<SousCategorie>> => requests.get('/souscategorie'),
+
+}
+const equipe = {
 
 }
 
