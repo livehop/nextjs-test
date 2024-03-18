@@ -14,8 +14,6 @@ const page = () => {
     const { kaizenStore } = useStore();
     const [open, setOpen] = useState(false)
 
-
-
     const openSidePanel = () => {
         console.log('openSidePanel' + open)
         if (open) {
@@ -31,9 +29,9 @@ const page = () => {
                 <div className="max-w-7xl px-2 py-4 sm:px-6 lg:px-8">
                     <h1 className="text-2xl font-bold tracking-tight text-gray-900">Le Journal Kaizen Unique</h1>
                 </div>
-                <div className='mr-6'>
+                {/* <div className='mr-6'>
                     <EquipeDropDown />
-                </div>
+                </div> */}
 
             </header>
             <main>
@@ -59,9 +57,9 @@ const page = () => {
 
                         </div> */}
                     </div>
-                    <div className='my-4 '>
+                    {/* <div className='my-4 '>
                         <Paging bottom={false} />
-                    </div>
+                    </div> */}
                     <DataSticky />
                     {/* <Data /> */}
                     <div className="mt-8 flow-root px-12">

@@ -5,6 +5,8 @@ import { store } from '../stores/Store';
 import { ILoginForm, IRegisterForm, IUpdatePasswordForm, IUser, IUserDetail, IUserRole } from '../models/User';
 import { Categorie, Employee, Equipe, Etat, KaizenDocument, KaizenLog, PagedResult, Secteur, SousCategorie } from '../models';
 import { IdValue } from '../models/IdValue';
+import { SearchRequest } from '../models/SearchRequest';
+import { AddNote, Note } from '../models/Note';
 
 export const token_key = 'Brisk_JWT';
 
@@ -113,15 +115,18 @@ const kaizen = {
     list: (params: URLSearchParams): Promise<PagedResult<KaizenDocument>> => axios.get('/kaizen', { params: params }).then(responseBody),
     search: (query: string): Promise<PagedResult<KaizenDocument>> => requests.get(`/kaizen/search?SearchText=${query}`),
     details: (id: number) => requests.get(`/kaizen/${id}`),
-
+    filterSearch: (request: SearchRequest): Promise<PagedResult<KaizenDocument>> => axios.get('/kaizen/filtersearch', { params: request }).then(responseBody),
 }
 
 const categorie = {
     list: (): Promise<PagedResult<Categorie>> => requests.get('/categorie'),
+    valuelist: (): Promise<IdValue[]> => requests.get('/categorie/valuelist'),
 
 }
 const employees = {
     list: (): Promise<Employee[]> => requests.get('/employees'),
+    valuelist: (query: string): Promise<IdValue[]> => requests.get(`/employees/valuelist?search=${query}`),
+
 }
 
 const equipement = {
@@ -141,10 +146,16 @@ const secteur = {
 
 const souscategorie = {
     list: (): Promise<PagedResult<SousCategorie>> => requests.get('/souscategorie'),
-
+    valuelist: (): Promise<IdValue[]> => requests.get('/souscategorie/valuelist'),
 }
-const equipe = {
+const projet = {
+    valuelist: (): Promise<IdValue[]> => requests.get('/projet/valuelist'),
+}
 
+
+const notes = {
+    list: (kaizenId: number): Promise<Note[]> => requests.get(`/notes?kaizenId=${kaizenId}`),
+    add: (note: AddNote): Promise<any> => requests.post('/notes', note),
 }
 
 export default {
@@ -154,5 +165,7 @@ export default {
     equipement,
     etat,
     secteur,
-    souscategorie
+    souscategorie,
+    notes,
+    projet
 }

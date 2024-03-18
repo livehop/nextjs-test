@@ -11,7 +11,8 @@ import { Badge } from '@/components/ui/badge'
 
 
 const EquipeFilter = () => {
-    const { equipeStore } = useStore();
+    const { equipeStore, searchStore } = useStore();
+    const { setEquipeFilter } = searchStore
     const { idValues, loadIdValues, toggleSelectedValue, isChecked, hasAnyCheckedItem, clearAllSelectedItems, selectedValues } = equipeStore;
     const [popoverOpen, setPopOverOpen] = useState(false);
 
@@ -22,14 +23,18 @@ const EquipeFilter = () => {
     const togglePoppver = () => {
         console.log("popover " + popoverOpen);
         setPopOverOpen(!popoverOpen);
+        if (popoverOpen) {
+            setEquipeFilter(selectedValues.map(v => v.id));
+        }
     }
+
     return (
         <>
             <Popover open={popoverOpen} onOpenChange={togglePoppver}>
                 <PopoverTrigger asChild>
                     <Button variant="outline" size="sm" className="h-8 border-dashed">
                         <PlusCircledIcon className="mr-2 h-4 w-4" />
-                        Equipe
+                        Équipe
                         {selectedValues?.length > 0 && (
                             <>
                                 <Separator orientation="vertical" className="mx-2 h-4" />

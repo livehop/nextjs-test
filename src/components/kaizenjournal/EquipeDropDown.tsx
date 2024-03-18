@@ -15,7 +15,7 @@ const EquipeDropDown = () => {
     }, []);
 
 
-    if (loading || activeEquipe === null) return <div>Loading...</div>
+    /*if (loading || activeEquipe === null) return <div>Loading...</div>*/
 
     return (
         <Listbox value={activeEquipe} onChange={(value) => { console.log("on change gets called " + value); setActiveEquipeWithNumber(value) }}>
@@ -27,7 +27,7 @@ const EquipeDropDown = () => {
                         <div className="inline-flex divide-x divide-lime-700 rounded-md shadow-sm">
                             <div className="inline-flex items-center gap-x-1.5 rounded-l-md bg-lime-600 px-3 py-2 text-white shadow-sm">
                                 <CheckIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-                                <p className="text-sm font-semibold">{activeEquipe.nomEquipe}</p>
+                                <p className="text-sm font-semibold">{activeEquipe?.nomEquipe}</p>
                             </div>
                             <Listbox.Button className="inline-flex items-center rounded-l-none rounded-r-md bg-lime-600 p-2 hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-lime-600 focus:ring-offset-2 focus:ring-offset-gray-50">
                                 <span className="sr-only">Change published status</span>

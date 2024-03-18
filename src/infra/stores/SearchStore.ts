@@ -1,9 +1,12 @@
 "use client";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { PagedResult } from "../models/PagedResult";
+import { SearchRequest } from "../models/SearchRequest";
+import { store } from "./Store";
+import agent from "../apiclient/agent";
 
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 100;
 
 export default class SearchStore {
 
@@ -21,6 +24,59 @@ export default class SearchStore {
     searchType = '';
     searchValue = '';
 
+
+    problemSearch = '';
+    solutionSearch = '';
+
+    equipeFilter: number[] = [];
+    secteurFilter: number[] = [];
+    etatFilter: number[] = [];
+    sortBy = 'Id';
+    sortOrder = 'desc';
+
+    setEquipeFilter = (value: number[]) => {
+        this.equipeFilter = value;
+        console.log('setEquipeNumber' + value);
+        this.searchKaizenDocuments();
+    }
+
+    setSecteurFilter = (value: number[]) => {
+        this.secteurFilter = value;
+        console.log('setSecteurFilter' + value);
+        this.searchKaizenDocuments();
+    }
+
+    setEtatFilter = (value: number[]) => {
+        this.etatFilter = value;
+        console.log('setEtatFilter' + value);
+        this.searchKaizenDocuments();
+    }
+
+    setProblemSearch = (value: string) => {
+        this.problemSearch = value;
+    }
+
+    setSolutionSearch = (value: string) => {
+        this.solutionSearch = value;
+    }
+
+    setSortBy = (value: string) => {
+        this.sortBy = value;
+    }
+
+    setSortOrder = (value: string) => {
+        this.sortOrder = value;
+        this.searchKaizenDocuments();
+    }
+
+    resetFilters = () => {
+        this.equipeFilter = [];
+        this.secteurFilter = [];
+        this.etatFilter = [];
+        this.problemSearch = '';
+        this.solutionSearch = '';
+        this.searchKaizenDocuments();
+    }
 
     setPageData = (result: PagedResult<any>) => {
         this.currentPageNo = result.currentPage;
@@ -96,6 +152,43 @@ export default class SearchStore {
 
         console.log(params.toString());
         return params;
+    }
+
+
+    getSearchAxiosParams() {
+        const params: SearchRequest =
+        {
+            equipeIds: this.equipeFilter?.join(',') || '',
+            secteurIds: this.secteurFilter?.join(',') || '',
+            etatIds: this.etatFilter?.join(',') || '',
+            problemSearch: this.problemSearch,
+            solutionSearch: this.solutionSearch,
+            pageSize: PAGE_SIZE,
+            pageNo: this.currentPageNo,
+            sortBy: this.sortBy ?? "Id",
+            sortOrder: this.sortOrder ?? "desc"
+        }
+        return params;
+    }
+
+
+    searchKaizenDocuments = async () => {
+        try {
+            store.kaizenStore.setLoading(false);
+            console.log(JSON.stringify(this.getSearchAxiosParams()));
+            const document = await agent.kaizen.filterSearch(this.getSearchAxiosParams());
+            runInAction(() => {
+                store.kaizenStore.setKaizenDocuments(document);
+                this.setPageData(document);
+                store.kaizenStore.setLoading(false);
+            });
+            return document.data;
+        } catch (error) {
+            runInAction(() => {
+                store.kaizenStore.setLoading(false);
+            });
+            console.log(error);
+        }
     }
 
 }

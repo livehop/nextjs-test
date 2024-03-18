@@ -5,6 +5,7 @@ import SkeletonData from './SkeletonData';
 import { isColumnVisible } from '@/lib/utils/arrayutils';
 import { FaCircle } from "react-icons/fa6";
 import { KaizenDocument } from '@/infra/models';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 const GetColoredText = (text: string, urgency: number) => {
@@ -64,6 +65,7 @@ const DataBody = () => {
 
     return (
         <>
+
             {kaizenDocuments !== null && kaizenDocuments?.data.map((kaizen) => (
                 <tr key={kaizen.id}>
                     {isColumnVisible(columns, "Id") && (

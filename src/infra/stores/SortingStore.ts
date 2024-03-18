@@ -1,5 +1,6 @@
 "use client";
 import { makeAutoObservable } from 'mobx';
+import { store } from './Store';
 
 
 export const ASC = "asc";
@@ -20,6 +21,8 @@ export default class SortingStore {
         } else {
             this.sortedOrder = ASC;
         }
+        store.searchStore.setSortBy(column);
+        store.searchStore.setSortOrder(this.sortedOrder);
     }
 
     setSortedColumn = (column: string) => {

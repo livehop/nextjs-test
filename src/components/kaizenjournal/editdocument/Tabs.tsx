@@ -9,7 +9,12 @@ import DemandesTab from './DemandesTab'
 import SuiviTab from './SuiviTab'
 import UploadDocumentsTab from './UploadDocumentsTab'
 import HistoryTab from './HistoryTab'
+import { UseFormRegister } from 'react-hook-form'
+import { KaizenDocument } from '@/infra/models'
 
+type TabProps = {
+    register: UseFormRegister<KaizenDocument>
+}
 
 interface ITab {
     name: string;
@@ -17,23 +22,14 @@ interface ITab {
 
 }
 
-// const tabs: ITab[] = [
-//     { name: 'Categorisation', current: true },
-//     { name: 'Solution', current: false },
-//     { name: 'Demandes', current: false },
-//     { name: 'Suivi', current: false },
-//     { name: 'Télécharger des documents', current: false },
-//     { name: 'Historique', current: false },
-// ]
-
-const Tabs = () => {
+const Tabs = ({ register }: TabProps) => {
 
     const [tabs, setTabs] = useState<ITab[]>([
-        { name: 'Categorisation', current: true },
+        { name: 'Catégorisation', current: true },
         { name: 'Solution', current: false },
         { name: 'Demandes', current: false },
         { name: 'Suivi', current: false },
-        { name: 'Télécharger des documents', current: false },
+        { name: 'Télécharger Documents', current: false },
         { name: 'Historique', current: false },
     ])
 
@@ -59,19 +55,19 @@ const Tabs = () => {
         const currentTab = getCurrentTab();
         switch (currentTab.name) {
             case 'Categorisation':
-                return <CategorizationTab />
+                return <CategorizationTab register={register} />
             case 'Solution':
-                return <SolutionTab />
+                return <SolutionTab register={register} />
             case 'Demandes':
                 return <DemandesTab />
             case 'Suivi':
                 return <SuiviTab />
-            case 'Télécharger des documents':
+            case 'Télécharger Documents':
                 return <UploadDocumentsTab />
             case 'Historique':
                 return <HistoryTab />
             default:
-                return <CategorizationTab />;
+                return <CategorizationTab register={register} />;
         }
 
     }

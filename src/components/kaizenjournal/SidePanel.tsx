@@ -58,7 +58,7 @@ const SidePanel = ({ open, setOpen }: Props) => {
     }
 
 
-    const currentDate = new Date().toLocaleDateString();
+    const currentDate = new Date().toISOString().split('T')[0];
     return (
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -126,7 +126,7 @@ const SidePanel = ({ open, setOpen }: Props) => {
                                                             htmlFor="project-name"
                                                             className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5"
                                                         >
-                                                            Inscrit Par
+                                                            Inscrit par
                                                         </label>
                                                     </div>
                                                     <div className="sm:col-span-2">
@@ -145,7 +145,7 @@ const SidePanel = ({ open, setOpen }: Props) => {
                                                             htmlFor="project-description"
                                                             className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5"
                                                         >
-                                                            Problematique
+                                                            Problème
                                                         </label>
                                                     </div>
                                                     <div className="sm:col-span-2">
@@ -185,7 +185,7 @@ const SidePanel = ({ open, setOpen }: Props) => {
                                                             htmlFor="project-description"
                                                             className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5"
                                                         >
-                                                            Equipe
+                                                            Équipe
                                                         </label>
                                                     </div>
                                                     <div className="sm:col-span-2">
@@ -232,7 +232,7 @@ const SidePanel = ({ open, setOpen }: Props) => {
                                                             htmlFor="project-description"
                                                             className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5"
                                                         >
-                                                            Categorie
+                                                            Catégorie
                                                         </label>
                                                     </div>
                                                     <div className="sm:col-span-2">
@@ -255,7 +255,7 @@ const SidePanel = ({ open, setOpen }: Props) => {
                                                             htmlFor="project-description"
                                                             className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5"
                                                         >
-                                                            Sous Categorie
+                                                            Sous-catégorie
                                                         </label>
                                                     </div>
                                                     <div className="sm:col-span-2">
@@ -278,18 +278,18 @@ const SidePanel = ({ open, setOpen }: Props) => {
                                         <div className="flex-shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6">
                                             <div className="flex justify-end space-x-3">
                                                 <button
-                                                    type="button"
-                                                    className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                    onClick={() => setOpen(false)}
-                                                >
-                                                    Annuler
-                                                </button>
-                                                <button
                                                     onClick={() => setOpen(false)}
                                                     type="button"
                                                     className="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                                 >
                                                     Soumettre
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                    onClick={() => setOpen(false)}
+                                                >
+                                                    Annuler
                                                 </button>
                                             </div>
                                         </div>

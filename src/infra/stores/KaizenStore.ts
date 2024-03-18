@@ -5,6 +5,7 @@ import { PagedResult } from '../models/PagedResult';
 import { store } from './Store';
 import { Categorie, Equipe, Etat, KaizenDocument, Secteur, SousCategorie } from '../models';
 import { SortOrder } from '../models/Ui';
+import { Note } from '../models/Note';
 
 export default class KaizenStore {
     constructor() {
@@ -30,8 +31,19 @@ export default class KaizenStore {
     activeSecteur: Secteur | null = null;
     activeSousCategorie: SousCategorie | null = null;
 
+    notes: Note[] = [];
     loading: boolean = false;
+    loadingNotes: boolean = false;
+    savingData: boolean = false;
 
+
+    setKaizenDocuments = (documents: PagedResult<KaizenDocument>) => {
+        this.kaizenDocuments = documents;
+    }
+
+    setLoading = (loading: boolean) => {
+        this.loading = loading;
+    }
 
     get hasAnyFiltersSet() {
         return store.equipeStore.selectedValues.length > 0 ||
@@ -43,6 +55,8 @@ export default class KaizenStore {
         store.equipeStore.clearAllSelectedItems();
         store.secteurStore.clearAllSelectedItems();
         store.etatStore.clearAllSelectedItems();
+        store.searchStore.resetFilters();
+
     }
 
 
@@ -230,6 +244,42 @@ export default class KaizenStore {
         } catch (error) {
             runInAction(() => {
                 this.loading = false;
+            });
+            console.log(error);
+        }
+    }
+
+    addNote = async (note: string) => {
+        try {
+            if (this.editDocumentId === null) return;
+            this.savingData = true;
+
+            console.log("Adding note to kaizen " + this.editDocumentId + " " + note)
+            await agent.notes.add({ kaizenId: this.editDocumentId, description: note });
+            runInAction(() => {
+                this.savingData = false;
+            });
+        } catch (error) {
+            runInAction(() => {
+                this.savingData = false;
+            });
+            console.log(error);
+        }
+    }
+
+    getNotes = async () => {
+        try {
+            if (this.editDocumentId === null || this.editDocument === null) return;
+            this.loadingNotes = true;
+            const notes = await agent.notes.list(this.editDocumentId);
+            runInAction(() => {
+                this.notes = notes;
+                this.loadingNotes = false;
+            });
+            return this.notes;
+        } catch (error) {
+            runInAction(() => {
+                this.loadingNotes = false;
             });
             console.log(error);
         }

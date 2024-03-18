@@ -26,9 +26,9 @@ const navigation = [
     { name: 'Employee Search', href: '#', current: false },
 ]
 const userNavigation = [
-    { name: 'My Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Mon Profil', href: '#' },
+    { name: 'Paramètres', href: '#' },
+    { name: 'Se déconnecter', href: '#' },
 ]
 
 const TopNav = () => {

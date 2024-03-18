@@ -6,4 +6,16 @@ docker-compose up
 docker-compose down
 
 
-zFCL3yih
+Problème
+Équipe
+Catégorie
+Sous-catégorie
+fréquence
+État
+
+complétée
+
+Tèlèchargez ou faites et dèposez un
+fichier ici jusqu'à 10 Mo
+
+Tèlèchargez ou faites et dèposez un fichier ici jusqu'à 10 Mo

@@ -11,7 +11,8 @@ import { Badge } from '@/components/ui/badge'
 
 
 const SecteurFilter = () => {
-    const { secteurStore } = useStore();
+    const { secteurStore, searchStore } = useStore();
+    const { setSecteurFilter } = searchStore
     const { idValues, loadIdValues, toggleSelectedValue, isChecked, hasAnyCheckedItem, clearAllSelectedItems, selectedValues } = secteurStore;
     const [popoverOpen, setPopOverOpen] = useState(false);
 
@@ -19,10 +20,15 @@ const SecteurFilter = () => {
         loadIdValues();
     }, [])
 
+
     const togglePoppver = () => {
         console.log("popover " + popoverOpen);
         setPopOverOpen(!popoverOpen);
+        if (popoverOpen) {
+            setSecteurFilter(selectedValues.map(v => v.id));
+        }
     }
+
     return (
         <>
             <Popover open={popoverOpen} onOpenChange={togglePoppver}>

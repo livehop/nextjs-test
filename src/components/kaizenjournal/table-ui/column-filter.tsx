@@ -1,10 +1,8 @@
 "use client";
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import React, { useState } from 'react'
+import React from 'react'
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
-import { DisplayColumn, getDefaultDisplayColumns } from '@/infra/models/DisplayColumn'
-import { getToggledColumns } from '@/lib/utils/arrayutils'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '@/infra/stores/Store';
 
@@ -23,7 +21,7 @@ const ColumnsFilter = () => {
                     className="ml-auto hidden h-8 lg:flex"
                 >
                     <MixerHorizontalIcon className="mr-2 h-4 w-4" />
-                    View
+                    Vue
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[150px]">

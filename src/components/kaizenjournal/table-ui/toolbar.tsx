@@ -17,7 +17,8 @@ type ToolbarProps = {
 
 
 const Toolbar = ({ openSidePanel }: ToolbarProps) => {
-    const { kaizenStore } = useStore();
+    const { kaizenStore, searchStore } = useStore();
+    const { problemSearch, setProblemSearch, solutionSearch, setSolutionSearch } = searchStore;
     const { hasAnyFiltersSet, resetSearchFilters } = kaizenStore;
 
     const [search, setSearch] = useState('')
@@ -28,8 +29,8 @@ const Toolbar = ({ openSidePanel }: ToolbarProps) => {
             <div className="flex items-center justify-between">
                 <div className="flex flex-1 items-center space-x-2">
                     <Input
-                        placeholder="Problems ..."
-                        value={search ?? ""}
+                        placeholder="Problème ..."
+                        value={problemSearch ?? ""}
                         onChange={(event) =>
                             setSearch(event.target.value)
                         }
@@ -37,7 +38,7 @@ const Toolbar = ({ openSidePanel }: ToolbarProps) => {
                     />
                     <Input
                         placeholder="Solutions ..."
-                        value={search ?? ""}
+                        value={solutionSearch ?? ""}
                         onChange={(event) =>
                             setSearch(event.target.value)
                         }

@@ -3,27 +3,21 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import { IdValue } from '../models/IdValue';
 import agent from '../apiclient/agent';
 
-export default class EmployeeStore {
+export default class ProjetStore {
     constructor() {
         makeAutoObservable(this);
     }
     idValues: IdValue[] = [];
     loading: boolean = false;
-    selectedValue: IdValue | null = null;
-    query: string = "";
 
-    loadIdValues = async (query = "") => {
-        if (this.idValues.length > 0 && query === this.query) {
-            return this.idValues;
-        }
-        console.log("loading id values for " + query);
+    loadIdValues = async () => {
+        if (this.idValues.length > 0) return this.idValues;
         try {
             this.loading = true;
-            const idvalues = await agent.employees.valuelist(query);
+            const idvalues = await agent.projet.valuelist();
             runInAction(() => {
                 this.loading = false;
                 this.idValues = idvalues;
-                this.query = query;
             });
             return idvalues;
         } catch (error) {
