@@ -201,7 +201,7 @@ export default function Example() {
                                         className="bg-gray-800 text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                                     >
                                         <Cog6ToothIcon
-                                            className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
+                                            className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-blue-600"
                                             aria-hidden="true"
                                         />
                                         Settings

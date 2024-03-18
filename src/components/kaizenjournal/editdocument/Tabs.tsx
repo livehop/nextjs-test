@@ -83,7 +83,7 @@ const Tabs = ({ register }: TabProps) => {
                 <select
                     id="tabs"
                     name="tabs"
-                    className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 >
                     {tabs.map((tab) => (
                         <option key={tab.name}
@@ -101,7 +101,7 @@ const Tabs = ({ register }: TabProps) => {
                                 onClick={(e) => { changeTab(tab) }}
                                 className={classNames(
                                     tab.current
-                                        ? 'border-indigo-500 text-indigo-600'
+                                        ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
                                     'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium'
                                 )}

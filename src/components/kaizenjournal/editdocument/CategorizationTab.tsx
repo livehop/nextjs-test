@@ -34,7 +34,7 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
                             id="country"
                             name="country"
                             autoComplete="country-name"
-                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                             {categoryStore.catetoryValues.map((idValue) => (
                                 <option key={idValue.id} selected={idValue.value === editDocument?.categorie.name}>{idValue.value}</option>
@@ -53,7 +53,7 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
                             id="country"
                             name="country"
                             autoComplete="country-name"
-                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                             {categoryStore.sousCatetoryValues.map((idValue) => (
                                 <option key={idValue.id} selected={idValue.value === editDocument?.sousCategorie.description}>{idValue.value}</option>
@@ -71,7 +71,7 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
                             id="country"
                             name="country"
                             autoComplete="country-name"
-                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                             {projetStore.idValues.map((idValue) => (
                                 <option key={idValue.id}>{idValue.value}</option>
@@ -89,7 +89,7 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
                             id="country"
                             name="country"
                             autoComplete="country-name"
-                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                             <option>Mois</option>
                             <option>Semaine</option>
@@ -108,7 +108,7 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
                             id="country"
                             name="country"
                             autoComplete="country-name"
-                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                             <option>Mineur</option>
                             <option>Grave</option>
@@ -126,7 +126,7 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
                             id="country"
                             name="country"
                             autoComplete="country-name"
-                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                             <option>Peu Probabable</option>
                             <option>Moyen</option>
@@ -144,7 +144,7 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
                             id="country"
                             name="country"
                             autoComplete="country-name"
-                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                            className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                             <option>N'affecte pas la DLP</option>
                             <option>Affecte la DLP</option>
