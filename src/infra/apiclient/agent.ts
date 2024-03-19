@@ -116,6 +116,7 @@ const kaizen = {
     search: (query: string): Promise<PagedResult<KaizenDocument>> => requests.get(`/kaizen/search?SearchText=${query}`),
     details: (id: number) => requests.get(`/kaizen/${id}`),
     filterSearch: (request: SearchRequest): Promise<PagedResult<KaizenDocument>> => axios.get('/kaizen/filtersearch', { params: request }).then(responseBody),
+    update: (kaizen: KaizenDocument): Promise<boolean> => requests.put(`/kaizen/${kaizen.id}`, kaizen),
 }
 
 const categorie = {

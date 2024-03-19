@@ -3,16 +3,18 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useStore } from '@/infra/stores/Store';
 import FocalPointCombo from '@/components/uicomponents/FocalPointCombo';
-import { UseFormRegister } from 'react-hook-form';
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { KaizenDocument } from '@/infra/models';
+import FocalPointSearch from '@/components/uicomponents/FocalPointSearch';
 
 
 type TopFormProps = {
-    register: UseFormRegister<KaizenDocument>
+    register: UseFormRegister<KaizenDocument>,
+    setValue: UseFormSetValue<KaizenDocument>
 }
 
 
-const TopForm = ({ register }: TopFormProps) => {
+const TopForm = ({ register, setValue }: TopFormProps) => {
     const { kaizenStore, equipeStore, secteurStore, employeeStore } = useStore();
 
     const { editDocument, editDocumentId } = kaizenStore;
@@ -54,7 +56,7 @@ const TopForm = ({ register }: TopFormProps) => {
                                 Inscrit le
                             </label>
                             <div className="mt-2">
-                                <h2 className="text-base font-semibold leading-7 text-gray-900">{editDocument?.inscritDate.split('T')[0]}</h2>
+                                <h2 className="text-base font-semibold leading-7 text-gray-900">{editDocument?.inscritDate?.split('T')[0]}</h2>
                             </div>
                         </div>
 
@@ -95,23 +97,7 @@ const TopForm = ({ register }: TopFormProps) => {
                         </div>
 
                         <div className="sm:col-span-2">
-                            <FocalPointCombo register={register} />
-
-                            {/* <label htmlFor="postal-code" className="block text-sm font-medium leading-6 text-gray-900">
-                                Point Focal
-                            </label>
-                            <div className="mt-2">
-                                <select
-                                    id="country"
-                                    name="country"
-                                    autoComplete="country-name"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                >
-                                    <option>{editDocument?.focalContactName}</option>
-                                    <option>Canada</option>
-                                    <option>Mexico</option>
-                                </select>
-                            </div> */}
+                            <FocalPointSearch register={register} setValue={setValue} />
                         </div>
 
 

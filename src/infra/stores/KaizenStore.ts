@@ -68,6 +68,37 @@ export default class KaizenStore {
 
     setEditDocumentId = (documentId: number | null) => {
         this.editDocumentId = documentId;
+        if (documentId === null) {
+            this.editDocument = null;
+        }
+    }
+
+
+    updateKaizenDocument = async (document: KaizenDocument) => {
+        try {
+            this.savingData = true;
+            console.log("Updating kaizen document " + document.id);
+            const result = await agent.kaizen.update(document);
+            runInAction(() => {
+                this.savingData = false;
+                if (result === true) {
+                    if (this.kaizenDocuments !== null && this.kaizenDocuments.data !== null) {
+                        const updatedDocument = this.kaizenDocuments.data.find(d => d.id === document.id);
+                        if (updatedDocument !== undefined) {
+                            this.editDocument = updatedDocument;
+                        }
+                        this.loadKaizenDocuments();
+                    }
+                }
+                //this.editDocument = updatedDocument;
+            });
+            return result;
+        } catch (error) {
+            runInAction(() => {
+                this.savingData = false;
+            });
+            console.log(error);
+        }
     }
 
     loadEditDocument = async () => {
