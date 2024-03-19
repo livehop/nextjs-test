@@ -86,9 +86,9 @@ const SidePanel = ({ open, setOpen }: Props) => {
                                                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
                                                             Ajout d'un point Kaizen
                                                         </Dialog.Title>
-                                                        <p className="text-sm text-gray-500">
+                                                        {/* <p className="text-sm text-gray-500">
                                                             Some Description
-                                                        </p>
+                                                        </p> */}
                                                     </div>
                                                     <div className="flex h-7 items-center">
                                                         <button

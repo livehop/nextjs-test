@@ -33,6 +33,8 @@ export default class KaizenStore {
 
     notes: Note[] = [];
     loading: boolean = false;
+
+    loadingDocument: boolean = false;
     loadingNotes: boolean = false;
     savingData: boolean = false;
 
@@ -69,20 +71,24 @@ export default class KaizenStore {
     }
 
     loadEditDocument = async () => {
-        console.log('loading edit document');
+        console.log("Loading editDocumentId " + this.editDocumentId);
         if (this.editDocumentId === null) return;
+        this.loadingDocument = true;
+        console.log("Loading kaizen document " + this.editDocumentId);
+        this.editDocument = null;
         if (this.kaizenDocuments !== null && this.kaizenDocuments.data !== null) {
-            console.log('finding kaizen document ' + this.editDocumentId);
             const document = this.kaizenDocuments.data.find(d => d.id === this.editDocumentId);
-            console.log('found kaizen document ' + this.editDocument);
+            console.log("Document found " + document?.problematique)
             if (document !== undefined) {
                 runInAction(() => {
-                    this.loading = false;
+                    this.loadingDocument = false;
                     this.editDocument = document;
                 });
                 return document;
             }
         }
+
+        this.loadingDocument = false;
 
     }
 

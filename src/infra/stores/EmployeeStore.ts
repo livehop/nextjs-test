@@ -16,7 +16,6 @@ export default class EmployeeStore {
         if (this.idValues.length > 0 && query === this.query) {
             return this.idValues;
         }
-        console.log("loading id values for " + query);
         try {
             this.loading = true;
             const idvalues = await agent.employees.valuelist(query);

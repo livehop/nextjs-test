@@ -1,4 +1,5 @@
 import { Equipe, Secteur, Categorie, SousCategorie, Etat } from "."
+import { z } from "zod";
 
 export interface KaizenDocument {
     id: number
@@ -33,3 +34,36 @@ export interface KaizenDocument {
     annuleDate: string
     pubNouveauPoint: boolean
 }
+
+
+export const KaizenDocumentSchema = z.object({
+    id: z.number(),
+    equipeId: z.number(),
+    secteurId: z.number(),
+    problematique: z.string(),
+    inscritPar: z.string(),
+    inscritDate: z.string(),
+    categorieId: z.number(),
+    sousCategorieId: z.number(),
+    catFreq: z.number(),
+    catGrav: z.number(),
+    catProb: z.number(),
+    catLegal: z.number(),
+    solGain: z.number(),
+    solCout: z.number(),
+    solEff: z.number(),
+    solRisq: z.number(),
+    solution: z.string(),
+    focalId: z.string(),
+    focalContactName: z.string(),
+    suiviDate: z.string(),
+    etatId: z.number(),
+    debutDate: z.string(),
+    finPlaniFieDate: z.string(),
+    completeDate: z.string(),
+    annuleDate: z.string(),
+    pubNouveauPoint: z.boolean(),
+});
+
+export type KaizenEditDocument = z.infer<typeof KaizenDocumentSchema>;
+

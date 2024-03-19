@@ -12,6 +12,7 @@ export const getToggledColumns = (columns: DisplayColumn[], column: DisplayColum
 
 export const isColumnVisible = (columns: DisplayColumn[], columnName: string) => {
     if (typeof window === 'undefined') return true;
+    if (!columns) return true;
     return columns.find((column) => column.title === columnName)?.isVisible ?? true;
 }
 

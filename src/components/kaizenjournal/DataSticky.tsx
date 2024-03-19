@@ -18,7 +18,7 @@ const DataSticky = () => {
     const { kaizenStore, columnStore } = useStore();
     const { columns } = columnStore;
 
-    const { kaizenDocuments, loading, loadKaizenDocuments, setEditDocumentId, setCurrentSortOrder, currentSortOrder } = kaizenStore;
+    const { kaizenDocuments, loading, loadKaizenDocuments, setEditDocumentId, currentSortOrder } = kaizenStore;
     useEffect(() => {
         loadKaizenDocuments();
         console.log('Data useEffect')

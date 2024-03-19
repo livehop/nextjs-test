@@ -1,26 +1,27 @@
 import { Combobox } from '@headlessui/react'
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { classNames } from '@/infra/utils/classNames'
 import { useStore } from '@/infra/stores/Store'
-import { Employee } from '@/infra/models'
 import { IdValue } from '@/infra/models/IdValue'
 import { observer } from 'mobx-react-lite';
-import useEmployeesFilter from '../kaizenjournal/hooks/useEmployeesFilter'
 import { useDebounceValue } from 'usehooks-ts'
+import { UseFormRegister } from 'react-hook-form'
+import { KaizenDocument } from '@/infra/models'
 
 type Person = {
     id: number;
     name: string;
 }
 
-const people: Person[] = [
-    { id: 1, name: 'Leslie Alexander' },
-]
+type FocalPointComboProps = {
+    register: UseFormRegister<KaizenDocument>
+}
 
+const FocalPointCombo = ({ register }: FocalPointComboProps) => {
+    const { employeeStore, kaizenStore } = useStore();
 
-const FocalPointCombo = () => {
-    const { employeeStore } = useStore();
+    const { editDocument } = kaizenStore;
 
 
     const [selectedPerson, setSelectedPerson] = useState<IdValue | null>(null)
@@ -50,10 +51,6 @@ const FocalPointCombo = () => {
         // })
     }
 
-
-
-
-
     const getDisplayValue = (person: any) => {
         return person?.value;
     }
@@ -65,10 +62,12 @@ const FocalPointCombo = () => {
             </Combobox.Label>
             <div className="relative mt-2">
                 <Combobox.Input
+                    {...register("focalContactName")}
                     onSelect={() => { setSelectedPerson(null) }}
                     className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     onChange={(event) => setValue(event.target.value)}
                     displayValue={(person) => getDisplayValue(person)}
+                    value={editDocument?.focalContactName}
                 />
                 <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
                     <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

@@ -27,7 +27,7 @@ const ColumnsFilter = () => {
             <DropdownMenuContent align="end" className="w-[150px]">
                 <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {columns
+                {columns && columns
                     .map((column) => {
                         return (
                             <DropdownMenuCheckboxItem

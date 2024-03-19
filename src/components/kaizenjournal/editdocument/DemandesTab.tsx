@@ -1,13 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { useStore } from '@/infra/stores/Store';
 import React from 'react'
 
 const DemandesTab = () => {
-    const { kaizenStore } = useStore();
-    const { editDocument, editDocumentId, loadEditDocument } = kaizenStore;
 
     return (
-        <div className="border-b border-gray-900/10 pb-8">
+        <div>
             <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
                 <div className="col-span-full">
                     <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">

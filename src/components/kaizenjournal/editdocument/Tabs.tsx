@@ -10,7 +10,7 @@ import SuiviTab from './SuiviTab'
 import UploadDocumentsTab from './UploadDocumentsTab'
 import HistoryTab from './HistoryTab'
 import { UseFormRegister } from 'react-hook-form'
-import { KaizenDocument } from '@/infra/models'
+import { KaizenDocument, KaizenEditDocument } from '@/infra/models'
 
 type TabProps = {
     register: UseFormRegister<KaizenDocument>
@@ -61,7 +61,7 @@ const Tabs = ({ register }: TabProps) => {
             case 'Demandes':
                 return <DemandesTab />
             case 'Suivi':
-                return <SuiviTab />
+                return <SuiviTab register={register} />
             case 'Télécharger Documents':
                 return <UploadDocumentsTab />
             case 'Historique':

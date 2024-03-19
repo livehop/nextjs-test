@@ -6,6 +6,7 @@ import { isColumnVisible } from '@/lib/utils/arrayutils';
 import { FaCircle } from "react-icons/fa6";
 import { KaizenDocument } from '@/infra/models';
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useRouter } from 'next/navigation';
 
 
 const GetColoredText = (text: string, urgency: number) => {
@@ -59,7 +60,14 @@ const DataBody = () => {
     const { kaizenStore, columnStore } = useStore();
     const { columns } = columnStore;
 
-    const { kaizenDocuments, loading, loadKaizenDocuments, setEditDocumentId, setCurrentSortOrder, currentSortOrder } = kaizenStore;
+    const { kaizenDocuments, loading, setEditDocumentId } = kaizenStore;
+
+    const router = useRouter();
+    const loadDocumentToEdit = (id: number) => {
+        router.replace("?kaizendocument=" + id)
+        setEditDocumentId(id);
+    }
+
 
     if (loading) return <SkeletonData />
 
@@ -152,9 +160,9 @@ const DataBody = () => {
                     )}
 
                     <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a onClick={() => { setEditDocumentId(kaizen.id) }} href="#" className="text-green-800 hover:text-indigo-900">
+                        <button onClick={() => { loadDocumentToEdit(kaizen.id) }} className="text-green-800 hover:text-indigo-900">
                             Edit<span className="sr-only">, {kaizen.id}</span>
-                        </a>
+                        </button>
                     </td>
                 </tr>
             ))

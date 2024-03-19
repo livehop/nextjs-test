@@ -20,7 +20,7 @@ const HistoryTab = () => {
 
 
     return (
-        <div className="border-b border-gray-900/10 pb-12">
+        <div>
             <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="col-span-full">
                     <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
