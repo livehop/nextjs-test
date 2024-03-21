@@ -10,7 +10,7 @@ import TopForm from './TopForm';
 import Tabs from './Tabs';
 
 type EditKaizenJournalFormProps = {
-    editDocument: KaizenDocument;
+    editDocument: KaizenDocument | null | undefined;
 }
 
 const EditKaizenJournalForm = ({ editDocument }: EditKaizenJournalFormProps) => {
@@ -22,6 +22,8 @@ const EditKaizenJournalForm = ({ editDocument }: EditKaizenJournalFormProps) => 
         handleSubmit,
         formState: { errors, isSubmitting },
         setValue,
+        getValues,
+        watch,
         reset
     } = useForm<KaizenDocument>({ defaultValues: { ...editDocument } });
     const router = useRouter();
@@ -29,9 +31,10 @@ const EditKaizenJournalForm = ({ editDocument }: EditKaizenJournalFormProps) => 
 
     const onSubmit = async (data: KaizenDocument) => {
         console.log("on submit from the form .....");
-        console.log("focal id ----> " + data.focalId);
-        await updateKaizenDocument(data);
-        closePanel();
+        console.log("catFreq ----> " + data.catFreq);
+        console.log("catGrav ----> " + data.catGrav);
+        //await updateKaizenDocument(data);
+        //closePanel();
     }
 
     const closePanel = () => {
@@ -69,7 +72,7 @@ const EditKaizenJournalForm = ({ editDocument }: EditKaizenJournalFormProps) => 
                     {/* Project name */}
                     <div className='p-6'>
                         <TopForm register={register} setValue={setValue} />
-                        <Tabs register={register} />
+                        <Tabs register={register} getValues={getValues} watch={watch} />
                     </div>
                 </div>
             </div>

@@ -13,6 +13,7 @@ import SortingStore from "./SortingStore";
 import ColumnStore from "./ColumnStore";
 import CategorieStore from "./CategorieStore";
 import ProjetStore from "./ProjectStore";
+import RessourcesStore from "./RessourcesStore";
 
 interface Store {
     commonStore: CommonStore;
@@ -28,6 +29,7 @@ interface Store {
     columnStore: ColumnStore;
     categoryStore: CategorieStore;
     projetStore: ProjetStore;
+    ressourcesStore: RessourcesStore;
 }
 
 export const store: Store = {
@@ -43,7 +45,8 @@ export const store: Store = {
     sortingStore: new SortingStore(),
     columnStore: new ColumnStore(),
     categoryStore: new CategorieStore(),
-    projetStore: new ProjetStore()
+    projetStore: new ProjetStore(),
+    ressourcesStore: new RessourcesStore()
 }
 
 export const StoreContext = createContext(store);

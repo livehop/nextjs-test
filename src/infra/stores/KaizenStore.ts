@@ -6,6 +6,7 @@ import { store } from './Store';
 import { Categorie, Equipe, Etat, KaizenDocument, Secteur, SousCategorie } from '../models';
 import { SortOrder } from '../models/Ui';
 import { Note } from '../models/Note';
+import { RessourcesNecessaire, RessourcesNecessaireDesc } from '../models/RessourcesNecessaire';
 
 export default class KaizenStore {
     constructor() {
@@ -23,13 +24,16 @@ export default class KaizenStore {
     sousCategories: SousCategorie[] = [];
 
     editDocumentId: number | null = null;
-    editDocument: KaizenDocument | null = null;
+    editDocument: KaizenDocument | null | undefined = null;
 
     activeCategorie: Categorie | null = null;
     activeEquipe: Equipe | null = null;
     activeEtat: Etat | null = null;
     activeSecteur: Secteur | null = null;
     activeSousCategorie: SousCategorie | null = null;
+
+    resNecessaires: RessourcesNecessaireDesc[] = [];
+    loadingResNecessaire: boolean = false;
 
     notes: Note[] = [];
     loading: boolean = false;
@@ -70,6 +74,7 @@ export default class KaizenStore {
         this.editDocumentId = documentId;
         if (documentId === null) {
             this.editDocument = null;
+            this.resNecessaires = [];
         }
     }
 
@@ -108,9 +113,10 @@ export default class KaizenStore {
         console.log("Loading kaizen document " + this.editDocumentId);
         this.editDocument = null;
         if (this.kaizenDocuments !== null && this.kaizenDocuments.data !== null) {
-            const document = this.kaizenDocuments.data.find(d => d.id === this.editDocumentId);
+            let document = this.kaizenDocuments.data.find(d => d.id === this.editDocumentId);
             console.log("Document found " + document?.problematique)
             if (document !== undefined) {
+                //document = this.setDefaults(document);
                 runInAction(() => {
                     this.loadingDocument = false;
                     this.editDocument = document;
@@ -121,6 +127,36 @@ export default class KaizenStore {
 
         this.loadingDocument = false;
 
+    }
+
+    loadResourceNessaicaires = async () => {
+        if (this.editDocumentId === null) return;
+        try {
+            this.loadingResNecessaire = true;
+            const result = await agent.ressourcesnecessaire.list(this.editDocumentId);
+            runInAction(() => {
+                this.resNecessaires = result;
+                this.loadingResNecessaire = false;
+            });
+            return result;
+        } catch (error) {
+            console.log(error);
+            this.loadingResNecessaire = false;
+        }
+    }
+
+    upsertResourceNessaicaires = async (resNecessaire: RessourcesNecessaire) => {
+        try {
+            this.loadingResNecessaire = true;
+            const result = await agent.ressourcesnecessaire.upsert(resNecessaire);
+            runInAction(() => {
+                this.loadingResNecessaire = false;
+            });
+            return result;
+        } catch (error) {
+            console.log(error);
+            this.loadingResNecessaire = false;
+        }
     }
 
 

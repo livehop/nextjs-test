@@ -1,15 +1,47 @@
 import { KaizenDocument, KaizenEditDocument } from '@/infra/models';
 import { useStore } from '@/infra/stores/Store';
-import React from 'react'
-import { UseFormRegister } from 'react-hook-form';
+import React, { useState } from 'react'
+import { UseFormGetValues, UseFormRegister } from 'react-hook-form';
 
 type SolutionTabProps = {
-    register: UseFormRegister<KaizenDocument>
+    register: UseFormRegister<KaizenDocument>;
+    getValues: UseFormGetValues<KaizenDocument>;
 }
 
-const SolutionTab = ({ register }: SolutionTabProps) => {
+const SolutionTab = ({ register, getValues }: SolutionTabProps) => {
     const { kaizenStore } = useStore();
-    const { editDocument, editDocumentId, loadEditDocument } = kaizenStore;
+    const { editDocument } = kaizenStore;
+
+
+
+    const [mySolGain, setMySolGain] = useState(editDocument?.solGain.toString());
+    const [mySolCout, setMySolCout] = useState(editDocument?.solCout.toString());
+    const [mySolEff, setMySolEff] = useState(editDocument?.solEff.toString());
+    const [mySolRisq, setMySolRisq] = useState(editDocument?.solRisq.toString());
+
+
+    // ' Calcul de la cote
+    // If Not IsNull(RS.Fields("SOL_GAIN").Value) And Not IsNull(RS.Fields("SOL_COUT").Value) And Not IsNull(RS.Fields("SOL_EFF").Value) And Not IsNull(RS.Fields("SOL_RISQ").Value) Then
+    //     Cote = (4 * RS.Fields("SOL_GAIN").Value) + (4 - RS.Fields("SOL_COUT").Value) + (4 - RS.Fields("SOL_EFF").Value) + (4 - RS.Fields("SOL_RISQ").Value) + Indice
+    //     MultiPage1.pgSolution.lblCote.Caption = Cote
+    // End If
+
+
+    const toNumber = (value: string | number | undefined) => {
+        if (typeof value === "string") {
+            return parseInt(value);
+        }
+        return 0;
+    }
+
+    const getCote = () => {
+        return (4 * (toNumber(mySolGain)))
+            + (4 - toNumber(mySolCout))
+            + (4 - toNumber(mySolEff))
+            + (4 - toNumber(mySolRisq));
+        ;
+    }
+
 
     return (
         <div>
@@ -34,12 +66,13 @@ const SolutionTab = ({ register }: SolutionTabProps) => {
                     <div className="mt-2">
                         <select
                             {...register('solGain')}
+                            onChange={(event) => { setMySolGain(event.target.value) }}
                             className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                            <option value={"0"} selected={editDocument?.solGain.toString() === "0"}>$1 K</option>
-                            <option value={"1"} selected={editDocument?.solGain.toString() === "1"}>$10 K</option>
-                            <option value={"2"} selected={editDocument?.solGain.toString() === "2"}>$100 K</option>
-                            <option value={"2"} selected={editDocument?.solGain.toString() === "3"}>$1 M</option>
+                            <option value={1}>$1 K</option>
+                            <option value={2}>$10 K</option>
+                            <option value={3}>$100 K</option>
+                            <option value={4}>$1 M</option>
                         </select>
                     </div>
                 </div>
@@ -52,11 +85,12 @@ const SolutionTab = ({ register }: SolutionTabProps) => {
                     <div className="mt-2">
                         <select
                             {...register('solCout')}
+                            onChange={(event) => { setMySolCout(event.target.value) }}
                             className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                            <option value={"0"} selected={editDocument?.solCout.toString() === "0"}>$1 K</option>
-                            <option value={"1"} selected={editDocument?.solCout.toString() === "1"}>$10 K</option>
-                            <option value={"2"} selected={editDocument?.solCout.toString() === "2"}>$100 K</option>
+                            <option value={1}>$1 K</option>
+                            <option value={2}>$10 K</option>
+                            <option value={3}>$100 K</option>
                         </select>
                     </div>
                 </div>
@@ -68,11 +102,12 @@ const SolutionTab = ({ register }: SolutionTabProps) => {
                     <div className="mt-2">
                         <select
                             {...register('solEff')}
+                            onChange={(event) => { setMySolEff(event.target.value) }}
                             className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                            <option value={"0"} selected={editDocument?.solEff.toString() === "0"}>Moins de 10 h</option>
-                            <option value={"1"} selected={editDocument?.solEff.toString() === "1"}>Moins de 100 h</option>
-                            <option value={"2"} selected={editDocument?.solEff.toString() === "2"}>Plus de 100 h</option>
+                            <option value={1}>Moins de 10 h</option>
+                            <option value={2}>Moins de 100 h</option>
+                            <option value={3}>Plus de 100 h</option>
                         </select>
                     </div>
                 </div>
@@ -84,11 +119,12 @@ const SolutionTab = ({ register }: SolutionTabProps) => {
                     <div className="mt-2">
                         <select
                             {...register('solRisq')}
+                            onChange={(event) => { setMySolRisq(event.target.value) }}
                             className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                            <option value={"0"} selected={editDocument?.solRisq.toString() === "0"}>Faible</option>
-                            <option value={"1"} selected={editDocument?.solRisq.toString() === "0"}>Moyen</option>
-                            <option value={"2"} selected={editDocument?.solRisq.toString() === "0"}>Grand</option>
+                            <option value={1}>Faible</option>
+                            <option value={2}>Moyen</option>
+                            <option value={3}>Grand</option>
                         </select>
                     </div>
                 </div>
@@ -98,7 +134,7 @@ const SolutionTab = ({ register }: SolutionTabProps) => {
                         Cote
                     </label>
                     <div className="mt-2">
-                        <h2>14</h2>
+                        <h2>{getCote()}</h2>
                     </div>
                 </div>
             </div>

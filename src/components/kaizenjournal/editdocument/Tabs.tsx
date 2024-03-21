@@ -9,11 +9,13 @@ import DemandesTab from './DemandesTab'
 import SuiviTab from './SuiviTab'
 import UploadDocumentsTab from './UploadDocumentsTab'
 import HistoryTab from './HistoryTab'
-import { UseFormRegister } from 'react-hook-form'
+import { UseFormGetValues, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 import { KaizenDocument, KaizenEditDocument } from '@/infra/models'
 
 type TabProps = {
-    register: UseFormRegister<KaizenDocument>
+    register: UseFormRegister<KaizenDocument>;
+    getValues: UseFormGetValues<KaizenDocument>;
+    watch: UseFormWatch<KaizenDocument>
 }
 
 interface ITab {
@@ -22,7 +24,7 @@ interface ITab {
 
 }
 
-const Tabs = ({ register }: TabProps) => {
+const Tabs = ({ register, getValues, watch }: TabProps) => {
 
     const [tabs, setTabs] = useState<ITab[]>([
         { name: 'Catégorisation', current: true },
@@ -55,9 +57,9 @@ const Tabs = ({ register }: TabProps) => {
         const currentTab = getCurrentTab();
         switch (currentTab.name) {
             case 'Categorisation':
-                return <CategorizationTab register={register} />
+                return <CategorizationTab register={register} getValues={getValues} watch={watch} />
             case 'Solution':
-                return <SolutionTab register={register} />
+                return <SolutionTab register={register} getValues={getValues} />
             case 'Demandes':
                 return <DemandesTab />
             case 'Suivi':
@@ -67,7 +69,7 @@ const Tabs = ({ register }: TabProps) => {
             case 'Historique':
                 return <HistoryTab />
             default:
-                return <CategorizationTab register={register} />;
+                return <CategorizationTab register={register} getValues={getValues} watch={watch} />;
         }
 
     }

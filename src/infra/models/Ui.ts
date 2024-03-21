@@ -1,3 +1,6 @@
+import { UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { KaizenDocument } from ".";
+
 export enum SortOrder {
     ID = 0,
     Equipe,
@@ -12,4 +15,10 @@ export enum SortOrder {
     Solution,
     PointFocal,
     Etat
+}
+
+export type FormProps = {
+    register: UseFormRegister<KaizenDocument>;
+    getValues: UseFormGetValues<KaizenDocument>;
+    setValue: UseFormSetValue<KaizenDocument>
 }

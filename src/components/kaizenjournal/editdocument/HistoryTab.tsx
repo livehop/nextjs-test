@@ -26,12 +26,29 @@ const HistoryTab = () => {
                     <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
                         Logs
                     </label>
-                    {notes && notes.map(note => (
-                        <div key={note.id} className='pl-2 pt-2 border-grey-100 border-b-gray-500 border-2'>
-                            <p>[{note.inscritDate.split("T")[0]}] : {note.description}
-                            </p>
-                        </div>
-                    ))}
+                    <div id="class-table" className="flex-none min-w-full h-52 px-4 overflow-auto border-2 border-gray-400">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr>
+                                    <th className="sticky z-10 w-36 top-0 text-sm leading-6 font-semibold text-slate-700 bg-white p-0 dark:bg-slate-900 dark:text-slate-300">
+                                        <div className="py-2 pr-2 border-b border-slate-200 dark:border-slate-400/20">Date</div>
+                                    </th>
+                                    <th className="sticky z-10 top-0 text-sm leading-6 font-semibold text-slate-700 bg-white p-0 dark:bg-slate-900 dark:text-slate-300">
+                                        <div className="py-2 pl-2 border-b border-slate-200 dark:border-slate-400/20">Description</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="align-baseline">
+                                {notes && notes.map((note, index) => (
+                                    <tr key={index}>
+                                        <td translate="no" className="py-0 pr-2 font-mono font-medium text-xs leading-6 text-sky-500 whitespace-nowrap dark:text-sky-400">{note.inscritDate.split("T")[0]}</td>
+                                        <td translate="no" className="py-0 pr-2 font-mono font-medium text-xs leading-6 text-sky-500 whitespace-nowrap dark:text-sky-400">{note.description}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
 
                 </div>
             </div>

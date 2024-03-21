@@ -1,18 +1,24 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Paging from '@/components/kaizenjournal/Paging';
-import Data from '@/components/kaizenjournal/Data';
 import SidePanel from '@/components/kaizenjournal/SidePanel';
-import EquipeDropDown from '@/components/kaizenjournal/EquipeDropDown';
 import { useStore } from '@/infra/stores/Store';
 import EditPanel from '@/components/kaizenjournal/EditPanel';
 import Toolbar from '@/components/kaizenjournal/table-ui/toolbar';
 import DataSticky from '@/components/kaizenjournal/DataSticky';
+import { useRouter } from 'next/navigation';
 
 
 const page = () => {
     const { kaizenStore } = useStore();
     const [open, setOpen] = useState(false)
+
+    const router = useRouter();
+
+    useEffect(() => {
+
+        router.replace('kaizenjournal', undefined);
+    }, []);
 
     const openSidePanel = () => {
         console.log('openSidePanel' + open)
@@ -64,7 +70,7 @@ const page = () => {
                     {/* <Data /> */}
                     <div className="mt-8 flow-root px-12">
                         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <EditPanel />
+                            <EditPanel open={open} setOpen={openSidePanel} />
                             <SidePanel open={open} setOpen={openSidePanel} />
                         </div>
                     </div>

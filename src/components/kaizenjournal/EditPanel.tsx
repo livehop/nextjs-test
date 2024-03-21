@@ -5,11 +5,19 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '@/infra/stores/Store';
 import { useRouter, useSearchParams } from 'next/navigation';
 import EditKaizenJournalForm from './editdocument/EditKaizenJournalForm';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
-const EditPanel = () => {
+interface EditPanelProps {
+    setOpen: (open: boolean) => void;
+    open: boolean;
+}
+
+
+
+const EditPanel = ({ setOpen, open }: EditPanelProps) => {
     console.log("-------------------------EditPanel -------------------------");
     const { kaizenStore } = useStore();
-    const { editDocumentId, setEditDocumentId, loadEditDocument, loadingDocument, editDocument } = kaizenStore;
+    const { editDocumentId, setEditDocumentId, loadEditDocument, loadingDocument, editDocument, loadResourceNessaicaires } = kaizenStore;
     const router = useRouter();
     const searchParams = useSearchParams()
     const search = searchParams.get('kaizendocument');
@@ -17,13 +25,16 @@ const EditPanel = () => {
     useEffect(() => {
         console.log("-------------------------EditPanel useEffect ------------------------- " + search);
         loadEditDocument();
+        loadResourceNessaicaires();
     }, [search]);
 
     if (loadingDocument) return;
 
     const closePanel = () => {
+        console.log("closing panel");
         router.replace('kaizenjournal', undefined);
         setEditDocumentId(null);
+        setOpen(false);
     }
 
     const currentDate = new Date().toLocaleDateString();
@@ -45,7 +56,8 @@ const EditPanel = () => {
                                 leaveTo="translate-x-full"
                             >
                                 <Dialog.Panel className="pointer-events-auto w-screen max-w-4xl">
-                                    {editDocument != null && <EditKaizenJournalForm editDocument={editDocument} />}
+                                    {<EditKaizenJournalForm editDocument={editDocument} />}
+
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

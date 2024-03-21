@@ -7,6 +7,7 @@ import { Categorie, Employee, Equipe, Etat, KaizenDocument, KaizenLog, PagedResu
 import { IdValue } from '../models/IdValue';
 import { SearchRequest } from '../models/SearchRequest';
 import { AddNote, Note } from '../models/Note';
+import { RessourcesNecessaire, RessourcesNecessaireDesc } from '../models/RessourcesNecessaire';
 
 export const token_key = 'Brisk_JWT';
 
@@ -153,10 +154,16 @@ const projet = {
     valuelist: (): Promise<IdValue[]> => requests.get('/projet/valuelist'),
 }
 
-
 const notes = {
     list: (kaizenId: number): Promise<Note[]> => requests.get(`/notes?kaizenId=${kaizenId}`),
     add: (note: AddNote): Promise<any> => requests.post('/notes', note),
+}
+
+const ressourcesnecessaire = {
+    list: (kaizenId: number): Promise<RessourcesNecessaireDesc[]> => requests.get(`/ressourcesnecessaire?kaizenId=${kaizenId}`),
+    upsert: (ressourcesnecessaire: RessourcesNecessaire): Promise<boolean> => requests.post('/ressourcesnecessaire', ressourcesnecessaire),
+    listResources: (): Promise<IdValue[]> => requests.get('/ressourcesnecessaire/ressourceslist'),
+    listTypeDemandes: (): Promise<IdValue[]> => requests.get('/ressourcesnecessaire/typedemandeslist'),
 }
 
 export default {
@@ -168,5 +175,6 @@ export default {
     secteur,
     souscategorie,
     notes,
-    projet
+    projet,
+    ressourcesnecessaire
 }
