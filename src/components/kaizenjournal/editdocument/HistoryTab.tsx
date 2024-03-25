@@ -50,13 +50,13 @@ const HistoryTab = () => {
                     <tr key={index}>
                       <td
                         translate="no"
-                        className="border-b-2 border-red-100 py-0 pr-2 font-mono font-medium text-xs leading-6 text-gray-500 whitespace-nowrap dark:text-sky-400"
+                        className="border-b-2 border-gray-200 py-0 pr-2 font-mono font-medium text-xs leading-6 text-gray-500 whitespace-nowrap dark:text-sky-400"
                       >
                         {note.inscritDate.split("T")[0]}
                       </td>
                       <td
                         translate="no"
-                        className="border-b-2 border-red-100 py-0 pr-2 font-mono font-medium text-sm leading-6 text-gray-800 whitespace-nowrap dark:text-sky-400"
+                        className="border-b-2 border-gray-200 py-0 pr-2 font-mono font-medium text-sm leading-6 text-gray-800 whitespace-nowrap dark:text-sky-400"
                       >
                         {note.description}
                       </td>

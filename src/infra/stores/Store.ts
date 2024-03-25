@@ -14,44 +14,46 @@ import ColumnStore from "./ColumnStore";
 import CategorieStore from "./CategorieStore";
 import ProjetStore from "./ProjectStore";
 import RessourcesStore from "./RessourcesStore";
+import DocumentStore from "./DocumentStore";
 
 interface Store {
-    commonStore: CommonStore;
-    userStore: UserStore;
-    kaizenStore: KaizenStore;
-    kaizenLogStore: KaizenLogStore;
-    employeeStore: EmployeeStore;
-    searchStore: SearchStore;
-    equipeStore: EquipeStore;
-    secteurStore: SecteurStore;
-    etatStore: EtatStore;
-    sortingStore: SortingStore;
-    columnStore: ColumnStore;
-    categoryStore: CategorieStore;
-    projetStore: ProjetStore;
-    ressourcesStore: RessourcesStore;
+  commonStore: CommonStore;
+  userStore: UserStore;
+  kaizenStore: KaizenStore;
+  kaizenLogStore: KaizenLogStore;
+  employeeStore: EmployeeStore;
+  searchStore: SearchStore;
+  equipeStore: EquipeStore;
+  secteurStore: SecteurStore;
+  etatStore: EtatStore;
+  sortingStore: SortingStore;
+  columnStore: ColumnStore;
+  categoryStore: CategorieStore;
+  projetStore: ProjetStore;
+  ressourcesStore: RessourcesStore;
+  documentStore: DocumentStore;
 }
 
 export const store: Store = {
-    commonStore: new CommonStore(),
-    userStore: new UserStore(),
-    kaizenStore: new KaizenStore(),
-    kaizenLogStore: new KaizenLogStore(),
-    employeeStore: new EmployeeStore(),
-    searchStore: new SearchStore(),
-    equipeStore: new EquipeStore(),
-    secteurStore: new SecteurStore(),
-    etatStore: new EtatStore(),
-    sortingStore: new SortingStore(),
-    columnStore: new ColumnStore(),
-    categoryStore: new CategorieStore(),
-    projetStore: new ProjetStore(),
-    ressourcesStore: new RessourcesStore()
-}
+  commonStore: new CommonStore(),
+  userStore: new UserStore(),
+  kaizenStore: new KaizenStore(),
+  kaizenLogStore: new KaizenLogStore(),
+  employeeStore: new EmployeeStore(),
+  searchStore: new SearchStore(),
+  equipeStore: new EquipeStore(),
+  secteurStore: new SecteurStore(),
+  etatStore: new EtatStore(),
+  sortingStore: new SortingStore(),
+  columnStore: new ColumnStore(),
+  categoryStore: new CategorieStore(),
+  projetStore: new ProjetStore(),
+  ressourcesStore: new RessourcesStore(),
+  documentStore: new DocumentStore(),
+};
 
 export const StoreContext = createContext(store);
 
-
 export function useStore() {
-    return useContext(StoreContext)
+  return useContext(StoreContext);
 }

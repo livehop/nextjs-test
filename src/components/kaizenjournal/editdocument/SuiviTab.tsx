@@ -25,7 +25,7 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
     <div className="pb-2">
       <div className="flex mb-2">
         <div className="w-1/2 h-24 p-4">
-          <div className="space-y-4">
+          <div className="space-y-2">
             <div className="sm:col-span-2">
               <label
                 htmlFor="postal-code"
