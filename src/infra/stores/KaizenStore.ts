@@ -5,6 +5,7 @@ import { PagedResult } from "../models/PagedResult";
 import { store } from "./Store";
 import {
   Categorie,
+  CreateKaizenDocument,
   Equipe,
   Etat,
   KaizenDocument,
@@ -83,6 +84,25 @@ export default class KaizenStore {
     if (documentId === null) {
       this.editDocument = null;
       this.resNecessaires = [];
+    }
+  };
+
+  createKaizenDocument = async (document: CreateKaizenDocument) => {
+    try {
+      this.savingData = true;
+      console.log("Creating kaizen document " + document);
+      const result = await agent.kaizen.create(document);
+      console.log("result from create " + result);
+      runInAction(() => {
+        this.savingData = false;
+        this.loadKaizenDocuments();
+      });
+      return result;
+    } catch (error) {
+      runInAction(() => {
+        this.savingData = false;
+      });
+      console.log(error);
     }
   };
 

@@ -12,6 +12,7 @@ import {
 } from "../models/User";
 import {
   Categorie,
+  CreateKaizenDocument,
   Employee,
   Equipe,
   Etat,
@@ -163,6 +164,8 @@ const kaizen = {
     axios.get("/kaizen/filtersearch", { params: request }).then(responseBody),
   update: (kaizen: KaizenDocument): Promise<boolean> =>
     requests.put(`/kaizen/${kaizen.id}`, kaizen),
+  create: (kaizen: CreateKaizenDocument): Promise<boolean> =>
+    axios.post("/kaizen", kaizen),
 };
 
 const categorie = {
