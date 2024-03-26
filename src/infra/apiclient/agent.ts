@@ -190,7 +190,8 @@ const etat = {
 
 const secteur = {
   list: (): Promise<PagedResult<Secteur>> => requests.get("/secteur"),
-  valuelist: (): Promise<IdValue[]> => requests.get("/secteur/valuelist"),
+  valuelist: (equipeIds: string): Promise<IdValue[]> =>
+    requests.get(`/secteur/valuelist?equipeIds=${equipeIds}`),
 };
 
 const souscategorie = {

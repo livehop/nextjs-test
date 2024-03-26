@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import ColumnsFilter from "./column-filter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import EtatFilter from "./etat-filter";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import { FaPlus } from "react-icons/fa6";
+import { useDebounceValue } from "usehooks-ts";
 
 type ToolbarProps = {
   openSidePanel: () => void;
@@ -16,10 +17,26 @@ type ToolbarProps = {
 
 const Toolbar = ({ openSidePanel }: ToolbarProps) => {
   const { kaizenStore, searchStore } = useStore();
-  const { problemSearch, solutionSearch } = searchStore;
+  const {
+    problemSearch,
+    setProblemSearch,
+    solutionSearch,
+    setSolutionSearch,
+    searchKaizenDocuments,
+  } = searchStore;
   const { hasAnyFiltersSet, resetSearchFilters } = kaizenStore;
 
-  const [search, setSearch] = useState("");
+  const [searchProblem, setSearchProblem] = useState("");
+  const [searchSolution, setSearchSolution] = useState("");
+
+  const [debouncedSearchProblem] = useDebounceValue(searchProblem, 1200);
+  const [debouncedSearchSolution] = useDebounceValue(searchSolution, 1200);
+
+  useEffect(() => {
+    setProblemSearch(debouncedSearchProblem);
+    setSolutionSearch(debouncedSearchSolution);
+    searchKaizenDocuments();
+  }, [debouncedSearchProblem, debouncedSearchSolution]);
 
   return (
     <>
@@ -27,14 +44,14 @@ const Toolbar = ({ openSidePanel }: ToolbarProps) => {
         <div className="flex flex-1 items-center space-x-2">
           <Input
             placeholder="Problème ..."
-            value={problemSearch ?? ""}
-            onChange={(event) => setSearch(event.target.value)}
+            value={searchProblem ?? ""}
+            onChange={(event) => setSearchProblem(event.target.value)}
             className="h-8 w-[150px] lg:w-[250px]"
           />
           <Input
             placeholder="Solutions ..."
-            value={solutionSearch ?? ""}
-            onChange={(event) => setSearch(event.target.value)}
+            value={searchSolution ?? ""}
+            onChange={(event) => setSearchSolution(event.target.value)}
             className="h-8 w-[150px] lg:w-[250px]"
           />
           <EquipeFilter />
