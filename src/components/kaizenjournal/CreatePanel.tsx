@@ -215,7 +215,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                 }}
               >
                 <option value="" disabled selected>
-                  Select One
+                  Sélectionner
                 </option>
                 {equipes.map((option, index) => (
                   <option key={index} value={option.numeroEquipe}>
@@ -241,7 +241,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
               >
                 <option value="" disabled selected>
-                  Select One
+                  Sélectionner
                 </option>
 
                 {selectedSecteurs.map((secteur, index) => (
@@ -272,7 +272,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                 }}
               >
                 <option value="" disabled selected>
-                  Select One
+                  Sélectionner
                 </option>
 
                 {categories.map((categorie, index) => (
@@ -300,7 +300,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
               >
                 <option value="" disabled selected>
-                  Select One
+                  Sélectionner
                 </option>
 
                 {selectedSousCategories.map((sousCategorie, index) => (
