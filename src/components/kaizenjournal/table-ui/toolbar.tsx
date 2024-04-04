@@ -42,14 +42,21 @@ const Toolbar = ({ openSidePanel }: ToolbarProps) => {
     <>
       <div className="flex items-center justify-between">
         <div className="flex flex-1 items-center space-x-2">
+          <label htmlFor="searchProblem" className="my-4 text-sm font-semibold">
+            Problème :
+          </label>
           <Input
             placeholder="Problème ..."
             value={searchProblem ?? ""}
             onChange={(event) => setSearchProblem(event.target.value)}
             className="h-8 w-[150px] lg:w-[250px]"
           />
+          <label htmlFor="searchProblem" className="text-sm font-semibold">
+            Solution:
+          </label>
+
           <Input
-            placeholder="Solutions ..."
+            placeholder="Solution ..."
             value={searchSolution ?? ""}
             onChange={(event) => setSearchSolution(event.target.value)}
             className="h-8 w-[150px] lg:w-[250px]"

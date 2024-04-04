@@ -14,7 +14,7 @@ export const getDefaultDisplayColumns = () => {
       isVisible: true,
     },
     {
-      title: "Sectuer",
+      title: "Secteur",
       isVisible: true,
     },
     {
@@ -22,11 +22,11 @@ export const getDefaultDisplayColumns = () => {
       isVisible: true,
     },
     {
-      title: "Inscrit_Par",
+      title: "Inscrit Par",
       isVisible: true,
     },
     {
-      title: "Inscrit_Date",
+      title: "Inscrit Date",
       isVisible: true,
     },
     {
@@ -62,11 +62,11 @@ export const getDefaultDisplayColumns = () => {
       isVisible: true,
     },
     {
-      title: "Fin Planfie",
+      title: "Fin Planfié",
       isVisible: true,
     },
     {
-      title: "Complete",
+      title: "Complété",
       isVisible: true,
     },
     {

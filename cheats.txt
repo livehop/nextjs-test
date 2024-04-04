@@ -5,7 +5,10 @@ docker-compose up
 # to stop the docker image
 docker-compose down
 
+Fin Planfié
+Complété
 
+Sélectionner Équipe en premier
 Problème
 Équipe
 Catégorie

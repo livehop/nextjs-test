@@ -89,25 +89,25 @@ const DataBody = () => {
                 {kaizen.equipe.nomEquipe}
               </td>
             )}
-            {isColumnVisible(columns, "Sectuer") && (
-              <td className="pt-1 text-start whitespace-nowrap  text-sm text-gray-900">
+            {isColumnVisible(columns, "Secteur") && (
+              <td className="pt-1 text-start text-xs text-gray-900 max-w-28 text-wrap">
                 {kaizen.secteur.name}
               </td>
             )}
             {isColumnVisible(columns, "Problème") && (
-              <td className="pt-1 text-xs text-gray-500 max-w-[600px] line-clamp-3">
+              <td className="pt-1 text-xs text-gray-500 max-w-[600px] line-clamp-3 min-w-48">
                 {kaizen.problematique}
               </td>
             )}
-            {(isColumnVisible(columns, "Inscrit_Par") ||
-              isColumnVisible(columns, "Inscrit_Date")) && (
-              <td className="pt-1 whitespace-nowrap text-sm text-gray-500">
-                {isColumnVisible(columns, "Inscrit_Par") && (
+            {(isColumnVisible(columns, "Inscrit Par") ||
+              isColumnVisible(columns, "Inscrit Date")) && (
+              <td className="pt-1 whitespace-nowrap text-xs text-gray-500 max-w-36 text-wrap">
+                {isColumnVisible(columns, "Inscrit Par") && (
                   <>
                     {kaizen.inscritPar} <br />
                   </>
                 )}
-                {isColumnVisible(columns, "Inscrit_Date") && (
+                {isColumnVisible(columns, "Inscrit Date") && (
                   <>{kaizen.inscritDate?.split("T")[0]}</>
                 )}
               </td>
@@ -143,19 +143,23 @@ const DataBody = () => {
               </td>
             )}
             {isColumnVisible(columns, "Solution") && (
-              <td className="pt-1 text-xs text-gray-500 max-w-[600px] line-clamp-3">
+              <td className="pt-1 text-xs text-gray-500 max-w-[600px] line-clamp-3 min-w-48">
                 {kaizen.solution}
               </td>
             )}
             {isColumnVisible(columns, "Point Focal") && (
               <td className="pt-1 text-center text-xs text-gray-500">
-                {kaizen.focalContactName}
+                {kaizen.focalContactName.length > 0 ? (
+                  <>{kaizen.focalContactName}</>
+                ) : (
+                  <div className="text-red-600">non attribué</div>
+                )}
               </td>
             )}
             {(isColumnVisible(columns, "Suivi") ||
               isColumnVisible(columns, "Debut") ||
-              isColumnVisible(columns, "Fin Planfie") ||
-              isColumnVisible(columns, "Complete")) && (
+              isColumnVisible(columns, "Fin Planfié") ||
+              isColumnVisible(columns, "Complété")) && (
               <td className="text-center text-xs text-gray-500">
                 {isColumnVisible(columns, "Suivi") && (
                   <>
@@ -169,13 +173,13 @@ const DataBody = () => {
                     <br />
                   </>
                 )}
-                {isColumnVisible(columns, "Fin Planfie") && (
+                {isColumnVisible(columns, "Fin Planfié") && (
                   <>
                     {GetColoredText(GetDate(kaizen.finPlaniFieDate), 3)}
                     <br />
                   </>
                 )}
-                {isColumnVisible(columns, "Complete") && (
+                {isColumnVisible(columns, "Complété") && (
                   <>{GetColoredText(GetDate(kaizen.completeDate), 4)}</>
                 )}
               </td>

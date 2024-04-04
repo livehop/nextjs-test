@@ -77,7 +77,7 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
         </div>
         <div className="w-1/2 h-32 p-4">
           <div className="space-y-4">
-            <div className="mt-2 flex align-middle justify-around">
+            <div className="mt-2 flex align-middle justify-between">
               <div>
                 <label
                   htmlFor="postal-code"
@@ -94,7 +94,7 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
                   htmlFor="postal-code"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Date Procahain Suivi
+                  Procahain Suivi
                 </label>
                 <div className="mt-2">
                   <input
@@ -105,13 +105,13 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
                 </div>
               </div>
             </div>
-            <div className="mt-2 flex align-middle justify-around">
+            <div className="mt-2 flex align-middle justify-between">
               <div>
                 <label
                   htmlFor="postal-code"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Date de fin planifiee
+                  Fin Planfié
                 </label>
                 <div className="mt-2">
                   <input
@@ -126,7 +126,7 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
                   htmlFor="postal-code"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Date Complétée
+                  Complété
                 </label>
                 <div className="mt-2">
                   <input

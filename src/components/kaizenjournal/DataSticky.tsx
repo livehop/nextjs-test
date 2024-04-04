@@ -29,9 +29,9 @@ const DataSticky = () => {
             {isColumnVisible(columns, "Équipe") && (
               <SingleColHeader title="Équipe" />
             )}
-            <SingleColHeader title="Sectuer" />
+            <SingleColHeader title="Secteur" />
             <SingleColHeader title="Problème" />
-            <TwoColHeader title1="Inscrit_Par" title2="Inscrit_Date" />
+            <TwoColHeader title1="Inscrit Par" title2="Inscrit Date" />
             <TwoColHeader title1="Catégorie" title2="Sous-catégorie" />
             <TwoColHeader title1="Indice" title2="Cote Indice" />
             <SingleColHeader title="Solution" />
@@ -40,8 +40,8 @@ const DataSticky = () => {
             <FourColHeader
               title1="Suivi"
               title2="Debut"
-              title3="Fin Planfie"
-              title4="Complete"
+              title3="Fin Planfié"
+              title4="Complété"
             />
             <SingleColHeader title="État" />
             <th

@@ -27,7 +27,7 @@ export default class SecteurStore {
 
   clearAllSelectedItems = () => {
     this.selectedValues = [];
-    this.idValues = [{ id: -1, value: "Select Equipe First" }];
+    this.idValues = [{ id: -1, value: "Sélectionner Équipe en premier" }];
   };
 
   isChecked = (value: IdValue) => {
@@ -41,7 +41,7 @@ export default class SecteurStore {
     );
 
     if (store.equipeStore.selectedValues.length == 0) {
-      this.idValues = [{ id: -1, value: "Select Equipe First" }];
+      this.idValues = [{ id: -1, value: "Sélectionner Équipe en premier" }];
       return;
     }
     let ids = store.equipeStore.selectedValues.map((v) => v.id);
@@ -70,7 +70,7 @@ export default class SecteurStore {
     );
 
     if (store.equipeStore.selectedValues.length == 0) {
-      this.idValues = [{ id: -1, value: "Select Equipe First" }];
+      this.idValues = [{ id: -1, value: "Sélectionner Équipe en premier" }];
       return;
     }
     if (this.idValues.length > 1) return this.idValues;

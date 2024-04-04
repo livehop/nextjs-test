@@ -26,7 +26,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
     createKaizenDocument,
   } = kaizenStore;
 
-  const [selectedSectuers, setSelectedSectuers] = useState<Secteur[]>([]);
+  const [selectedSecteurs, setSelectedSecteurs] = useState<Secteur[]>([]);
   const [selectedSousCategories, setSelectedSousCatetories] = useState<
     SousCategorie[]
   >([]);
@@ -35,7 +35,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
 
   useEffect(() => {
     loadMeta().then(() => {
-      setSelectedSectuers(secteurs);
+      setSelectedSecteurs(secteurs);
       setSelectedSousCatetories(sousCategories);
     });
     return () => {};
@@ -59,12 +59,12 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
       return equipe.numeroEquipe === equipeId;
     });
 
-    let mysectuers = secteurs.filter((secteur) => {
+    let mysecteurs = secteurs.filter((secteur) => {
       return secteur.equipeId === equipe?.id;
     });
 
-    console.log(toJS(mysectuers));
-    setSelectedSectuers(mysectuers);
+    console.log(toJS(mysecteurs));
+    setSelectedSecteurs(mysecteurs);
   };
 
   const categorySelected = (categoryId: number) => {
@@ -244,7 +244,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                   Select One
                 </option>
 
-                {selectedSectuers.map((secteur, index) => (
+                {selectedSecteurs.map((secteur, index) => (
                   <option key={index} value={secteur.id}>
                     {secteur.name}
                   </option>

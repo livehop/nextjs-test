@@ -50,7 +50,7 @@ const FocalPointSearch = ({ setValue }: FocalPointComboProps) => {
   return (
     <>
       <Combobox as="div" value={selectedPerson} onChange={setSelectedPerson}>
-        <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">
+        <Combobox.Label className="block text-xs font-medium leading-6 text-gray-500">
           Point focal
         </Combobox.Label>
         <div className="relative mt-1">

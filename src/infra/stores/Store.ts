@@ -7,7 +7,6 @@ import KaizenLogStore from "./KaizenLogStore";
 import UserStore from "./UserStore";
 import SearchStore from "./SearchStore";
 import EquipeStore from "./EquipmentStore";
-import SecteurStore from "./SectuerStore";
 import EtatStore from "./EtatStore";
 import SortingStore from "./SortingStore";
 import ColumnStore from "./ColumnStore";
@@ -15,6 +14,7 @@ import CategorieStore from "./CategorieStore";
 import ProjetStore from "./ProjectStore";
 import RessourcesStore from "./RessourcesStore";
 import DocumentStore from "./DocumentStore";
+import SecteurStore from "./SecteurStore";
 
 interface Store {
   commonStore: CommonStore;
