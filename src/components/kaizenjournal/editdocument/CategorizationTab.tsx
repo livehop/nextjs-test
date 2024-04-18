@@ -1,4 +1,4 @@
-import { KaizenDocument } from "@/infra/models";
+import { CatLegalLookup, KaizenDocument } from "@/infra/models";
 import { useStore } from "@/infra/stores/Store";
 import { set, toJS } from "mobx";
 import { observer } from "mobx-react-lite";
@@ -15,19 +15,39 @@ type CategorizationTabProps = {
   watch: UseFormWatch<KaizenDocument>;
 };
 
-const CategorizationTab = ({ register }: CategorizationTabProps) => {
+const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
   const { kaizenStore, categoryStore, secteurStore, projetStore } = useStore();
-  const { editDocument, loadEditDocument } = kaizenStore;
+  const { editDocument, loadEditDocument, sousCategories } = kaizenStore;
 
   const [myFreq, setMyFreq] = useState(editDocument?.catFreq.toString());
   const [myGrav, setMyGrav] = useState(editDocument?.catGrav.toString());
   const [myProb, setMyProb] = useState(editDocument?.catProb.toString());
   const [myLegal, setMyLegal] = useState(editDocument?.catLegal.toString());
 
+  const [catLegalLookup, setCatLegalLookup] = useState<CatLegalLookup[]>([]);
+  const [catLegalLabel, setCatLegalLabel] = useState<string>("Objectif");
+
   useEffect(() => {
-    secteurStore.loadIdValues();
+    const equipeId = getValues("equipeId");
+    let categorieId = getValues("categorieId");
+    if (!categorieId) {
+      if (editDocument) categorieId = editDocument?.categorieId;
+    }
+
+    if (equipeId) {
+      secteurStore.loadIdValues(equipeId);
+    }
     categoryStore.loadCategoryValues();
-    categoryStore.loadSousCategoryValues();
+
+    if (categorieId) {
+      categoryStore.loadSousCategoryValues(categorieId);
+      categoryStore.getCatLegalLookup(categorieId).then((data) => {
+        if (data) {
+          setCatLegalLookup(data);
+          setCatLegalLabel(data[0].label);
+        }
+      });
+    }
     projetStore.loadIdValues();
     if (editDocument === null) {
       loadEditDocument().then((document) => {
@@ -40,7 +60,18 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
         );
       });
     }
-  }, []);
+  }, [editDocument]);
+
+  const categorySelected = (categoryId: number) => {
+    console.log("Selected categoryId " + categoryId);
+    categoryStore.loadSousCategoryValues(categoryId);
+    categoryStore.getCatLegalLookup(categoryId).then((data) => {
+      if (data) {
+        setCatLegalLookup(data);
+        setCatLegalLabel(data[0].label);
+      }
+    });
+  };
 
   const toNumber = (value: string | number | undefined) => {
     if (typeof value === "string") {
@@ -64,6 +95,9 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
           <div className="mt-2">
             <select
               {...register("categorieId")}
+              onChange={(e) => {
+                categorySelected(parseInt(e.target.value));
+              }}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
               {categoryStore.catetoryValues.map((idValue) => (
@@ -180,7 +214,7 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
             htmlFor="postal-code"
             className="block text-xs font-medium leading-6 text-gray-900"
           >
-            Objectif
+            {catLegalLabel}
           </label>
           <div className="mt-2">
             <select
@@ -190,9 +224,11 @@ const CategorizationTab = ({ register }: CategorizationTabProps) => {
               }}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
-              <option value={1}>N'affecte pas la DLP</option>
-              <option value={2}>Affecte la DLP</option>
-              <option value={3}>Affecte severement la DLP</option>
+              {catLegalLookup.map((idValue) => (
+                <option value={idValue.catLegal} key={idValue.id}>
+                  {idValue.catLegal} - {idValue.description}
+                </option>
+              ))}
             </select>
           </div>
         </div>

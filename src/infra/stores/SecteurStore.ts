@@ -11,6 +11,7 @@ export default class SecteurStore {
   idValues: IdValue[] = [];
   loading: boolean = false;
   selectedValues: IdValue[] = [];
+  sousSecteurSelectedValues: IdValue[] = [];
 
   toggleSelectedValue = (value: IdValue) => {
     const index = this.selectedValues.findIndex((v) => v.id === value.id);
@@ -28,6 +29,7 @@ export default class SecteurStore {
   clearAllSelectedItems = () => {
     this.selectedValues = [];
     this.idValues = [{ id: -1, value: "Sélectionner Équipe en premier" }];
+    this.sousSecteurSelectedValues = [];
   };
 
   isChecked = (value: IdValue) => {
@@ -63,23 +65,30 @@ export default class SecteurStore {
     }
   };
 
-  loadIdValues = async () => {
-    console.log(
-      "loading id values for secteur..... " +
-        store.equipeStore.selectedValues.length
-    );
-
-    if (store.equipeStore.selectedValues.length == 0) {
-      this.idValues = [{ id: -1, value: "Sélectionner Équipe en premier" }];
-      return;
-    }
-    if (this.idValues.length > 1) return this.idValues;
+  loadIdValues = async (equipeId: number) => {
     try {
       this.loading = true;
-      const idvalues = await agent.secteur.valuelist("");
+      const idvalues = await agent.secteur.valuelist(equipeId.toString());
       runInAction(() => {
         this.loading = false;
         this.idValues = idvalues;
+      });
+      return idvalues;
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      });
+      console.log(error);
+    }
+  };
+
+  loadSousSecteurValues = async (equipeId: number, secteurId: number) => {
+    try {
+      this.loading = true;
+      const idvalues = await agent.soussecteur.valuelist(equipeId, secteurId);
+      runInAction(() => {
+        this.loading = false;
+        this.sousSecteurSelectedValues = idvalues;
       });
       return idvalues;
     } catch (error) {

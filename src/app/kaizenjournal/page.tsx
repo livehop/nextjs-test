@@ -18,12 +18,12 @@ const page = () => {
     router.replace("kaizenjournal", undefined);
   }, []);
 
-  const openSidePanel = () => {
-    console.log("openSidePanel" + open);
+  const openSidePanel = (openPanel: boolean) => {
+    console.log("openSidePanel---------------" + openPanel);
     if (open) {
       kaizenStore.setEditDocumentId(null);
     }
-    setOpen(!open);
+    setOpen(openPanel);
   };
 
   return (

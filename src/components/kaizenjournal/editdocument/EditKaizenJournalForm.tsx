@@ -75,7 +75,11 @@ const EditKaizenJournalForm = ({
         <div className="space-y-2 py-2 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0">
           {/* Project name */}
           <div className="p-4">
-            <TopForm register={register} setValue={setValue} />
+            <TopForm
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+            />
             <Tabs register={register} getValues={getValues} watch={watch} />
           </div>
         </div>

@@ -18,6 +18,7 @@ import {
   RessourcesNecessaire,
   RessourcesNecessaireDesc,
 } from "../models/RessourcesNecessaire";
+import { EmailDetails } from "../models/Email";
 
 export default class KaizenStore {
   constructor() {
@@ -64,7 +65,8 @@ export default class KaizenStore {
     return (
       store.equipeStore.selectedValues.length > 0 ||
       store.secteurStore.selectedValues.length > 0 ||
-      store.etatStore.selectedValues.length > 0
+      store.etatStore.selectedValues.length > 0 ||
+      store.categoryStore.selectedValues.length > 0
     );
   }
 
@@ -73,6 +75,7 @@ export default class KaizenStore {
     store.secteurStore.clearAllSelectedItems();
     store.etatStore.clearAllSelectedItems();
     store.searchStore.resetFilters();
+    store.categoryStore.clearAllSelectedItems();
   };
 
   setCurrentSortOrder = (sortOrder: SortOrder) => {
@@ -156,6 +159,31 @@ export default class KaizenStore {
     }
 
     this.loadingDocument = false;
+  };
+
+  sendMail = async (pointFocal: string, probleme: string, solution: string) => {
+    if (this.editDocumentId === null) return;
+    if (this.editDocument === null) return;
+    try {
+      this.savingData = true;
+      const emailDetails: EmailDetails = {
+        documentId: this.editDocumentId,
+        pointFocal: pointFocal,
+        probleme: probleme,
+        solution: solution,
+      };
+      console.log("Sending mail for document " + this.editDocumentId);
+      const result = await agent.sendmail.send(emailDetails);
+      runInAction(() => {
+        this.savingData = false;
+      });
+      return result;
+    } catch (error) {
+      runInAction(() => {
+        this.savingData = false;
+      });
+      console.log(error);
+    }
   };
 
   setDefaults = (document: KaizenDocument) => {

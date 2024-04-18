@@ -10,9 +10,10 @@ import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import { FaPlus } from "react-icons/fa6";
 import { useDebounceValue } from "usehooks-ts";
+import CategoryFilter from "./category-filter";
 
 type ToolbarProps = {
-  openSidePanel: () => void;
+  openSidePanel: (open: boolean) => void;
 };
 
 const Toolbar = ({ openSidePanel }: ToolbarProps) => {
@@ -63,6 +64,7 @@ const Toolbar = ({ openSidePanel }: ToolbarProps) => {
           />
           <EquipeFilter />
           <SecteurFilter />
+          <CategoryFilter />
           <EtatFilter />
 
           {hasAnyFiltersSet && (
@@ -78,7 +80,7 @@ const Toolbar = ({ openSidePanel }: ToolbarProps) => {
         </div>
         <div className="flex flex-col gap-2">
           <ColumnsFilter />
-          <Button onClick={() => openSidePanel()} variant="secondary">
+          <Button onClick={() => openSidePanel(true)} variant="secondary">
             <FaPlus />
             <div className="ml-2">Ajout</div>
           </Button>

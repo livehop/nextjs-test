@@ -5,18 +5,18 @@ import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { set, toJS } from "mobx";
 import React, { useEffect, useState } from "react";
-import FocalPointSearch from "../uicomponents/FocalPointSearch";
 import { FieldValues, useForm } from "react-hook-form";
 import { observer } from "mobx-react-lite";
-import { on } from "events";
 import InscritParSearch from "../uicomponents/InscritParSearch";
+import { get } from "http";
+import { IdValue } from "@/infra/models/IdValue";
 
 interface CreatePanelProps {
   setOpen: (open: boolean) => void;
 }
 
 const CreatePanel = ({ setOpen }: CreatePanelProps) => {
-  const { kaizenStore } = useStore();
+  const { kaizenStore, secteurStore } = useStore();
   const {
     equipes,
     secteurs,
@@ -27,9 +27,14 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
   } = kaizenStore;
 
   const [selectedSecteurs, setSelectedSecteurs] = useState<Secteur[]>([]);
+  const [selectedSousSecteurs, setSelectedSousSecteurs] =
+    useState<IdValue | null>(null);
+
   const [selectedSousCategories, setSelectedSousCatetories] = useState<
     SousCategorie[]
   >([]);
+
+  const [sousSecteurs, setSousSecteurs] = useState<IdValue[]>([]);
 
   const [inscritPar, setInscritPar] = useState("");
 
@@ -40,15 +45,20 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
     });
     return () => {};
   }, []);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    getValues,
   } = useForm();
 
   const inscritRegister = register("inscritpar");
   const equipeRegister = register("equipe", { required: "Select an Équipe" });
+  const secteurRegister = register("secteur", {
+    required: "Select an Secteur",
+  });
   const categorieRegister = register("categorie", {
     required: "Select a Categorie",
   });
@@ -67,6 +77,23 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
     setSelectedSecteurs(mysecteurs);
   };
 
+  const secteurSelected = (secteurId: number) => {
+    const selectedEquipe = getValues("equipe") as number;
+    let equipe = equipes.find((equipe) => {
+      return equipe.numeroEquipe.toString() === selectedEquipe.toString();
+    });
+    if (!equipe) {
+      setSousSecteurs([]);
+      return;
+    }
+
+    secteurStore.loadSousSecteurValues(equipe.id, secteurId).then((values) => {
+      if (values) {
+        setSousSecteurs(values);
+      }
+    });
+    setSousSecteurs([]);
+  };
   const categorySelected = (categoryId: number) => {
     console.log("Selected categoryId " + categoryId);
     let mysousCategories = sousCategories.filter((sousCategorie) => {
@@ -179,7 +206,6 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
               )}
             </div>
           </div>
-
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
@@ -198,7 +224,6 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
               )}
             </div>
           </div>
-
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
@@ -207,6 +232,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
             </div>
             <div className="sm:col-span-2">
               <select
+                defaultValue={"Sélectionner"}
                 {...equipeRegister}
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
                 onChange={(e) => {
@@ -214,7 +240,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                   equipeSelected(parseInt(e.target.value));
                 }}
               >
-                <option value="" disabled selected>
+                <option value="Sélectionner" disabled>
                   Sélectionner
                 </option>
                 {equipes.map((option, index) => (
@@ -228,7 +254,6 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
               )}
             </div>
           </div>
-
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
@@ -237,10 +262,19 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
             </div>
             <div className="sm:col-span-2">
               <select
+                defaultValue={"Sélectionner"}
                 {...register("secteur", { required: "Select a Secteur" })}
+                onChange={(e) => {
+                  secteurRegister.onChange(e);
+                  secteurSelected(parseInt(e.target.value));
+                }}
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
               >
-                <option value="" disabled selected>
+                <option
+                  value="Sélectionner"
+                  disabled
+                  defaultValue={"Sélectionner"}
+                >
                   Sélectionner
                 </option>
 
@@ -255,7 +289,36 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
               )}
             </div>
           </div>
+          {sousSecteurs.length > 0 && (
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+              <div>
+                <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                  Sous Secteur
+                </label>
+              </div>
+              <div className="sm:col-span-2">
+                <select
+                  {...register("soussecteur", {
+                    required: "Select a Sous Secteur",
+                  })}
+                  className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
+                >
+                  <option value="" disabled defaultValue={""}>
+                    Sélectionner
+                  </option>
 
+                  {sousSecteurs.map((soussecteur, index) => (
+                    <option key={index} value={soussecteur.id}>
+                      {soussecteur.value}
+                    </option>
+                  ))}
+                </select>
+                {errors.soussecteur && (
+                  <p className="pt-2 text-xs text-red-600">{`${errors.soussecteur.message}`}</p>
+                )}
+              </div>
+            </div>
+          )}
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
@@ -264,6 +327,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
             </div>
             <div className="sm:col-span-2">
               <select
+                defaultValue={"Sélectionner"}
                 {...categorieRegister}
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
                 onChange={(e) => {
@@ -271,7 +335,11 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                   categorySelected(parseInt(e.target.value));
                 }}
               >
-                <option value="" disabled selected>
+                <option
+                  value="Sélectionner"
+                  disabled
+                  defaultValue={"Sélectionner"}
+                >
                   Sélectionner
                 </option>
 
@@ -294,12 +362,17 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
             </div>
             <div className="sm:col-span-2">
               <select
+                defaultValue={"Sélectionner"}
                 {...register("sousCategorie", {
                   required: "Select a Sous-catégorie",
                 })}
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
               >
-                <option value="" disabled selected>
+                <option
+                  value="Sélectionner"
+                  disabled
+                  defaultValue={"Sélectionner"}
+                >
                   Sélectionner
                 </option>
 

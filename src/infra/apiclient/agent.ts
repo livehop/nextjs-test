@@ -11,6 +11,7 @@ import {
   IUserRole,
 } from "../models/User";
 import {
+  CatLegalLookup,
   Categorie,
   CreateKaizenDocument,
   Employee,
@@ -30,6 +31,7 @@ import {
   RessourcesNecessaireDesc,
 } from "../models/RessourcesNecessaire";
 import { KaizenAttachmentDetail } from "../models/Document";
+import { EmailDetails } from "../models/Email";
 
 export const token_key = "Brisk_JWT";
 
@@ -193,11 +195,18 @@ const secteur = {
   valuelist: (equipeIds: string): Promise<IdValue[]> =>
     requests.get(`/secteur/valuelist?equipeIds=${equipeIds}`),
 };
+const soussecteur = {
+  valuelist: (equipeId: number, secteurId: number): Promise<IdValue[]> =>
+    requests.get(
+      "/soussecteur/valuelist?equipeId=" + equipeId + "&secteurId=" + secteurId
+    ),
+};
 
 const souscategorie = {
   list: (): Promise<PagedResult<SousCategorie>> =>
     requests.get("/souscategorie"),
-  valuelist: (): Promise<IdValue[]> => requests.get("/souscategorie/valuelist"),
+  valuelist: (categorieId: number): Promise<IdValue[]> =>
+    requests.get("/souscategorie/valuelist?categorieId=" + categorieId),
 };
 const projet = {
   valuelist: (): Promise<IdValue[]> => requests.get("/projet/valuelist"),
@@ -207,6 +216,11 @@ const notes = {
   list: (kaizenId: number): Promise<Note[]> =>
     requests.get(`/notes?kaizenId=${kaizenId}`),
   add: (note: AddNote): Promise<any> => requests.post("/notes", note),
+};
+
+const catlegallookup = {
+  list: (categorieId: number): Promise<CatLegalLookup[]> =>
+    requests.get(`/catlegallookup?categorieId=${categorieId}`),
 };
 
 const ressourcesnecessaire = {
@@ -230,6 +244,11 @@ const document = {
   delete: (id: number): Promise<boolean> => requests.del(`/document/${id}`),
 };
 
+const sendmail = {
+  send: (email: EmailDetails): Promise<any> =>
+    requests.post("/sendmail", email),
+};
+
 export default {
   kaizen,
   employees,
@@ -237,9 +256,12 @@ export default {
   equipement,
   etat,
   secteur,
+  soussecteur,
   souscategorie,
   notes,
   projet,
   ressourcesnecessaire,
   document,
+  catlegallookup,
+  sendmail,
 };
