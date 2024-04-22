@@ -9,7 +9,7 @@ const KaizenLayout = async ({ children }: { children: React.ReactNode }) => {
     <>
       <div className="min-h-full">
         <TopNav user={user} />
-        <LoginTester />
+        {/* <LoginTester /> */}
         <>{children}</>
       </div>
     </>

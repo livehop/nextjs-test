@@ -29,10 +29,18 @@ const page = () => {
   return (
     <>
       <header className="bg-white shadow flex justify-between">
-        <div className="max-w-7xl px-2 py-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between w-10/12 items-center px-2 py-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-bold tracking-tight text-gray-900">
             Le Journal Kaizen Unique
           </h1>
+          <div className="flex justify-between">
+            <h4 className="text-md tracking-tight text-orange-600 pr-8">
+              Points Ouvert : <b>9999</b>
+            </h4>
+            <h4 className="text-md tracking-tight text-green-700">
+              Points Fermé : <b>9999</b>
+            </h4>
+          </div>
         </div>
       </header>
       <main>

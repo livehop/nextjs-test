@@ -124,7 +124,7 @@ export default function Example() {
                                     item.current
                                       ? "bg-gray-50 text-blue-600"
                                       : "text-gray-700 hover:text-blue-600 hover:bg-gray-50",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-2 font-semibold"
                                   )}
                                 >
                                   <item.icon
@@ -143,7 +143,7 @@ export default function Example() {
                           </ul>
                         </li>
                         <li>
-                          <div className="text-xs font-semibold leading-6 text-gray-400">
+                          <div className="text-xs font-semibold leading-2 text-gray-400">
                             Your teams
                           </div>
                           <ul role="list" className="-mx-2 mt-2 space-y-1">
@@ -155,7 +155,7 @@ export default function Example() {
                                     team.current
                                       ? "bg-gray-50 text-blue-600"
                                       : "text-gray-700 hover:text-blue-600 hover:bg-gray-50",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-2 font-semibold"
                                   )}
                                 >
                                   <span
@@ -177,7 +177,7 @@ export default function Example() {
                         <li className="mt-auto">
                           <a
                             href="#"
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600"
                           >
                             <Cog6ToothIcon
                               className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-blue-600"
@@ -218,7 +218,7 @@ export default function Example() {
                             item.current
                               ? "bg-gray-50 text-blue-600"
                               : "text-gray-700 hover:text-blue-600 hover:bg-gray-50",
-                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                            "group flex gap-x-3 rounded-md p-2 text-sm leading-2 font-semibold"
                           )}
                         >
                           <item.icon
@@ -237,7 +237,7 @@ export default function Example() {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs font-semibold leading-6 text-gray-400">
+                  <div className="text-xs font-semibold leading-2 text-gray-400">
                     Your teams
                   </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
@@ -249,7 +249,7 @@ export default function Example() {
                             team.current
                               ? "bg-gray-50 text-blue-600"
                               : "text-gray-700 hover:text-blue-600 hover:bg-gray-50",
-                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                            "group flex gap-x-3 rounded-md p-2 text-sm leading-2 font-semibold"
                           )}
                         >
                           <span
@@ -271,7 +271,7 @@ export default function Example() {
                 <li className="mt-auto">
                   <a
                     href="#"
-                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600"
                   >
                     <Cog6ToothIcon
                       className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-blue-600"
@@ -355,7 +355,7 @@ export default function Example() {
                       </svg>
                       <span className="hidden lg:flex lg:items-center">
                         <span
-                          className="ml-4 text-sm font-semibold leading-6 text-gray-900"
+                          className="ml-4 text-sm font-semibold leading-2 text-gray-900"
                           aria-hidden="true"
                         >
                           Sylvain Castonguay
@@ -383,7 +383,7 @@ export default function Example() {
                                 href={item.href}
                                 className={classNames(
                                   active ? "bg-gray-50" : "",
-                                  "block px-3 py-1 text-sm leading-6 text-gray-900"
+                                  "block px-3 py-1 text-sm leading-2 text-gray-900"
                                 )}
                               >
                                 {item.name}
