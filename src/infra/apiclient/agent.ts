@@ -20,6 +20,7 @@ import {
   KaizenDocument,
   KaizenLog,
   PagedResult,
+  RecordMetric,
   Secteur,
   SousCategorie,
 } from "../models";
@@ -168,6 +169,8 @@ const kaizen = {
     requests.put(`/kaizen/${kaizen.id}`, kaizen),
   create: (kaizen: CreateKaizenDocument): Promise<boolean> =>
     axios.post("/kaizen", kaizen),
+  recordMetrics: (): Promise<RecordMetric> =>
+    requests.get(`/kaizen/recordcounts`),
 };
 
 const categorie = {

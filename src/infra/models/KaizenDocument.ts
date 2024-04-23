@@ -75,3 +75,8 @@ export interface CreateKaizenDocument {
   categorieId: number;
   sousCategorieId: number;
 }
+
+export interface RecordMetric {
+  openRecords: number;
+  closedRecords: number;
+}

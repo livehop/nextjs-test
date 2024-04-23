@@ -7,14 +7,17 @@ import EditPanel from "@/components/kaizenjournal/EditPanel";
 import Toolbar from "@/components/kaizenjournal/table-ui/toolbar";
 import DataSticky from "@/components/kaizenjournal/DataSticky";
 import { useRouter } from "next/navigation";
+import { observer } from "mobx-react-lite";
 
 const page = () => {
   const { kaizenStore } = useStore();
+  const { loadRecordMetrics, recordMetrics } = kaizenStore;
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
+    loadRecordMetrics();
     router.replace("kaizenjournal", undefined);
   }, []);
 
@@ -33,14 +36,16 @@ const page = () => {
           <h1 className="text-2xl font-bold tracking-tight text-gray-900">
             Le Journal Kaizen Unique
           </h1>
-          <div className="flex justify-between">
-            <h4 className="text-md tracking-tight text-orange-600 pr-8">
-              Points Ouvert : <b>9999</b>
-            </h4>
-            <h4 className="text-md tracking-tight text-green-700">
-              Points Fermé : <b>9999</b>
-            </h4>
-          </div>
+          {recordMetrics && (
+            <div className="flex justify-between">
+              <h4 className="text-md tracking-tight text-orange-600 pr-8">
+                Points Ouvert : <b>{recordMetrics.openRecords}</b>
+              </h4>
+              <h4 className="text-md tracking-tight text-green-700">
+                Points Fermé : <b>{recordMetrics.closedRecords}</b>
+              </h4>
+            </div>
+          )}
         </div>
       </header>
       <main>
@@ -69,4 +74,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default observer(page);

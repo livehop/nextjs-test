@@ -67,8 +67,8 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
           <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-6">
             <div className="sm:col-span-2 sm:col-start-1">
               <label
-                htmlFor="city"
-                className="block text-xs font-medium leading-6 text-gray-500"
+                htmlFor="ID"
+                className="block text-xs font-medium text-gray-500"
               >
                 ID
               </label>
@@ -82,19 +82,19 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
             <div className="sm:col-span-2">
               <label
                 htmlFor="region"
-                className="block text-xs font-medium leading-6 text-gray-500"
+                className="block text-xs font-medium text-gray-500"
               >
                 Inscrit par
               </label>
               <div>
-                <h2 className="text-md font-semibold leading-7 text-gray-900">
+                <h2 className="text-md font-semibold text-gray-900">
                   {editDocument?.inscritPar}
                 </h2>
               </div>
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs font-medium leading-6 text-gray-500">
+              <label className="block text-xs font-medium text-gray-500">
                 Inscrit le
               </label>
               <div>
@@ -107,7 +107,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
             <div className="sm:col-span-2">
               <label
                 htmlFor="postal-code"
-                className="block text-xs font-medium leading-6 text-gray-500"
+                className="block text-xs font-medium text-gray-500"
               >
                 Équipe
               </label>
@@ -138,7 +138,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
             <div className="sm:col-span-2">
               <label
                 htmlFor="postal-code"
-                className="block text-xs font-medium leading-6 text-gray-500"
+                className="block text-xs font-medium text-gray-500"
               >
                 Secteur
               </label>

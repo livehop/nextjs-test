@@ -9,6 +9,7 @@ import {
   Equipe,
   Etat,
   KaizenDocument,
+  RecordMetric,
   Secteur,
   SousCategorie,
 } from "../models";
@@ -52,6 +53,8 @@ export default class KaizenStore {
   loadingDocument: boolean = false;
   loadingNotes: boolean = false;
   savingData: boolean = false;
+
+  recordMetrics: RecordMetric | null = null;
 
   setKaizenDocuments = (documents: PagedResult<KaizenDocument>) => {
     this.kaizenDocuments = documents;
@@ -275,6 +278,19 @@ export default class KaizenStore {
       console.log(error);
     }
   };
+
+  loadRecordMetrics = async () => {
+    try {
+      const metrics = await agent.kaizen.recordMetrics();
+      runInAction(() => {
+        this.recordMetrics = metrics;
+      });
+      return metrics;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   loadKaizenDocuments = async () => {
     try {
       this.loading = true;

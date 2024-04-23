@@ -87,9 +87,9 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
   };
   return (
     <div>
-      <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div className="sm:col-span-2">
-          <label className="block text-xs font-medium leading-6 text-gray-900">
+          <label className="block text-xs font-medium text-gray-500">
             Catégorie
           </label>
           <div className="mt-2">
@@ -113,7 +113,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
           </div>
         </div>
         <div className="sm:col-span-2">
-          <label className="block text-xs font-medium leading-6 text-gray-900">
+          <label className="block text-xs font-medium text-gray-500">
             Sous-catégorie
           </label>
           <div className="mt-2">
@@ -137,7 +137,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-xs font-medium leading-6 text-gray-900">
+          <label className="block text-xs font-medium text-gray-500">
             Projet
           </label>
           <div className="mt-2">
@@ -150,7 +150,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
         </div>
 
         <div className="sm:col-span-1">
-          <label className="block text-xs font-medium leading-6 text-gray-900">
+          <label className="block text-xs font-medium text-gray-500">
             Fréquence
           </label>
           <div className="mt-2">
@@ -169,7 +169,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
         </div>
 
         <div className="sm:col-span-1">
-          <label className="block text-xs font-medium leading-6 text-gray-900">
+          <label className="block text-xs font-medium text-gray-500">
             Gravité
           </label>
           <div className="mt-2">
@@ -190,7 +190,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
         <div className="sm:col-span-2">
           <label
             htmlFor="postal-code"
-            className="block text-xs font-medium leading-6 text-gray-900"
+            className="block text-xs font-medium text-gray-500"
           >
             Probabilité
           </label>
@@ -211,8 +211,8 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
 
         <div className="sm:col-span-2">
           <label
-            htmlFor="postal-code"
-            className="block text-xs font-medium leading-6 text-gray-900"
+            htmlFor="label"
+            className="block text-xs font-medium text-gray-500"
           >
             {catLegalLabel}
           </label>
@@ -236,12 +236,14 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
         <div className="sm:col-span-1">
           <label
             htmlFor="postal-code"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-medium text-gray-500"
           >
             Indice
           </label>
           <div className="mt-2">
-            <h2>{getIndice()}</h2>
+            <h2 className="block text-sm font-medium text-gray-900">
+              {getIndice()}
+            </h2>
           </div>
         </div>
       </div>
