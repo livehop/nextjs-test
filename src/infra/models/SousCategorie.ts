@@ -1,9 +1,8 @@
-import { Categorie } from "./Categorie"
+import { Categorie } from "./Categorie";
 
 export interface SousCategorie {
-    id: number
-    categorieId: number
-    categorie: Categorie
-    description: string
+  id: number;
+  categorieId: number;
+  categorie: Categorie;
+  description: string;
 }
-

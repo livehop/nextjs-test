@@ -23,7 +23,7 @@ type UserType = {
 // };
 const navigation = [
   { name: "Kaizen Dashboard", href: "/kaizenjournal", current: true },
-  { name: "Access Logs", href: "/accesslogs", current: false },
+  { name: "Adminstration", href: "/administration", current: false },
   { name: "Employee Search", href: "/employeesearch", current: false },
 ];
 const userNavigation = [

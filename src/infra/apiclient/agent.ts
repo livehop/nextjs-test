@@ -23,6 +23,7 @@ import {
   RecordMetric,
   Secteur,
   SousCategorie,
+  SousSecteur,
 } from "../models";
 import { IdValue } from "../models/IdValue";
 import { SearchRequest } from "../models/SearchRequest";
@@ -176,7 +177,13 @@ const kaizen = {
 const categorie = {
   list: (): Promise<PagedResult<Categorie>> => requests.get("/categorie"),
   valuelist: (): Promise<IdValue[]> => requests.get("/categorie/valuelist"),
+  categoryList: (): Promise<Categorie[]> => requests.get("/categorie/list"),
+  details: (categorieId: number): Promise<Categorie> =>
+    requests.get(`/categorie/details/${categorieId}`),
+  save: (categorie: Categorie): Promise<boolean> =>
+    requests.post("/categorie", categorie),
 };
+
 const employees = {
   list: (): Promise<Employee[]> => requests.get("/employees"),
   valuelist: (query: string): Promise<IdValue[]> =>
@@ -186,6 +193,10 @@ const employees = {
 const equipement = {
   list: (): Promise<PagedResult<Equipe>> => requests.get("/equipement"),
   valuelist: (): Promise<IdValue[]> => requests.get("/equipement/valuelist"),
+  details: (equipeId: number): Promise<Equipe> =>
+    requests.get(`/equipement/details/${equipeId}`),
+  upsert: (equipe: Equipe): Promise<boolean> =>
+    requests.post("/equipement", equipe),
 };
 
 const etat = {
@@ -197,12 +208,27 @@ const secteur = {
   list: (): Promise<PagedResult<Secteur>> => requests.get("/secteur"),
   valuelist: (equipeIds: string): Promise<IdValue[]> =>
     requests.get(`/secteur/valuelist?equipeIds=${equipeIds}`),
+  details: (secteurId: number): Promise<Secteur> =>
+    requests.get(`/secteur/details/${secteurId}`),
+  secteurList: (equipeId: number): Promise<Secteur[]> =>
+    requests.get(`/secteur/getsoussecteursforequipe/${equipeId}`),
+  save: (secteur: Secteur): Promise<boolean> =>
+    requests.post("/secteur", secteur),
 };
 const soussecteur = {
   valuelist: (equipeId: number, secteurId: number): Promise<IdValue[]> =>
     requests.get(
       "/soussecteur/valuelist?equipeId=" + equipeId + "&secteurId=" + secteurId
     ),
+  details: (soussecteurId: number): Promise<SousSecteur> =>
+    requests.get(`/soussecteur/details/${soussecteurId}`),
+  save: (soussecteur: SousSecteur): Promise<boolean> =>
+    requests.post("/soussecteur", soussecteur),
+  souseSecteurList: (
+    equipeId: number,
+    secteurId: number
+  ): Promise<SousSecteur[]> =>
+    requests.get(`/soussecteur/getsoussecteur/${equipeId}/${secteurId}`),
 };
 
 const souscategorie = {
@@ -210,9 +236,19 @@ const souscategorie = {
     requests.get("/souscategorie"),
   valuelist: (categorieId: number): Promise<IdValue[]> =>
     requests.get("/souscategorie/valuelist?categorieId=" + categorieId),
+  details: (souscategorieId: number): Promise<SousCategorie> =>
+    requests.get(`/souscategorie/details/${souscategorieId}`),
+  sousCategoryList: (categorieId: number): Promise<SousCategorie[]> =>
+    requests.get(`/categorie/souscategorie?CategorieId=${categorieId}`),
+  save: (souscategorie: SousCategorie): Promise<boolean> =>
+    requests.post("/souscategorie", souscategorie),
 };
+
 const projet = {
   valuelist: (): Promise<IdValue[]> => requests.get("/projet/valuelist"),
+  details: (projetId: number): Promise<IdValue> =>
+    requests.get(`/projet/details/${projetId}`),
+  save: (projet: IdValue): Promise<boolean> => requests.post("/projet", projet),
 };
 
 const notes = {

@@ -34,7 +34,7 @@ const page = () => {
       <header className="bg-white shadow flex justify-between">
         <div className="flex justify-between w-10/12 items-center px-2 py-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-bold tracking-tight text-gray-900">
-            Le Journal Kaizen Unique
+            Journal Kaizen Usine
           </h1>
           {recordMetrics && (
             <div className="flex justify-between">

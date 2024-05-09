@@ -2,7 +2,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { useStore } from "@/infra/stores/Store";
-import FocalPointCombo from "@/components/uicomponents/FocalPointCombo";
 import {
   UseFormGetValues,
   UseFormRegister,
@@ -10,6 +9,7 @@ import {
 } from "react-hook-form";
 import { KaizenDocument } from "@/infra/models";
 import FocalPointSearch from "@/components/uicomponents/FocalPointSearch";
+import { SiMinutemailer } from "react-icons/si";
 
 type TopFormProps = {
   register: UseFormRegister<KaizenDocument>;
@@ -55,13 +55,25 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
       <div className="space-y-12 bg-gray-100 p-2 rounded-sm">
         <div className="border-b border-gray-900/10 pb-2">
           <div className="flex justify-end">
-            <button
+            {/* <button
               onClick={sendMail}
               disabled={mailSent}
               type="button"
               className="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Send Mail
+            </button> */}
+
+            <button
+              onClick={sendMail}
+              type="button"
+              disabled={mailSent}
+              className="inline-flex justify-center rounded-md bg-gray-600 px-3 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <div className={"flex gap-2 items-center justify-center"}>
+                <SiMinutemailer size={15} color="white" />
+                Envoyer
+              </div>
             </button>
           </div>
           <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-6">

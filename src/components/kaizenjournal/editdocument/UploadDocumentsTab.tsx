@@ -1,12 +1,13 @@
 "use client";
 import React, { use, useEffect, useState } from "react";
-import { DocumentWidgetDropzone } from "./DocumentWidgetDropZone";
 import { FaDownload, FaTrash } from "react-icons/fa6";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import { KaizenAttachement } from "@/infra/models/Document";
 import Link from "next/link";
-import { FaSave } from "react-icons/fa";
+import { LuSaveAll } from "react-icons/lu";
+import { FaUndo } from "react-icons/fa";
+import { DocumentWidgetDropzone } from "./DocumentWidgetDropzone";
 
 const UploadDocumentsTab = () => {
   const { documentStore, kaizenStore } = useStore();
@@ -73,6 +74,13 @@ const UploadDocumentsTab = () => {
     });
   };
 
+  const deleteLocalAttachment = async (id: number) => {
+    setFiles((prev) => {
+      if (!prev) return prev;
+      return prev.filter((file) => file.id !== id);
+    });
+  };
+
   return (
     <form>
       <div className="space-y-4">
@@ -93,12 +101,12 @@ const UploadDocumentsTab = () => {
                       <tr>
                         <th className="sticky z-10 top-0 text-sm leading-6 font-semibold text-slate-700 bg-white p-0 dark:bg-slate-900 dark:text-slate-300">
                           <div className="py-2 pl-2 border-b border-slate-200 dark:border-slate-400/20">
-                            File Name
+                            Action
                           </div>
                         </th>
                         <th className="sticky z-10 top-0 text-sm leading-6 font-semibold text-slate-700 bg-white p-0 dark:bg-slate-900 dark:text-slate-300">
                           <div className="py-2 pl-2 border-b border-slate-200 dark:border-slate-400/20">
-                            Action
+                            File Name
                           </div>
                         </th>
                       </tr>
@@ -110,26 +118,10 @@ const UploadDocumentsTab = () => {
                           <tr key={index} className="border-2">
                             <td
                               translate="no"
-                              className="pl-2 font-mono font-medium text-xs leading-6 text-gray-500 whitespace-nowrap dark:text-sky-400"
-                            >
-                              {file.id ? (
-                                <div className="pl-2">
-                                  {file.data?.name} - {file.size / 1000} KB
-                                  {file.isProcessing ? "- Processing" : ""}
-                                </div>
-                              ) : (
-                                <div className="bg-red-100 pl-2">
-                                  * {file.data?.name} - {file.size / 1000} KB
-                                  {file.isProcessing ? "- Processing" : ""}
-                                </div>
-                              )}
-                            </td>
-                            <td
-                              translate="no"
                               className="pr-2 font-mono font-medium text-xs leading-6 text-gray-500 whitespace-nowrap dark:text-sky-400"
                             >
                               {file.id ? (
-                                <div className="flex gap-2 space-between justify-center items-center m-2">
+                                <div className="flex gap-2 space-between justify-start items-center m-2">
                                   <Link
                                     href="#"
                                     onClick={() => {
@@ -153,14 +145,39 @@ const UploadDocumentsTab = () => {
                                 </div>
                               ) : (
                                 <div className="flex gap-2 space-between justify-center items-center m-2">
-                                  <Link
+                                  {/* <Link
                                     href="#"
                                     onClick={() => {
                                       uploadFiles();
                                     }}
                                   >
                                     <FaSave size={15} color="green" />
+                                  </Link> */}
+                                  <Link
+                                    href="#"
+                                    onClick={() => {
+                                      deleteLocalAttachment(file.id);
+                                    }}
+                                  >
+                                    <FaUndo size={15} color="red" />
                                   </Link>
+                                </div>
+                              )}
+                            </td>
+
+                            <td
+                              translate="no"
+                              className="pl-2 font-mono font-medium text-xs leading-6 text-gray-500 whitespace-nowrap dark:text-sky-400"
+                            >
+                              {file.id ? (
+                                <div className="pl-2">
+                                  {file.data?.name} - {file.size / 1000} KB
+                                  {file.isProcessing ? "- Processing" : ""}
+                                </div>
+                              ) : (
+                                <div className="bg-red-100 pl-2">
+                                  * {file.data?.name} - {file.size / 1000} KB
+                                  {file.isProcessing ? "- Processing" : ""}
                                 </div>
                               )}
                             </td>
@@ -173,9 +190,18 @@ const UploadDocumentsTab = () => {
                   <button
                     onClick={uploadFiles}
                     type="button"
-                    className="inline-flex justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    className="inline-flex justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500"
                   >
-                    Save
+                    <Link
+                      className="flex gap-2 items-center justify-center"
+                      href="#"
+                      onClick={() => {
+                        uploadFiles();
+                      }}
+                    >
+                      <LuSaveAll size={15} color="white" />
+                      Save All
+                    </Link>
                   </button>
                 </div>
               </div>

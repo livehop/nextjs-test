@@ -2,7 +2,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { IdValue } from "../models/IdValue";
 import agent from "../apiclient/agent";
-import { store } from "./Store";
+import { Categorie, SousCategorie } from "../models";
 
 export default class CategorieStore {
   constructor() {
@@ -16,6 +16,118 @@ export default class CategorieStore {
   loadingIdValues: boolean = false;
   idValues: IdValue[] = [];
   selectedValues: IdValue[] = [];
+
+  categories: Categorie[] = [];
+  selectedCategorie: Categorie | null = null;
+
+  souscategories: SousCategorie[] = [];
+  selectedSousCategorie: SousCategorie | null = null;
+
+  saveCategorie = async (categorie: Categorie) => {
+    try {
+      this.loading = true;
+      const result = await agent.categorie.save(categorie);
+      runInAction(() => {
+        this.loading = false;
+      });
+      return result;
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      });
+      console.log(error);
+    }
+  };
+
+  loadCategories = async () => {
+    try {
+      this.loading = true;
+      const categories = await agent.categorie.categoryList();
+      runInAction(() => {
+        this.loading = false;
+        this.categories = categories;
+      });
+      return categories;
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      });
+      console.log(error);
+    }
+  };
+
+  loadCategorie = async (categorieId: number) => {
+    try {
+      this.loading = true;
+      const categorie = await agent.categorie.details(categorieId);
+      runInAction(() => {
+        this.loading = false;
+        this.selectedCategorie = categorie;
+      });
+      return categorie;
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      });
+      console.log(error);
+    }
+  };
+
+  resetSousCategories = () => {
+    this.souscategories = [];
+  };
+  loadSousCategories = async (categorieId: number) => {
+    console.log("loading souscategories for " + categorieId);
+    try {
+      this.loading = true;
+      const souscategories = await agent.souscategorie.sousCategoryList(
+        categorieId
+      );
+      runInAction(() => {
+        this.loading = false;
+        this.souscategories = souscategories;
+      });
+      return souscategories;
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      });
+      console.log(error);
+    }
+  };
+
+  loadSousCategorie = async (sousCategorieId: number) => {
+    try {
+      this.loading = true;
+      const souscategorie = await agent.souscategorie.details(sousCategorieId);
+      runInAction(() => {
+        this.loading = false;
+        this.selectedSousCategorie = souscategorie;
+      });
+      return souscategorie;
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      });
+      console.log(error);
+    }
+  };
+
+  saveSousCategorie = async (sousCategorie: SousCategorie) => {
+    try {
+      this.loading = true;
+      const result = await agent.souscategorie.save(sousCategorie);
+      runInAction(() => {
+        this.loading = false;
+      });
+      return result;
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      });
+      console.log(error);
+    }
+  };
 
   loadCategoryValues = async () => {
     if (this.catetoryValues.length > 0) {

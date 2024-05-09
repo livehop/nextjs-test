@@ -101,6 +101,7 @@ export default class KaizenStore {
       console.log("result from create " + result);
       runInAction(() => {
         this.savingData = false;
+        this.loadRecordMetrics();
         this.loadKaizenDocuments();
       });
       return result;
@@ -331,8 +332,9 @@ export default class KaizenStore {
     }
   };
 
-  loadEquipes = async () => {
-    if (this.equipes.length > 0) return this.equipes;
+  loadEquipes = async (forceLoad: boolean = false) => {
+    console.log("Loading equipes.....");
+    if (!forceLoad && this.equipes.length > 0) return this.equipes;
     try {
       this.loading = true;
       const equipes = await agent.equipement.list();
@@ -341,7 +343,7 @@ export default class KaizenStore {
         this.equipes = equipes.data;
         this.activeEquipe = this.equipes[0];
       });
-      return equipes;
+      return equipes.data;
     } catch (error) {
       runInAction(() => {
         this.loading = false;
