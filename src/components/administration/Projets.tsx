@@ -115,6 +115,22 @@ const Projets = () => {
               )}
             </div>
           </div>
+          <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                État
+              </label>
+            </div>
+            <div className="sm:col-span-2">
+              <select
+                defaultValue={"Add New Value"}
+                className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
+              >
+                <option value="">Actif</option>
+                <option value="">Inactif</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -129,7 +145,7 @@ const Projets = () => {
                          focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600
                          disabled:bg-gray-500"
           >
-            Save
+            Sauvegarder
           </button>
           <button
             type="button"

@@ -91,13 +91,13 @@ const Categories = () => {
       className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
     >
       <div className="flex items-start justify-center">
-        <div className="flex-1 bg-green-50">
+        <div className="flex-1">
           {/* Header */}
           <div className="bg-gray-50 px-4 py-6 sm:px-6">
             <div className="flex items-start justify-between space-x-3">
               <div className="space-y-1">
                 <div className="text-base font-semibold leading-6 text-gray-900">
-                  Add / Update Category
+                  Add / Update Catégorie
                 </div>
               </div>
               <div className="flex h-7 items-center"></div>
@@ -105,12 +105,12 @@ const Categories = () => {
           </div>
 
           {/* Divider container */}
-          <div className="space-y-6 py-6 sm:space-y-0  sm:py-0">
+          <div className="space-y-6 py-6 sm:space-y-0 sm:py-0">
             {/* Project name */}
             <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                  Category
+                  Catégorie
                 </label>
               </div>
               <div className="sm:col-span-2">
@@ -174,13 +174,13 @@ const Categories = () => {
             </div>
           </div>
         </div>
-        <div className="flex-1 bg-blue-50">
+        <div className="flex-1">
           {/* Header */}
           <div className="bg-gray-50 px-4 py-6 sm:px-6">
             <div className="flex items-start justify-between space-x-3">
               <div className="space-y-1">
                 <div className="text-base font-semibold leading-6 text-gray-900">
-                  Add / Update Sous Category
+                  Add / Update Sous Catégorie
                 </div>
               </div>
               <div className="flex h-7 items-center"></div>
@@ -193,7 +193,7 @@ const Categories = () => {
             <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                  Sous Category
+                  Sous Catégorie
                 </label>
               </div>
               <div className="sm:col-span-2">
@@ -249,7 +249,7 @@ const Categories = () => {
                        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600
                        disabled:bg-gray-500"
           >
-            Save
+            Sauvegarder
           </button>
           <button
             type="button"

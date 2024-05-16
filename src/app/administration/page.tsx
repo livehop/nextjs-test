@@ -14,8 +14,10 @@ const Adminstration = () => {
         className="w-[800px] bg-gray-50 border-2 rounded-md mx-auto mt-8"
       >
         <TabsList>
-          <TabsTrigger value="equipes">Equipes</TabsTrigger>
-          <TabsTrigger value="categorie">Categorie</TabsTrigger>
+          <TabsTrigger value="equipes">Équipes</TabsTrigger>
+          <TabsTrigger value="categorie">
+            Catégorie / Sous-catégorie
+          </TabsTrigger>
           <TabsTrigger value="projets">Projets</TabsTrigger>
           <TabsTrigger value="secteurs">Secteurs</TabsTrigger>
         </TabsList>
