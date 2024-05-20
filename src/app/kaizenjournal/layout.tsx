@@ -1,7 +1,7 @@
 import TopNav from "@/components/kaizenjournal/TopNav";
-import LoginTester from "@/components/uicomponents/LoginTester";
 import React from "react";
 import { getCurrentUser } from "../actions/authActions";
+import { Toaster } from "@/components/ui/toaster";
 
 const KaizenLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await getCurrentUser();
@@ -10,6 +10,8 @@ const KaizenLayout = async ({ children }: { children: React.ReactNode }) => {
       <div className="min-h-full">
         <TopNav user={user} />
         {/* <LoginTester /> */}
+        <Toaster />
+
         <>{children}</>
       </div>
     </>
