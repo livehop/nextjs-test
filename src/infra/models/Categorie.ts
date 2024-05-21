@@ -2,6 +2,7 @@ export interface Categorie {
   id: number;
   name: string;
   ficherIntranet: string;
+  desuet: number;
 }
 
 export interface CatLegalLookup {

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, useWatch } from "react-hook-form";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import { Equipe } from "@/infra/models";
@@ -22,21 +22,25 @@ const Equipes = () => {
     formState: { errors, isSubmitting },
     reset,
     setValue,
-  } = useForm<Equipe>();
+    control,
+  } = useForm<Equipe>({
+    defaultValues: {
+      desuet: 0, // Set the default value for the radio button
+    },
+  });
 
   useEffect(() => {
     kaizenStore.loadEquipes();
-  }, []);
+  }, [kaizenStore]);
 
   const handleConfirm = async () => {
     const equipe = formData as Equipe;
+    equipe.desuet = selectedOption;
     console.log("Submitted Equipe " + JSON.stringify(equipe));
-    await saveEquipe(equipe).then((data) => {
+    await saveEquipe(equipe).then(() => {
       kaizenStore.loadEquipes(true);
-      reset();
     });
 
-    reset();
     setIsDialogOpen(false);
     toast({
       title: "Success",
@@ -54,20 +58,26 @@ const Equipes = () => {
   };
 
   const equipeSelected = (equipeId: number) => {
-    console.log("Selected Equipe Id " + equipeId);
+    console.log("Selected Equipe Id -->  " + equipeId);
     if (isNaN(equipeId) || equipeId === -1) {
       reset();
       return;
     }
     loadEquipe(equipeId).then((data) => {
       if (!data) return;
-      reset();
+      console.log("Selected Equipe " + JSON.stringify(data));
       setValue("nomEquipe", data.nomEquipe);
       setValue("numeroEquipe", data.numeroEquipe);
       setValue("typeEquipe", data.typeEquipe);
       setValue("publicationPath", data.publicationPath);
+      setValue("desuet", data.desuet);
     });
   };
+
+  const selectedOption = useWatch({
+    control,
+    name: "desuet",
+  });
 
   return (
     <>
@@ -89,7 +99,7 @@ const Equipes = () => {
           </div>
 
           {/* Divider container */}
-          <div className="space-y-6 py-6 sm:space-y-0  sm:py-0">
+          <div className="space-y-6 py-6 sm:space-y-0 sm:py-0">
             {/* Project name */}
             <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
@@ -192,6 +202,32 @@ const Equipes = () => {
                 {errors.publicationPath && (
                   <p className="pt-2 text-xs text-red-600">{`${errors.publicationPath.message}`}</p>
                 )}
+              </div>
+            </div>
+
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+              <div>
+                <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                  État
+                </label>
+              </div>
+              <div className="sm:col-span-2">
+                Actif :
+                <input
+                  className="m-2"
+                  type="radio"
+                  value={0}
+                  checked={selectedOption === 0}
+                  onChange={() => setValue("desuet", 0)}
+                />
+                InActif :{" "}
+                <input
+                  className="m-2"
+                  type="radio"
+                  value={1}
+                  checked={selectedOption === 1}
+                  onChange={() => setValue("desuet", 1)}
+                />
               </div>
             </div>
           </div>

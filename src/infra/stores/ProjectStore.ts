@@ -2,6 +2,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { IdValue } from "../models/IdValue";
 import agent from "../apiclient/agent";
+import { Projet } from "../models/Projet";
 
 export default class ProjetStore {
   constructor() {
@@ -9,7 +10,7 @@ export default class ProjetStore {
   }
   idValues: IdValue[] = [];
   loading: boolean = false;
-  selectedProject: IdValue | null = null;
+  selectedProject: Projet | null = null;
 
   loadIdValues = async (forceLoad: boolean = false) => {
     if (!forceLoad && this.idValues.length > 0) return this.idValues;
@@ -46,7 +47,7 @@ export default class ProjetStore {
     }
   };
 
-  saveProjet = async (projet: IdValue) => {
+  saveProjet = async (projet: Projet) => {
     try {
       this.loading = true;
       await agent.projet.save(projet);

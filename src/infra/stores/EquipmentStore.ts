@@ -71,6 +71,7 @@ export default class EquipeStore {
 
   saveEquipe = async (equipe: Equipe) => {
     try {
+      console.log("Saving equipe " + JSON.stringify(equipe));
       this.loading = true;
       const result = await agent.equipement.upsert(equipe);
       runInAction(() => {

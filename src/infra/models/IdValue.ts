@@ -1,4 +1,4 @@
 export interface IdValue {
-    id: number
-    value: string
+  id: number;
+  value: string;
 }

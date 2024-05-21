@@ -3,9 +3,11 @@ import { IdValue } from "@/infra/models/IdValue";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, useForm, useWatch } from "react-hook-form";
 import ConfirmationDialog from "../uicomponents/ConfirmationDialog";
 import { useToast } from "../ui/use-toast";
+import { Projet } from "@/infra/models/Projet";
+import { set } from "date-fns";
 
 const Projets = () => {
   const { projetStore } = useStore();
@@ -21,7 +23,12 @@ const Projets = () => {
     formState: { errors, isSubmitting },
     reset,
     setValue,
-  } = useForm<IdValue>();
+    control,
+  } = useForm<Projet>({
+    defaultValues: {
+      desuet: 0, // Set the default value for the radio button
+    },
+  });
 
   useEffect(() => {
     loadIdValues();
@@ -29,7 +36,7 @@ const Projets = () => {
 
   const onSubmitOld = async (data: FieldValues) => {
     console.log("Submitted Projet........... " + JSON.stringify(data));
-    const projet = data as IdValue;
+    const projet = data as Projet;
     console.log("Submitted Projet " + JSON.stringify(projet));
     await saveProjet(projet).then((data) => {
       loadIdValues(true);
@@ -50,14 +57,15 @@ const Projets = () => {
       console.log("Form data submitted:", formData);
       setIsDialogOpen(false);
 
-      const projet = formData as IdValue;
+      const projet = formData as Projet;
+      projet.desuet = selectedOption;
       console.log("Submitted Projet " + JSON.stringify(projet));
       await saveProjet(projet).then((data) => {
         loadIdValues(true);
-        reset();
+        //reset();
       });
 
-      reset();
+      //reset();
       toast({
         title: "Success",
         description: "Your changes have been saved",
@@ -79,9 +87,15 @@ const Projets = () => {
       console.log(data);
       reset();
       setValue("id", data.id);
-      setValue("value", data.value);
+      setValue("name", data.name);
+      setValue("desuet", data.desuet);
     });
   };
+
+  const selectedOption = useWatch({
+    control,
+    name: "desuet",
+  });
 
   return (
     <>
@@ -140,14 +154,14 @@ const Projets = () => {
               </div>
               <div className="sm:col-span-2">
                 <input
-                  {...register("value", {
+                  {...register("name", {
                     required: "NomEquipe is required",
                   })}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-200 sm:text-sm sm:leading-6"
                   defaultValue={""}
                 />
-                {errors.value && (
-                  <p className="pt-2 text-xs text-red-600">{`${errors.value.message}`}</p>
+                {errors.name && (
+                  <p className="pt-2 text-xs text-red-600">{`${errors.name.message}`}</p>
                 )}
               </div>
             </div>
@@ -158,13 +172,22 @@ const Projets = () => {
                 </label>
               </div>
               <div className="sm:col-span-2">
-                <select
-                  defaultValue={"Add New Value"}
-                  className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
-                >
-                  <option value="">Actif</option>
-                  <option value="">Inactif</option>
-                </select>
+                Actif :
+                <input
+                  className="m-2"
+                  type="radio"
+                  value={0}
+                  checked={selectedOption === 0}
+                  onChange={() => setValue("desuet", 0)}
+                />
+                InActif :{" "}
+                <input
+                  className="m-2"
+                  type="radio"
+                  value={1}
+                  checked={selectedOption === 1}
+                  onChange={() => setValue("desuet", 1)}
+                />
               </div>
             </div>
           </div>

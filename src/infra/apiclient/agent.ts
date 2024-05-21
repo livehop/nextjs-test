@@ -34,6 +34,7 @@ import {
 } from "../models/RessourcesNecessaire";
 import { KaizenAttachmentDetail } from "../models/Document";
 import { EmailDetails } from "../models/Email";
+import { Projet } from "../models/Projet";
 
 export const token_key = "Brisk_JWT";
 
@@ -246,9 +247,9 @@ const souscategorie = {
 
 const projet = {
   valuelist: (): Promise<IdValue[]> => requests.get("/projet/valuelist"),
-  details: (projetId: number): Promise<IdValue> =>
+  details: (projetId: number): Promise<Projet> =>
     requests.get(`/projet/details/${projetId}`),
-  save: (projet: IdValue): Promise<boolean> => requests.post("/projet", projet),
+  save: (projet: Projet): Promise<boolean> => requests.post("/projet", projet),
 };
 
 const notes = {

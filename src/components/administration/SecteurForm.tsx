@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, useWatch } from "react-hook-form";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import { Secteur, SousSecteur } from "@/infra/models";
-import { set } from "date-fns";
 import { useToast } from "../ui/use-toast";
 import ConfirmationDialog from "../uicomponents/ConfirmationDialog";
 
@@ -21,12 +20,10 @@ const SecteurForm = () => {
     loadSecteur,
     secteurs,
     sousSecteurs,
-    selectedSecteur,
     loadSousSecteur,
     loadSousSecteurs,
     saveSecteur,
     saveSousSecteur,
-    resetSousSecteurs,
   } = secteurStore;
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -39,7 +36,17 @@ const SecteurForm = () => {
     formState: { errors, isSubmitting },
     reset,
     setValue,
-  } = useForm<SecteurDto>();
+    control,
+  } = useForm<SecteurDto>({
+    defaultValues: {
+      secteur: {
+        desuet: 0, // Set the default value for the radio button
+      },
+      sousSecteur: {
+        desuet: 0, // Set the default value for the radio button},
+      },
+    },
+  });
 
   useEffect(() => {
     loadEquipes();
@@ -54,19 +61,16 @@ const SecteurForm = () => {
 
   const handleConfirm = async () => {
     const secteurDto = formData as SecteurDto;
+    secteurDto.secteur.desuet = selectedSecteurOption;
     console.log(
       "Submitted SecteurDto " + Boolean(Number(secteurDto.secteur.desuet))
     );
     const equipeId = secteurDto.secteur.equipe.id;
 
-    secteurDto.secteur.desuet = getBooleanValue(secteurDto.secteur.desuet);
-    secteurDto.sousSecteur.desuet = getBooleanValue(
-      secteurDto.sousSecteur.desuet
-    );
-
     await saveSecteur(secteurDto.secteur);
 
     if (secteurDto.sousSecteur.description !== "") {
+      secteurDto.sousSecteur.desuet = selectedSousSecteurOption;
       secteurDto.sousSecteur.equipeId = equipeId;
       secteurDto.sousSecteur.secteurId = secteurDto.secteur.id;
       await saveSousSecteur(secteurDto.sousSecteur);
@@ -80,7 +84,7 @@ const SecteurForm = () => {
       title: "Success",
       description: "Your changes have been saved",
     });
-    reset();
+    //reset();
   };
 
   const onSubmit = async (data: FieldValues) => {
@@ -104,11 +108,11 @@ const SecteurForm = () => {
     });
     setValue("secteur.id", 0);
     setValue("secteur.name", "");
-    setValue("secteur.desuet", false);
+    setValue("secteur.desuet", 0);
 
     setValue("sousSecteur.id", 0);
     setValue("sousSecteur.description", "");
-    setValue("sousSecteur.desuet", false);
+    setValue("sousSecteur.desuet", 0);
     loadSecteurs(equipeId);
   };
 
@@ -129,7 +133,7 @@ const SecteurForm = () => {
 
       setValue("sousSecteur.id", 0);
       setValue("sousSecteur.description", "");
-      setValue("sousSecteur.desuet", false);
+      setValue("sousSecteur.desuet", 0);
 
       loadSousSecteurs(data.equipeId, secteurId);
     });
@@ -146,8 +150,19 @@ const SecteurForm = () => {
       if (!data) return;
       setValue("sousSecteur.id", data.id);
       setValue("sousSecteur.description", data.description);
+      setValue("sousSecteur.desuet", data.desuet);
     });
   };
+
+  const selectedSecteurOption = useWatch({
+    control,
+    name: "secteur.desuet",
+  });
+
+  const selectedSousSecteurOption = useWatch({
+    control,
+    name: "sousSecteur.desuet",
+  });
 
   return (
     <>
@@ -251,34 +266,26 @@ const SecteurForm = () => {
               <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
                 <div>
                   <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                    Desuet
-                  </label>
-                </div>
-                <div className="sm:col-span-2">
-                  <input
-                    {...register("secteur.desuet")}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-200 sm:text-sm sm:leading-6"
-                    defaultValue={""}
-                  />
-                  {errors.secteur?.desuet && (
-                    <p className="pt-2 text-xs text-red-600">{`${errors.secteur?.desuet?.message}`}</p>
-                  )}
-                </div>
-              </div>
-              <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
                     État
                   </label>
                 </div>
                 <div className="sm:col-span-2">
-                  <select
-                    defaultValue={"Add New Value"}
-                    className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
-                  >
-                    <option value="">Actif</option>
-                    <option value="">Inactif</option>
-                  </select>
+                  Actif :
+                  <input
+                    className="m-2"
+                    type="radio"
+                    value={0}
+                    checked={selectedSecteurOption === 0}
+                    onChange={() => setValue("secteur.desuet", 0)}
+                  />
+                  InActif :{" "}
+                  <input
+                    className="m-2"
+                    type="radio"
+                    value={1}
+                    checked={selectedSecteurOption === 1}
+                    onChange={() => setValue("secteur.desuet", 1)}
+                  />
                 </div>
               </div>
             </div>
@@ -329,23 +336,6 @@ const SecteurForm = () => {
               <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
                 <div>
                   <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                    Desuet
-                  </label>
-                </div>
-                <div className="sm:col-span-2">
-                  <input
-                    {...register("sousSecteur.desuet")}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-200 sm:text-sm sm:leading-6"
-                    defaultValue={""}
-                  />
-                  {errors.sousSecteur?.desuet && (
-                    <p className="pt-2 text-xs text-red-600">{`${errors.sousSecteur.desuet?.message}`}</p>
-                  )}
-                </div>
-              </div>
-              <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
                     Description
                   </label>
                 </div>
@@ -360,6 +350,7 @@ const SecteurForm = () => {
                   )}
                 </div>
               </div>
+
               <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
                 <div>
                   <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
@@ -367,13 +358,22 @@ const SecteurForm = () => {
                   </label>
                 </div>
                 <div className="sm:col-span-2">
-                  <select
-                    defaultValue={"Add New Value"}
-                    className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
-                  >
-                    <option value="">Actif</option>
-                    <option value="">Inactif</option>
-                  </select>
+                  Actif :
+                  <input
+                    className="m-2"
+                    type="radio"
+                    value={0}
+                    checked={selectedSousSecteurOption === 0}
+                    onChange={() => setValue("sousSecteur.desuet", 0)}
+                  />
+                  InActif :{" "}
+                  <input
+                    className="m-2"
+                    type="radio"
+                    value={1}
+                    checked={selectedSousSecteurOption === 1}
+                    onChange={() => setValue("sousSecteur.desuet", 1)}
+                  />
                 </div>
               </div>
             </div>

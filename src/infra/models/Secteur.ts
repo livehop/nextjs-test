@@ -5,7 +5,7 @@ export interface Secteur {
   equipeId: number;
   equipe: Equipe;
   name: string;
-  desuet: boolean;
+  desuet: number;
 }
 
 export interface SousSecteur {
@@ -15,5 +15,5 @@ export interface SousSecteur {
   secteurId: number;
   secteur: Secteur;
   description: string;
-  desuet: boolean;
+  desuet: number;
 }

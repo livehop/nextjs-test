@@ -9,6 +9,8 @@ import DataSticky from "@/components/kaizenjournal/DataSticky";
 import { useRouter } from "next/navigation";
 import { observer } from "mobx-react-lite";
 
+const currentYear = new Date().getFullYear();
+
 const page = () => {
   const { kaizenStore } = useStore();
   const { loadRecordMetrics, recordMetrics } = kaizenStore;
@@ -38,6 +40,9 @@ const page = () => {
           </h1>
           {recordMetrics && (
             <div className="flex justify-between">
+              <h4 className="text-lg tracking-ti</div>ght text-black-600 pr-8">
+                Year : <b>{currentYear}</b>
+              </h4>
               <h4 className="text-md tracking-tight text-orange-600 pr-8">
                 Points Ouvert : <b>{recordMetrics.openRecords}</b>
               </h4>

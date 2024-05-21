@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, useWatch } from "react-hook-form";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import { Categorie, Equipe, SousCategorie } from "@/infra/models";
 import ConfirmationDialog from "../uicomponents/ConfirmationDialog";
 import { useToast } from "../ui/use-toast";
+import { set } from "date-fns";
 
 type CategorieDto = {
   categorie: Categorie;
@@ -38,7 +39,17 @@ const Categories = () => {
     formState: { errors, isSubmitting },
     reset,
     setValue,
-  } = useForm<CategorieDto>();
+    control,
+  } = useForm<CategorieDto>({
+    defaultValues: {
+      categorie: {
+        desuet: 0, // Set the default value for the radio button
+      },
+      sousCategorie: {
+        desuet: 0, // Set the default value for the radio button},
+      },
+    },
+  });
 
   useEffect(() => {
     loadCategories();
@@ -67,17 +78,19 @@ const Categories = () => {
       setIsDialogOpen(false);
 
       const categoryDto = formData as CategorieDto;
+      categoryDto.categorie.desuet = selectedCategorieOption;
       await saveCategorie(categoryDto.categorie);
 
       if (categoryDto.sousCategorie.description !== "") {
         categoryDto.sousCategorie.categorieId = categoryDto.categorie.id;
+        categoryDto.sousCategorie.desuet = selectedSousCategorieOption;
         await saveSousCategorie(categoryDto.sousCategorie);
       }
 
       loadCategories();
       loadSousCategories(selectedCategorie?.id || 0);
 
-      reset();
+      //reset();
       toast({
         title: "Success",
         description: "Your changes have been saved",
@@ -106,6 +119,7 @@ const Categories = () => {
       setValue("categorie.id", data.id);
       setValue("categorie.name", data.name);
       setValue("categorie.ficherIntranet", data.ficherIntranet);
+      setValue("categorie.desuet", data.desuet);
       loadSousCategories(data.id);
     });
   };
@@ -121,8 +135,19 @@ const Categories = () => {
       if (!data) return;
       setValue("sousCategorie.id", data.id);
       setValue("sousCategorie.description", data.description);
+      setValue("sousCategorie.desuet", data.desuet);
     });
   };
+
+  const selectedCategorieOption = useWatch({
+    control,
+    name: "categorie.desuet",
+  });
+
+  const selectedSousCategorieOption = useWatch({
+    control,
+    name: "sousCategorie.desuet",
+  });
 
   return (
     <>
@@ -212,6 +237,32 @@ const Categories = () => {
                   )}
                 </div>
               </div>
+
+              <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+                <div>
+                  <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                    État
+                  </label>
+                </div>
+                <div className="sm:col-span-2">
+                  Actif :
+                  <input
+                    className="m-2"
+                    type="radio"
+                    value={0}
+                    checked={selectedCategorieOption === 0}
+                    onChange={() => setValue("categorie.desuet", 0)}
+                  />
+                  InActif :{" "}
+                  <input
+                    className="m-2"
+                    type="radio"
+                    value={1}
+                    checked={selectedCategorieOption === 1}
+                    onChange={() => setValue("categorie.desuet", 1)}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex-1">
@@ -272,6 +323,32 @@ const Categories = () => {
                   {errors.sousCategorie?.description && (
                     <p className="pt-2 text-xs text-red-600">{`${errors.sousCategorie.description?.message}`}</p>
                   )}
+                </div>
+              </div>
+
+              <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+                <div>
+                  <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                    État
+                  </label>
+                </div>
+                <div className="sm:col-span-2">
+                  Actif :
+                  <input
+                    className="m-2"
+                    type="radio"
+                    value={0}
+                    checked={selectedSousCategorieOption === 0}
+                    onChange={() => setValue("sousCategorie.desuet", 0)}
+                  />
+                  InActif :{" "}
+                  <input
+                    className="m-2"
+                    type="radio"
+                    value={1}
+                    checked={selectedSousCategorieOption === 1}
+                    onChange={() => setValue("sousCategorie.desuet", 1)}
+                  />
                 </div>
               </div>
             </div>

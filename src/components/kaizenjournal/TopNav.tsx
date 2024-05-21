@@ -16,13 +16,19 @@ type UserType = {
   imageIcon: any;
 };
 
+type NavigationType = {
+  name: string;
+  href: string;
+  current: boolean;
+};
+
 // const user: UserType = {
 //   name: "Sylvain Castonguay",
 //   email: "Sylvain.Castonguay@ge.com",
 //   imageIcon: <FaUser size={ICON_SIZE} color="white" />,
 // };
-const navigation = [
-  { name: "Kaizen Dashboard", href: "/kaizenjournal", current: true },
+const initNavigation: NavigationType[] = [
+  { name: "Kaizen Dashboard", href: "/kaizenjournal", current: false },
   { name: "Adminstration", href: "/administration", current: false },
   { name: "Employee Search", href: "/employeesearch", current: false },
 ];
@@ -38,6 +44,8 @@ type TopNavProps = {
 
 const TopNav = ({ user }: TopNavProps) => {
   const [open, setOpen] = useState(false);
+  const [navigation, setNavigation] =
+    useState<NavigationType[]>(initNavigation);
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -163,6 +171,10 @@ const TopNav = ({ user }: TopNavProps) => {
             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
               {navigation.map((item) => (
                 <Disclosure.Button
+                  onClick={() => {
+                    item.current = true;
+                    setNavigation([...navigation]);
+                  }}
                   key={item.name}
                   as="a"
                   href={item.href}

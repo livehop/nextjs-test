@@ -5,4 +5,5 @@ export interface SousCategorie {
   categorieId: number;
   categorie: Categorie;
   description: string;
+  desuet: number;
 }
