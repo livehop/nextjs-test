@@ -92,8 +92,8 @@ const Categories = () => {
 
       //reset();
       toast({
-        title: "Success",
-        description: "Your changes have been saved",
+        title: "Succès",
+        description: "Vos changements ont été sauvegardés avec succès.",
       });
     }
   };
@@ -180,7 +180,7 @@ const Categories = () => {
                 </div>
                 <div className="sm:col-span-2">
                   <select
-                    defaultValue={"Add New Value"}
+                    defaultValue={"Ajouter une nouvelle valeur"}
                     {...register("categorie.id", {
                       required: "Select an Équipe",
                     })}
@@ -189,7 +189,7 @@ const Categories = () => {
                       categorySelected(parseInt(e.target.value));
                     }}
                   >
-                    <option value="0">Add New Value</option>
+                    <option value="0">Ajouter une nouvelle valeur</option>
                     {categories.map((option, index) => (
                       <option key={index} value={option.id}>
                         {option.name} - {option.ficherIntranet}
@@ -244,23 +244,25 @@ const Categories = () => {
                     État
                   </label>
                 </div>
-                <div className="sm:col-span-2">
-                  Actif :
-                  <input
-                    className="m-2"
-                    type="radio"
-                    value={0}
-                    checked={selectedCategorieOption === 0}
-                    onChange={() => setValue("categorie.desuet", 0)}
-                  />
-                  InActif :{" "}
-                  <input
-                    className="m-2"
-                    type="radio"
-                    value={1}
-                    checked={selectedCategorieOption === 1}
-                    onChange={() => setValue("categorie.desuet", 1)}
-                  />
+                <div className="sm:col-span-2 flex gap-6 pt-2">
+                  <div>
+                    <span className="mr-2">Actif :</span>
+                    <input
+                      type="radio"
+                      value={0}
+                      checked={selectedCategorieOption === 0}
+                      onChange={() => setValue("categorie.desuet", 0)}
+                    />
+                  </div>
+                  <div>
+                    <span className="mr-2">Inactif :</span>
+                    <input
+                      type="radio"
+                      value={1}
+                      checked={selectedCategorieOption === 1}
+                      onChange={() => setValue("categorie.desuet", 1)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -289,7 +291,7 @@ const Categories = () => {
                 </div>
                 <div className="sm:col-span-2">
                   <select
-                    defaultValue={"Add New Value"}
+                    defaultValue={"Ajouter une nouvelle valeur"}
                     {...register("sousCategorie.id", {
                       required: "Select an Sous Category",
                     })}
@@ -298,7 +300,7 @@ const Categories = () => {
                       sousCategorySelected(parseInt(e.target.value));
                     }}
                   >
-                    <option value="0">Add New Value</option>
+                    <option value="0">Ajouter une nouvelle valeur</option>
                     {souscategories.map((option, index) => (
                       <option key={index} value={option.id}>
                         {option.description}
@@ -332,23 +334,26 @@ const Categories = () => {
                     État
                   </label>
                 </div>
-                <div className="sm:col-span-2">
-                  Actif :
-                  <input
-                    className="m-2"
-                    type="radio"
-                    value={0}
-                    checked={selectedSousCategorieOption === 0}
-                    onChange={() => setValue("sousCategorie.desuet", 0)}
-                  />
-                  InActif :{" "}
-                  <input
-                    className="m-2"
-                    type="radio"
-                    value={1}
-                    checked={selectedSousCategorieOption === 1}
-                    onChange={() => setValue("sousCategorie.desuet", 1)}
-                  />
+
+                <div className="sm:col-span-2 flex gap-6 pt-2">
+                  <div>
+                    <span className="mr-2">Actif :</span>
+                    <input
+                      type="radio"
+                      value={0}
+                      checked={selectedSousCategorieOption === 0}
+                      onChange={() => setValue("sousCategorie.desuet", 0)}
+                    />
+                  </div>
+                  <div>
+                    <span className="mr-2">Inactif :</span>
+                    <input
+                      type="radio"
+                      value={1}
+                      checked={selectedSousCategorieOption === 1}
+                      onChange={() => setValue("sousCategorie.desuet", 1)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -373,7 +378,7 @@ const Categories = () => {
               className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               onClick={() => reset()}
             >
-              Reset
+              Réinitialiser
             </button>
           </div>
         </div>

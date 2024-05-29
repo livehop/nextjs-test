@@ -43,8 +43,8 @@ const Equipes = () => {
 
     setIsDialogOpen(false);
     toast({
-      title: "Success",
-      description: "Your changes have been saved",
+      title: "Succès",
+      description: "Vos changements ont été sauvegardés avec succès.",
     });
   };
 
@@ -101,7 +101,7 @@ const Equipes = () => {
           {/* Divider container */}
           <div className="space-y-6 py-6 sm:space-y-0 sm:py-0">
             {/* Project name */}
-            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
                   Équipe
@@ -109,7 +109,7 @@ const Equipes = () => {
               </div>
               <div className="sm:col-span-2">
                 <select
-                  defaultValue={"Add New Value"}
+                  defaultValue={"Ajouter une nouvelle valeur"}
                   {...register("numeroEquipe", {
                     required: "Select an Équipe",
                   })}
@@ -118,7 +118,7 @@ const Equipes = () => {
                     equipeSelected(parseInt(e.target.value));
                   }}
                 >
-                  <option value="">Add New Value</option>
+                  <option value="">Ajouter une nouvelle valeur</option>
                   {equipes.map((option, index) => (
                     <option key={index} value={option.numeroEquipe}>
                       {option.numeroEquipe} - {option.nomEquipe}
@@ -129,10 +129,10 @@ const Equipes = () => {
             </div>
 
             {/* Project description */}
-            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                  Numero Equipe
+                  No Équipe
                 </label>
               </div>
               <div className="sm:col-span-2">
@@ -149,10 +149,10 @@ const Equipes = () => {
                 )}
               </div>
             </div>
-            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                  NomEquipe
+                  Nouveau nom
                 </label>
               </div>
               <div className="sm:col-span-2">
@@ -168,10 +168,10 @@ const Equipes = () => {
                 )}
               </div>
             </div>
-            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                  Type Equipe
+                  Type Équipe
                 </label>
               </div>
               <div className="sm:col-span-2">
@@ -187,7 +187,7 @@ const Equipes = () => {
                 )}
               </div>
             </div>
-            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+            {/* <div className="space-y-2 px-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
                   Publication Path
@@ -203,31 +203,33 @@ const Equipes = () => {
                   <p className="pt-2 text-xs text-red-600">{`${errors.publicationPath.message}`}</p>
                 )}
               </div>
-            </div>
+            </div> */}
 
-            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
                   État
                 </label>
               </div>
-              <div className="sm:col-span-2">
-                Actif :
-                <input
-                  className="m-2"
-                  type="radio"
-                  value={0}
-                  checked={selectedOption === 0}
-                  onChange={() => setValue("desuet", 0)}
-                />
-                InActif :{" "}
-                <input
-                  className="m-2"
-                  type="radio"
-                  value={1}
-                  checked={selectedOption === 1}
-                  onChange={() => setValue("desuet", 1)}
-                />
+              <div className="sm:col-span-2 flex gap-6 pt-2">
+                <div>
+                  <span className="mr-2">Actif :</span>
+                  <input
+                    type="radio"
+                    value={0}
+                    checked={selectedOption === 0}
+                    onChange={() => setValue("desuet", 0)}
+                  />
+                </div>
+                <div>
+                  <span className="mr-2">Inactif :</span>
+                  <input
+                    type="radio"
+                    value={1}
+                    checked={selectedOption === 1}
+                    onChange={() => setValue("desuet", 1)}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -251,7 +253,7 @@ const Equipes = () => {
               className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               onClick={() => reset()}
             >
-              Reset
+              Réinitialiser
             </button>
           </div>
         </div>

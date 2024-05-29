@@ -67,8 +67,8 @@ const Projets = () => {
 
       //reset();
       toast({
-        title: "Success",
-        description: "Your changes have been saved",
+        title: "Succès",
+        description: "Vos changements ont été sauvegardés avec succès.",
       });
     }
   };
@@ -117,17 +117,17 @@ const Projets = () => {
           </div>
 
           {/* Divider container */}
-          <div className="space-y-6 py-6 sm:space-y-0  sm:py-0">
+          <div className="space-y-2 py-2 sm:space-y-0  sm:py-0">
             {/* Project name */}
-            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
-                <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5 ml-8 p-2">
                   Projets
                 </label>
               </div>
               <div className="sm:col-span-2">
                 <select
-                  defaultValue={"Add New Value"}
+                  defaultValue={"Ajouter une nouvelle valeur"}
                   {...register("id", {
                     required: "Select an Équipe",
                   })}
@@ -136,7 +136,7 @@ const Projets = () => {
                     projetSelected(parseInt(e.target.value));
                   }}
                 >
-                  <option value="0">Add New Value</option>
+                  <option value="0">Ajouter une nouvelle valeur</option>
                   {idValues.map((option, index) => (
                     <option key={index} value={option.id}>
                       {option.value}
@@ -146,9 +146,9 @@ const Projets = () => {
               </div>
             </div>
 
-            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
-                <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5 ml-8 p-2">
                   Value
                 </label>
               </div>
@@ -165,29 +165,30 @@ const Projets = () => {
                 )}
               </div>
             </div>
-            <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
-              <div>
-                <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                  État
-                </label>
-              </div>
-              <div className="sm:col-span-2">
-                Actif :
-                <input
-                  className="m-2"
-                  type="radio"
-                  value={0}
-                  checked={selectedOption === 0}
-                  onChange={() => setValue("desuet", 0)}
-                />
-                InActif :{" "}
-                <input
-                  className="m-2"
-                  type="radio"
-                  value={1}
-                  checked={selectedOption === 1}
-                  onChange={() => setValue("desuet", 1)}
-                />
+            <div className="space-y-2 px-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-4">
+              <label className="text-sm font-medium leading-6 text-gray-900 ml-10 pt-2">
+                État
+              </label>
+
+              <div className="sm:col-span-2 flex gap-6 pt-2">
+                <div>
+                  <span className="mr-2">Actif :</span>
+                  <input
+                    type="radio"
+                    value={0}
+                    checked={selectedOption === 0}
+                    onChange={() => setValue("desuet", 0)}
+                  />
+                </div>
+                <div>
+                  <span className="mr-2">Inactif :</span>
+                  <input
+                    type="radio"
+                    value={1}
+                    checked={selectedOption === 1}
+                    onChange={() => setValue("desuet", 1)}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -211,7 +212,7 @@ const Projets = () => {
               className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               onClick={() => reset()}
             >
-              Reset
+              Réinitialiser
             </button>
           </div>
         </div>

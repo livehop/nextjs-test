@@ -41,7 +41,7 @@ const page = () => {
           {recordMetrics && (
             <div className="flex justify-between">
               <h4 className="text-lg tracking-ti</div>ght text-black-600 pr-8">
-                Year : <b>{currentYear}</b>
+                Année : <b>{currentYear}</b>
               </h4>
               <h4 className="text-md tracking-tight text-orange-600 pr-8">
                 Points Ouvert : <b>{recordMetrics.openRecords}</b>
