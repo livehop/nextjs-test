@@ -4,12 +4,6 @@ import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import { FaCircle } from "react-icons/fa6";
-import {
-  Bars3Icon,
-  BellIcon,
-  ArrowDownIcon,
-} from "@heroicons/react/24/outline";
-import { SortOrder } from "@/infra/models/Ui";
 import ColumnHeader from "./table-ui/column-header";
 
 const transactions = [
@@ -88,17 +82,8 @@ const GetCoteIndiceColor = (kaizenRecord: KaizenDocument) => {
 
 const Data = () => {
   const { kaizenStore } = useStore();
-  const {
-    kaizenDocuments,
-    loading,
-    loadKaizenDocuments,
-    setEditDocumentId,
-    currentSortOrder,
-  } = kaizenStore;
-  useEffect(() => {
-    loadKaizenDocuments();
-    console.log("Data useEffect");
-  }, [loadKaizenDocuments]);
+  const { kaizenDocuments, loading, setEditDocumentId, currentSortOrder } =
+    kaizenStore;
 
   if (loading) return <div>Loading...</div>;
 
