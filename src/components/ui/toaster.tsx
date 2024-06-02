@@ -9,7 +9,7 @@ import {
   ToastViewport,
 } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import { FaCheck, FaLightbulb } from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa6";
 import { MdErrorOutline } from "react-icons/md";
 
 export function Toaster() {

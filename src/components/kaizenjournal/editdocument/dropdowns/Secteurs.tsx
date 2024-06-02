@@ -31,7 +31,7 @@ const Secteurs = ({ equipeId, setValue }: SecteursProps) => {
         setSecteurValues(data);
       });
     }
-  }, [editDocument?.equipeId, equipeId]);
+  }, [editDocument?.equipeId, equipeId, secteurStore]);
 
   const selectSecteur = (e: React.SyntheticEvent<HTMLSelectElement, Event>) => {
     console.log("selectSecteur called " + e.currentTarget.value);

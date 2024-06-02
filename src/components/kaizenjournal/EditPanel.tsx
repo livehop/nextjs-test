@@ -35,7 +35,7 @@ const EditPanel = ({ setOpen, open }: EditPanelProps) => {
       secteurStore.loadIdValues(doc?.equipeId);
     });
     loadResourceNessaicaires();
-  }, [search, loadEditDocument, loadResourceNessaicaires, open]);
+  }, [search, loadEditDocument, loadResourceNessaicaires, open, secteurStore]);
 
   if (loadingDocument) return;
 
