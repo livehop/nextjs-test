@@ -43,12 +43,14 @@ const EditKaizenJournalForm = ({
         toast({
           title: "Succès",
           description: "Vos changements ont été sauvegardés avec succès.",
+          variant: "success",
         });
       });
     } catch (e: any) {
       toast({
         title: "Error",
         description: e.message,
+        variant: "destructive",
       });
     }
   };

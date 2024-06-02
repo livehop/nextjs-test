@@ -45,6 +45,7 @@ const Equipes = () => {
     toast({
       title: "Succès",
       description: "Vos changements ont été sauvegardés avec succès.",
+      variant: "success",
     });
   };
 
