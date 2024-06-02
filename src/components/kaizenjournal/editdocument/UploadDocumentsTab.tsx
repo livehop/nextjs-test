@@ -29,7 +29,7 @@ const UploadDocumentsTab = () => {
       });
       setFiles(dbFiles);
     });
-  }, [kaizenStore.editDocumentId]);
+  }, [kaizenStore.editDocumentId, loadFiles]);
 
   const uploadFiles = async () => {
     if (files) {

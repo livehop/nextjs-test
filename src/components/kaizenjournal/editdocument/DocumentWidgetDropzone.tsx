@@ -1,7 +1,7 @@
 "use client";
 import { KaizenAttachement } from "@/infra/models/Document";
 import { PhotoIcon } from "@heroicons/react/24/outline";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 type DocumentWidgetDropzoneProps = {
@@ -13,33 +13,36 @@ type DocumentWidgetDropzoneProps = {
 export function DocumentWidgetDropzone({
   setFiles,
 }: DocumentWidgetDropzoneProps) {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    // Do something with the files
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      // Do something with the files
 
-    let myattachments: KaizenAttachement[] = [];
+      let myattachments: KaizenAttachement[] = [];
 
-    acceptedFiles.forEach((element) => {
-      let attachment: KaizenAttachement = {
-        id: 0,
-        data: element,
-        isProcessing: false,
-        size: element.size,
-      };
-      myattachments.push(attachment);
-    });
+      acceptedFiles.forEach((element) => {
+        let attachment: KaizenAttachement = {
+          id: 0,
+          data: element,
+          isProcessing: false,
+          size: element.size,
+        };
+        myattachments.push(attachment);
+      });
 
-    console.log("Setting files" + myattachments);
+      console.log("Setting files" + myattachments);
 
-    setFiles((prev) => {
-      if (!prev) {
-        return myattachments;
-      }
-      console.log("Appending to previous" + prev);
-      let files = [...prev, ...myattachments];
-      console.log("Appending to previous" + files.length);
-      return files;
-    });
-  }, []);
+      setFiles((prev) => {
+        if (!prev) {
+          return myattachments;
+        }
+        console.log("Appending to previous" + prev);
+        let files = [...prev, ...myattachments];
+        console.log("Appending to previous" + files.length);
+        return files;
+      });
+    },
+    [setFiles]
+  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
@@ -88,7 +91,8 @@ export function DocumentWidgetDropzone({
                 />
               </label>
               <p className="pl-1">
-                Tèlèchargez ou faites et dèposez un fichier ici jusqu'à 20 Mo
+                Tèlèchargez ou faites et dèposez un fichier ici jusqu&apos;à 20
+                Mo
               </p>
             </div>
           </div>

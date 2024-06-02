@@ -1,9 +1,4 @@
-import {
-  ComponentProps,
-  ComponentPropsWithoutRef,
-  useEffect,
-  useState,
-} from "react";
+import { ComponentPropsWithoutRef, useEffect, useState } from "react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Combobox } from "@headlessui/react";
 import { classNames } from "@/infra/utils/classNames";
@@ -38,13 +33,13 @@ const InscritParSearch = ({
 
   const [debouncedQuery, setDebouncedQuery] = useDebounceValue("", 1000);
 
-  useEffect(() => {
-    employeeStore.loadIdValues();
-  }, []);
+  // useEffect(() => {
+  //   employeeStore.loadIdValues();
+  // }, [employeeStore]);
 
   useEffect(() => {
     employeeStore.loadIdValues(debouncedQuery);
-  }, [debouncedQuery]);
+  }, [debouncedQuery, employeeStore]);
 
   const filteredPeople =
     query === ""

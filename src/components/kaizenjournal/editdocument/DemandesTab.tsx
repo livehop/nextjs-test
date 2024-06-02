@@ -25,18 +25,25 @@ const DemandesTab = () => {
   useEffect(() => {
     loadRessourcesValues();
     loadTypeDemandeValues();
-  }, []);
+  }, [loadRessourcesValues, loadTypeDemandeValues]);
 
   const updateRessources = async () => {
     if (editDocumentId == null) return;
+
     const ressourceNessaicaires: RessourcesNecessaire = {
       kaizenId: editDocumentId,
-      ressourceId: Number(ressource),
+      ressourceId: Number(ressource === "" ? 1 : ressource),
       numeroDemande: demandeNo,
-      idType: Number(typeDemande),
+      idType: Number(typeDemande === "" ? 1 : typeDemande),
     };
+
     await upsertResourceNessaicaires(ressourceNessaicaires);
-    await loadResourceNessaicaires();
+    loadResourceNessaicaires().then((data) => {
+      console.log(
+        "loadResourceNessaicaires called  ----> ",
+        JSON.stringify(data)
+      );
+    });
   };
 
   return (
@@ -101,7 +108,6 @@ const DemandesTab = () => {
           Enregistrer Demande
         </button>
       </div>
-
       <div
         id="class-table"
         className="flex-none min-w-full h-32 px-4 overflow-auto border-2 border-gray-400 mt-2"

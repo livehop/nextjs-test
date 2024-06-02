@@ -29,7 +29,6 @@ const EditPanelOld = () => {
   const search = searchParams.get("kaizendocument");
 
   const {
-    register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
@@ -45,7 +44,7 @@ const EditPanelOld = () => {
     return () => {
       reset();
     };
-  }, [search, defaultValue]);
+  }, [search, defaultValue, loadEditDocument, editDocument, reset]);
 
   if (loadingDocument) return;
 

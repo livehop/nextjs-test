@@ -16,7 +16,7 @@ export default class SearchStore {
   currentPageNo = 1;
   totalPages = 0;
   pageSize = PAGE_SIZE;
-  equipeNumber = 2820;
+  equipeNumber = 0;
 
   searchType = "";
   searchValue = "";
@@ -32,20 +32,17 @@ export default class SearchStore {
 
   setEquipeFilter = (value: number[]) => {
     this.equipeFilter = value;
-    console.log("setEquipeNumber" + value);
     this.searchKaizenDocuments();
     store.secteurStore.reloadIdValues();
   };
 
   setSecteurFilter = (value: number[]) => {
     this.secteurFilter = value;
-    console.log("setSecteurFilter" + value);
     this.searchKaizenDocuments();
   };
 
   setEtatFilter = (value: number[]) => {
     this.etatFilter = value;
-    console.log("setEtatFilter" + value);
     this.searchKaizenDocuments();
   };
 
@@ -87,8 +84,6 @@ export default class SearchStore {
   };
 
   setNextPage = () => {
-    console.log(this.currentPageNo);
-    console.log(this.totalPages);
     if (this.currentPageNo < this.totalPages)
       this.currentPageNo = this.currentPageNo + 1;
   };
@@ -144,7 +139,6 @@ export default class SearchStore {
       params.append("pageNo", `${this.currentPageNo}`);
     }
 
-    console.log(params.toString());
     return params;
   }
 
@@ -166,7 +160,7 @@ export default class SearchStore {
   searchKaizenDocuments = async () => {
     try {
       store.kaizenStore.setLoading(false);
-      console.log(JSON.stringify(this.getSearchAxiosParams()));
+      //console.log(JSON.stringify(this.getSearchAxiosParams()));
       const document = await agent.kaizen.filterSearch(
         this.getSearchAxiosParams()
       );
@@ -180,7 +174,7 @@ export default class SearchStore {
       runInAction(() => {
         store.kaizenStore.setLoading(false);
       });
-      console.log(error);
+      //console.log(error);
     }
   };
 }

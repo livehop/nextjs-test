@@ -34,9 +34,9 @@ export default class RessourcesStore {
   };
 
   loadTypeDemandeValues = async () => {
-    if (this.typeDemandeValues.length > 0) {
-      return this.typeDemandeValues;
-    }
+    // if (this.typeDemandeValues.length > 0) {
+    //   return this.typeDemandeValues;
+    // }
     try {
       this.loading = true;
       const idvalues = await agent.ressourcesnecessaire.listTypeDemandes();

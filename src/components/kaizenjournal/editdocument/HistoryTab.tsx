@@ -13,7 +13,7 @@ const HistoryTab = () => {
     getNotes().then((mynotes) => {
       if (mynotes) setMyNotes(toJS(mynotes));
     });
-  }, []);
+  }, [getNotes]);
 
   return (
     <div>

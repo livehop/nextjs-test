@@ -27,8 +27,6 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
   } = kaizenStore;
 
   const [selectedSecteurs, setSelectedSecteurs] = useState<Secteur[]>([]);
-  const [selectedSousSecteurs, setSelectedSousSecteurs] =
-    useState<IdValue | null>(null);
 
   const [selectedSousCategories, setSelectedSousCatetories] = useState<
     SousCategorie[]
@@ -44,7 +42,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
       setSelectedSousCatetories(sousCategories);
     });
     return () => {};
-  }, []);
+  }, [loadMeta, secteurs, sousCategories]);
 
   const {
     register,
@@ -133,7 +131,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
           <div className="flex items-start justify-between space-x-3">
             <div className="space-y-1">
               <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                Ajout d'un point Kaizen
+                Ajout d&apos;un point Kaizen
               </Dialog.Title>
               {/* <p className="text-sm text-gray-500">
                                           Some Description

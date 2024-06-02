@@ -1,6 +1,5 @@
 import { CatLegalLookup, KaizenDocument } from "@/infra/models";
 import { useStore } from "@/infra/stores/Store";
-import { set, toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import {
@@ -17,7 +16,7 @@ type CategorizationTabProps = {
 
 const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
   const { kaizenStore, categoryStore, secteurStore, projetStore } = useStore();
-  const { editDocument, loadEditDocument, sousCategories } = kaizenStore;
+  const { editDocument, loadEditDocument } = kaizenStore;
 
   const [myFreq, setMyFreq] = useState(editDocument?.catFreq.toString());
   const [myGrav, setMyGrav] = useState(editDocument?.catGrav.toString());
@@ -30,6 +29,13 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
   useEffect(() => {
     const equipeId = getValues("equipeId");
     let categorieId = getValues("categorieId");
+    let secteurId = getValues("secteurId");
+    console.log(
+      "SecteurId ------------------- " +
+        secteurId +
+        " in editDocument " +
+        editDocument?.secteurId
+    );
     if (!categorieId) {
       if (editDocument) categorieId = editDocument?.categorieId;
     }
@@ -52,15 +58,31 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
     if (editDocument === null) {
       loadEditDocument().then((document) => {
         if (!document) return;
+
+        console.log(
+          "Categorization tab: document.catLegal " + document.catLegal
+        );
+
         setMyFreq((document.catFreq === 0 ? 1 : document.catFreq).toString());
         setMyGrav((document.catGrav === 0 ? 1 : document.catGrav).toString());
         setMyProb((document.catProb === 0 ? 1 : document.catProb).toString());
         setMyLegal(
           (document.catLegal === 0 ? 1 : document.catLegal).toString()
         );
+        console.log(
+          "Categorization tab: document.catLegal now " + document.catLegal
+        );
       });
     }
-  }, [editDocument]);
+  }, [
+    editDocument,
+    getValues,
+    loadEditDocument,
+    kaizenStore,
+    categoryStore,
+    projetStore,
+    secteurStore,
+  ]);
 
   const categorySelected = (categoryId: number) => {
     console.log("Selected categoryId " + categoryId);
@@ -104,7 +126,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
                 <option
                   value={idValue.id}
                   key={idValue.id}
-                  selected={idValue.value === editDocument?.categorie.name}
+                  selected={idValue.id === editDocument?.categorie.id}
                 >
                   {idValue.value}
                 </option>
@@ -125,9 +147,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
                 <option
                   value={idValue.id}
                   key={idValue.id}
-                  selected={
-                    idValue.value === editDocument?.sousCategorie.description
-                  }
+                  selected={idValue.id === editDocument?.sousCategorie.id}
                 >
                   {idValue.value}
                 </option>

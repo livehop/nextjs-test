@@ -21,13 +21,13 @@ const FocalPointSearch = ({ setValue }: FocalPointComboProps) => {
 
   const [debouncedQuery, setDebouncedQuery] = useDebounceValue("", 1000);
 
-  useEffect(() => {
-    employeeStore.loadIdValues();
-  }, []);
+  // useEffect(() => {
+  //   employeeStore.loadIdValues();
+  // }, []);
 
   useEffect(() => {
     employeeStore.loadIdValues(debouncedQuery);
-  }, [debouncedQuery]);
+  }, [employeeStore, debouncedQuery]);
 
   const filteredPeople =
     query === ""

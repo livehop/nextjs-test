@@ -10,6 +10,8 @@ import {
 import { KaizenDocument } from "@/infra/models";
 import FocalPointSearch from "@/components/uicomponents/FocalPointSearch";
 import { SiMinutemailer } from "react-icons/si";
+import { IdValue } from "@/infra/models/IdValue";
+import Secteurs from "./dropdowns/Secteurs";
 
 type TopFormProps = {
   register: UseFormRegister<KaizenDocument>;
@@ -20,19 +22,23 @@ type TopFormProps = {
 const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
   const { kaizenStore, equipeStore, secteurStore, employeeStore } = useStore();
 
-  const { editDocument, editDocumentId } = kaizenStore;
+  const { editDocument, editDocumentId, loadEditDocument } = kaizenStore;
 
   const [mailSent, setMailSent] = useState(false);
 
-  useEffect(() => {
-    const equipeId = getValues("equipeId");
+  const [secteurValues, setSecteurValues] = useState<IdValue[]>([]);
 
+  useEffect(() => {
     employeeStore.loadIdValues();
     equipeStore.loadIdValues();
-    if (equipeId) {
-      secteurStore.loadIdValues(equipeId);
-    }
-  }, [editDocumentId]);
+  }, [
+    editDocumentId,
+    employeeStore,
+    equipeStore,
+    secteurStore,
+    getValues,
+    editDocument,
+  ]);
 
   const equipeSelected = (equipeId: number) => {
     secteurStore.loadIdValues(equipeId);
@@ -76,6 +82,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
               </div>
             </button>
           </div>
+
           <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-6">
             <div className="sm:col-span-2 sm:col-start-1">
               <label
@@ -121,7 +128,8 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
                 htmlFor="postal-code"
                 className="block text-xs font-medium text-gray-500"
               >
-                Équipe
+                Équipe {getValues("equipeId")} {editDocument?.equipeId}{" "}
+                {equipeStore.idValues[0]?.value}
               </label>
               <div className="mt-1">
                 <select
@@ -136,9 +144,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
                     <option
                       value={idValue.id}
                       key={idValue.id}
-                      selected={
-                        idValue.value === editDocument?.equipe.nomEquipe
-                      }
+                      selected={idValue.id === editDocument?.equipeId}
                     >
                       {idValue.value}
                     </option>
@@ -146,7 +152,6 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
                 </select>
               </div>
             </div>
-
             <div className="sm:col-span-2">
               <label
                 htmlFor="postal-code"
@@ -163,7 +168,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
                     <option
                       value={idValue.id}
                       key={idValue.id}
-                      selected={idValue.id === editDocument?.secteur.id}
+                      selected={idValue.id === editDocument?.secteurId}
                     >
                       {idValue.value}
                     </option>
@@ -171,6 +176,8 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
                 </select>
               </div>
             </div>
+
+            {/* <Secteurs setValue={setValue} equipeId={getValues("equipeId")} /> */}
 
             <div className="sm:col-span-2">
               <FocalPointSearch register={register} setValue={setValue} />

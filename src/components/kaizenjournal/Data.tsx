@@ -93,13 +93,12 @@ const Data = () => {
     loading,
     loadKaizenDocuments,
     setEditDocumentId,
-    setCurrentSortOrder,
     currentSortOrder,
   } = kaizenStore;
   useEffect(() => {
     loadKaizenDocuments();
     console.log("Data useEffect");
-  }, []);
+  }, [loadKaizenDocuments]);
 
   if (loading) return <div>Loading...</div>;
 

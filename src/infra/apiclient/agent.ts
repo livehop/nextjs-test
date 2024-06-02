@@ -289,7 +289,8 @@ const sendmail = {
     requests.post("/sendmail", email),
 };
 
-export default {
+const apis = {
+  user,
   kaizen,
   employees,
   categorie,
@@ -305,3 +306,5 @@ export default {
   catlegallookup,
   sendmail,
 };
+
+export default apis;

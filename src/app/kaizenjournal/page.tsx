@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Paging from "@/components/kaizenjournal/Paging";
 import SidePanel from "@/components/kaizenjournal/SidePanel";
 import { useStore } from "@/infra/stores/Store";
@@ -11,7 +11,11 @@ import { observer } from "mobx-react-lite";
 
 const currentYear = new Date().getFullYear();
 
-const page = () => {
+function EditKaizenFallback() {
+  return <>Loading ...</>;
+}
+
+const KaizenJournal = () => {
   const { kaizenStore } = useStore();
   const { loadRecordMetrics, recordMetrics } = kaizenStore;
   const [open, setOpen] = useState(false);
@@ -21,12 +25,12 @@ const page = () => {
   useEffect(() => {
     loadRecordMetrics();
     router.replace("kaizenjournal", undefined);
-  }, []);
+  }, [loadRecordMetrics, router]);
 
   const openSidePanel = (openPanel: boolean) => {
     console.log("openSidePanel---------------" + openPanel);
     if (open) {
-      kaizenStore.setEditDocumentId(null);
+      //kaizenStore.setEditDocumentId(null);
     }
     setOpen(openPanel);
   };
@@ -64,7 +68,9 @@ const page = () => {
           {/* <Data /> */}
           <div className="mt-8 flow-root px-12">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <EditPanel open={open} setOpen={openSidePanel} />
+              <Suspense fallback={<EditKaizenFallback />}>
+                <EditPanel open={open} setOpen={openSidePanel} />
+              </Suspense>
               <SidePanel open={open} setOpen={openSidePanel} />
             </div>
           </div>
@@ -79,4 +85,4 @@ const page = () => {
   );
 };
 
-export default observer(page);
+export default observer(KaizenJournal);

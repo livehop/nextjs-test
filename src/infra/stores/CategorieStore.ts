@@ -151,10 +151,10 @@ export default class CategorieStore {
 
   loadSousCategoryValues = async (categorieId: number) => {
     try {
-      console.log("loading souscategorie values for " + categorieId);
+      //console.log("loading souscategorie values for " + categorieId);
       this.loading = true;
       const idvalues = await agent.souscategorie.valuelist(categorieId);
-      console.log("souscategorie values " + JSON.stringify(idvalues));
+      //console.log("souscategorie values " + JSON.stringify(idvalues));
       runInAction(() => {
         this.loading = false;
         this.sousCatetoryValues = idvalues;

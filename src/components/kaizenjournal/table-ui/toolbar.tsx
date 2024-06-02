@@ -37,7 +37,13 @@ const Toolbar = ({ openSidePanel }: ToolbarProps) => {
     setProblemSearch(debouncedSearchProblem);
     setSolutionSearch(debouncedSearchSolution);
     searchKaizenDocuments();
-  }, [debouncedSearchProblem, debouncedSearchSolution]);
+  }, [
+    debouncedSearchProblem,
+    debouncedSearchSolution,
+    searchKaizenDocuments,
+    setProblemSearch,
+    setSolutionSearch,
+  ]);
 
   return (
     <>

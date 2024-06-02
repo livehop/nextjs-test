@@ -50,7 +50,7 @@ const SecteurForm = () => {
 
   useEffect(() => {
     loadEquipes();
-  }, []);
+  }, [loadEquipes]);
 
   const getBooleanValue = (value: string | boolean) => {
     if (value === "true") return true;

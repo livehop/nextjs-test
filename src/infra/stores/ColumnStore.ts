@@ -20,13 +20,13 @@ export default class ColumnStore {
 
   getFromLocalStorage = () => {
     if (typeof window !== "undefined") {
-      console.log("getFromLocalStorage.......");
+      //console.log("getFromLocalStorage.......");
       const columns = localStorage.getItem("displaycolumns");
       if (columns) {
-        console.log("getFromLocalStorage.......columns");
+        //console.log("getFromLocalStorage.......columns");
         return JSON.parse(columns);
       } else {
-        console.log("getFromLocalStorage.......getDefaultDisplayColumns");
+        //console.log("getFromLocalStorage.......getDefaultDisplayColumns");
         return getDefaultDisplayColumns();
       }
     } else {

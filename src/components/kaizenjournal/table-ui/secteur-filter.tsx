@@ -18,7 +18,6 @@ const SecteurFilter = () => {
   const { setSecteurFilter } = searchStore;
   const {
     idValues,
-    loadIdValues,
     toggleSelectedValue,
     isChecked,
     hasAnyCheckedItem,
@@ -27,9 +26,9 @@ const SecteurFilter = () => {
   } = secteurStore;
   const [popoverOpen, setPopOverOpen] = useState(false);
 
-  useEffect(() => {
-    loadIdValues();
-  }, []);
+  // useEffect(() => {
+  //   loadIdValues();
+  // }, [loadIdValues]);
 
   const togglePoppver = () => {
     console.log("popover " + popoverOpen);

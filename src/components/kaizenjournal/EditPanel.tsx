@@ -1,11 +1,10 @@
 "use client";
-import { Fragment, useEffect } from "react";
+import { Fragment, Suspense, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "@/infra/stores/Store";
 import { useRouter, useSearchParams } from "next/navigation";
 import EditKaizenJournalForm from "./editdocument/EditKaizenJournalForm";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 
 interface EditPanelProps {
   setOpen: (open: boolean) => void;
@@ -13,7 +12,7 @@ interface EditPanelProps {
 }
 
 const EditPanel = ({ setOpen, open }: EditPanelProps) => {
-  const { kaizenStore } = useStore();
+  const { kaizenStore, secteurStore } = useStore();
   const {
     editDocumentId,
     setEditDocumentId,
@@ -27,9 +26,16 @@ const EditPanel = ({ setOpen, open }: EditPanelProps) => {
   const search = searchParams.get("kaizendocument");
 
   useEffect(() => {
-    loadEditDocument();
+    console.log("Panel use effect called");
+
+    loadEditDocument().then((doc) => {
+      console.log("loadedDoc : " + doc?.equipeId);
+      if (doc === undefined) return;
+      console.log("loading values for  : " + doc?.equipeId);
+      secteurStore.loadIdValues(doc?.equipeId);
+    });
     loadResourceNessaicaires();
-  }, [search]);
+  }, [search, loadEditDocument, loadResourceNessaicaires, open]);
 
   if (loadingDocument) return;
 
@@ -59,7 +65,11 @@ const EditPanel = ({ setOpen, open }: EditPanelProps) => {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-3xl">
-                  {<EditKaizenJournalForm editDocument={editDocument} />}
+                  <Suspense fallback={<div>Loading...</div>}>
+                    {editDocument && (
+                      <EditKaizenJournalForm editDocument={editDocument} />
+                    )}
+                  </Suspense>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

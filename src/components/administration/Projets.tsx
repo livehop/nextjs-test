@@ -32,7 +32,7 @@ const Projets = () => {
 
   useEffect(() => {
     loadIdValues();
-  }, []);
+  }, [loadIdValues]);
 
   const onSubmitOld = async (data: FieldValues) => {
     console.log("Submitted Projet........... " + JSON.stringify(data));

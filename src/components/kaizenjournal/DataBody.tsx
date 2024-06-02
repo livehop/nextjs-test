@@ -5,7 +5,6 @@ import SkeletonData from "./SkeletonData";
 import { isColumnVisible } from "@/lib/utils/arrayutils";
 import { FaCircle } from "react-icons/fa6";
 import { KaizenDocument } from "@/infra/models";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/navigation";
 import { FaEdit } from "react-icons/fa";
 

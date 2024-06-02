@@ -29,7 +29,7 @@ const CategoryFilter = () => {
 
   useEffect(() => {
     loadIdValues();
-  }, []);
+  }, [loadIdValues]);
 
   const togglePoppver = () => {
     console.log("popover " + popoverOpen);

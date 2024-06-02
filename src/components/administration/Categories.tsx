@@ -6,7 +6,6 @@ import { observer } from "mobx-react-lite";
 import { Categorie, Equipe, SousCategorie } from "@/infra/models";
 import ConfirmationDialog from "../uicomponents/ConfirmationDialog";
 import { useToast } from "../ui/use-toast";
-import { set } from "date-fns";
 
 type CategorieDto = {
   categorie: Categorie;
@@ -53,7 +52,7 @@ const Categories = () => {
 
   useEffect(() => {
     loadCategories();
-  }, []);
+  }, [loadCategories]);
 
   const onSubmitOld = async (data: FieldValues) => {
     const categoryDto = data as CategorieDto;

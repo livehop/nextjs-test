@@ -181,8 +181,14 @@ export default class SecteurStore {
     }
   };
 
+  resetValues = () => {
+    this.idValues = [];
+    this.sousSecteurSelectedValues = [];
+  };
+
   loadIdValues = async (equipeId: number) => {
     try {
+      if (equipeId === undefined || equipeId === 0) return;
       this.loading = true;
       const idvalues = await agent.secteur.valuelist(equipeId.toString());
       runInAction(() => {

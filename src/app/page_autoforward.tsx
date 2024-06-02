@@ -1,14 +1,14 @@
 "use client";
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
     // Redirect to the kaizenjournal page on the first load
-    router.replace('/kaizenjournal');
-  }, []);
+    router.replace("/kaizenjournal");
+  }, [router]);
 
   return null; // This component doesn't need to render anything
 };

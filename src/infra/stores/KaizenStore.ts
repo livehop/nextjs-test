@@ -86,6 +86,8 @@ export default class KaizenStore {
   };
 
   setEditDocumentId = (documentId: number | null) => {
+    console.log("Setting edit document id " + documentId);
+
     this.editDocumentId = documentId;
     if (documentId === null) {
       this.editDocument = null;
@@ -102,7 +104,8 @@ export default class KaizenStore {
       runInAction(() => {
         this.savingData = false;
         this.loadRecordMetrics();
-        this.loadKaizenDocuments();
+        //this.loadKaizenDocuments();
+        store.searchStore.searchKaizenDocuments();
       });
       return result;
     } catch (error) {
@@ -116,7 +119,8 @@ export default class KaizenStore {
   updateKaizenDocument = async (document: KaizenDocument) => {
     try {
       this.savingData = true;
-      console.log("Updating kaizen document " + document.id);
+      if (this.editDocumentId !== null) document.id = this.editDocumentId;
+      console.log("Updating kaizen document " + JSON.stringify(document.id));
       const result = await agent.kaizen.update(document);
       runInAction(() => {
         this.savingData = false;
@@ -131,7 +135,7 @@ export default class KaizenStore {
             if (updatedDocument !== undefined) {
               this.editDocument = updatedDocument;
             }
-            this.loadKaizenDocuments();
+            store.searchStore.searchKaizenDocuments();
           }
         }
         //this.editDocument = updatedDocument;
@@ -142,11 +146,13 @@ export default class KaizenStore {
         this.savingData = false;
       });
       console.log(error);
+      throw error;
     }
   };
 
   loadEditDocument = async () => {
     if (this.editDocumentId === null) return;
+    if (this.editDocumentId === this.editDocument?.id) return this.editDocument;
     this.loadingDocument = true;
     this.editDocument = null;
     if (this.kaizenDocuments !== null && this.kaizenDocuments.data !== null) {
@@ -239,7 +245,8 @@ export default class KaizenStore {
       this.activeEquipe = equipe;
       store.searchStore.resetSearch();
       store.searchStore.equipeNumber = equipe.numeroEquipe;
-      this.loadKaizenDocuments();
+      store.searchStore.searchKaizenDocuments();
+      //this.loadKaizenDocuments();
     }
   };
 
@@ -250,7 +257,8 @@ export default class KaizenStore {
       this.activeEquipe = equipe;
       store.searchStore.resetSearch();
       store.searchStore.equipeNumber = equipe.numeroEquipe;
-      this.loadKaizenDocuments();
+      store.searchStore.searchKaizenDocuments();
+      //    this.loadKaizenDocuments();
     }
   };
   loadMeta = async () => {
@@ -292,26 +300,26 @@ export default class KaizenStore {
     }
   };
 
-  loadKaizenDocuments = async () => {
-    try {
-      this.loading = true;
-      console.log(store.searchStore.getAxiosParams().toString());
-      const document = await agent.kaizen.list(
-        store.searchStore.getAxiosParams()
-      );
-      runInAction(() => {
-        this.kaizenDocuments = document;
-        store.searchStore.setPageData(document);
-        this.loading = false;
-      });
-      return document.data;
-    } catch (error) {
-      runInAction(() => {
-        this.loading = false;
-      });
-      console.log(error);
-    }
-  };
+  // loadKaizenDocuments = async () => {
+  //   try {
+  //     this.loading = true;
+  //     console.log(store.searchStore.getAxiosParams().toString());
+  //     const document = await agent.kaizen.list(
+  //       store.searchStore.getAxiosParams()
+  //     );
+  //     runInAction(() => {
+  //       this.kaizenDocuments = document;
+  //       store.searchStore.setPageData(document);
+  //       this.loading = false;
+  //     });
+  //     return document.data;
+  //   } catch (error) {
+  //     runInAction(() => {
+  //       this.loading = false;
+  //     });
+  //     console.log(error);
+  //   }
+  // };
 
   loadCategories = async () => {
     if (this.categories.length > 0) return this.categories;

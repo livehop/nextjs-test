@@ -1,5 +1,4 @@
 "use client";
-import { KaizenDocument } from "@/infra/models";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
@@ -13,11 +12,12 @@ const DataSticky = () => {
   const { kaizenStore, columnStore } = useStore();
   const { columns } = columnStore;
 
-  const { loadKaizenDocuments } = kaizenStore;
-  useEffect(() => {
-    loadKaizenDocuments();
-    console.log("Data useEffect");
-  }, []);
+  //const { loadKaizenDocuments } = kaizenStore;
+
+  // useEffect(() => {
+  //   loadKaizenDocuments();
+  //   console.log("Data useEffect");
+  // }, [loadKaizenDocuments]);
 
   return (
     <div className="mt-4 border-2 border-grey-200 pr-4">

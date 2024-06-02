@@ -1,13 +1,14 @@
 import { KaizenDocument } from "@/infra/models";
 import { Dialog } from "@headlessui/react";
 import { observer } from "mobx-react-lite";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/infra/stores/Store";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import TopForm from "./TopForm";
 import Tabs from "./Tabs";
+import { toast } from "@/components/ui/use-toast";
 
 type EditKaizenJournalFormProps = {
   editDocument: KaizenDocument | null | undefined;
@@ -16,8 +17,11 @@ type EditKaizenJournalFormProps = {
 const EditKaizenJournalForm = ({
   editDocument,
 }: EditKaizenJournalFormProps) => {
+  const [submitData, setSubmitData] = useState("");
+
   const { kaizenStore } = useStore();
-  const { setEditDocumentId, updateKaizenDocument } = kaizenStore;
+  const { setEditDocumentId, updateKaizenDocument, loadEditDocument } =
+    kaizenStore;
 
   const {
     register,
@@ -32,10 +36,21 @@ const EditKaizenJournalForm = ({
 
   const onSubmit = async (data: KaizenDocument) => {
     console.log("on submit from the form .....");
-    console.log("catFreq ----> " + data.catFreq);
-    console.log("catGrav ----> " + data.catGrav);
-    //await updateKaizenDocument(data);
-    //closePanel();
+    setSubmitData(JSON.stringify({ data }, null, " "));
+    try {
+      await updateKaizenDocument(data).then(() => {
+        closePanel();
+        toast({
+          title: "Succès",
+          description: "Vos changements ont été sauvegardés avec succès.",
+        });
+      });
+    } catch (e: any) {
+      toast({
+        title: "Error",
+        description: e.message,
+      });
+    }
   };
 
   const closePanel = () => {
@@ -70,7 +85,7 @@ const EditKaizenJournalForm = ({
             </div>
           </div>
         </div>
-
+        {/* {submitData} */}
         {/* Divider container */}
         <div className="space-y-2 py-2 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0">
           {/* Project name */}
