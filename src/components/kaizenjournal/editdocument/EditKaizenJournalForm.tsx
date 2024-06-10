@@ -37,6 +37,7 @@ const EditKaizenJournalForm = ({
   const onSubmit = async (data: KaizenDocument) => {
     console.log("on submit from the form .....");
     setSubmitData(JSON.stringify({ data }, null, " "));
+
     try {
       await updateKaizenDocument(data).then(() => {
         closePanel();
@@ -87,7 +88,7 @@ const EditKaizenJournalForm = ({
             </div>
           </div>
         </div>
-        {/* {submitData} */}
+        {submitData}
         {/* Divider container */}
         <div className="space-y-2 py-2 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0">
           {/* Project name */}
@@ -97,7 +98,12 @@ const EditKaizenJournalForm = ({
               setValue={setValue}
               getValues={getValues}
             />
-            <Tabs register={register} getValues={getValues} watch={watch} />
+            <Tabs
+              register={register}
+              getValues={getValues}
+              watch={watch}
+              setValue={setValue}
+            />
           </div>
         </div>
       </div>

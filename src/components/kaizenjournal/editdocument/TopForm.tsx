@@ -12,6 +12,7 @@ import FocalPointSearch from "@/components/uicomponents/FocalPointSearch";
 import { SiMinutemailer } from "react-icons/si";
 import { IdValue } from "@/infra/models/IdValue";
 import Secteurs from "./dropdowns/Secteurs";
+import { toast } from "@/components/ui/use-toast";
 
 type TopFormProps = {
   register: UseFormRegister<KaizenDocument>;
@@ -54,6 +55,11 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
     kaizenStore.sendMail(focalId, problem, solution);
     console.log("send mail to : " + getValues("focalId"));
     setMailSent(true);
+    toast({
+      title: "Succès",
+      description: "Votre courrier a été envoyé.",
+      variant: "success",
+    });
   };
 
   return (

@@ -4,12 +4,18 @@ import { KaizenDocument } from "@/infra/models";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import {
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 
 type SuiviTabTabProps = {
   register: UseFormRegister<KaizenDocument>;
+  getValues: UseFormGetValues<KaizenDocument>;
+  setvalue: UseFormSetValue<KaizenDocument>;
 };
-const SuiviTab = ({ register }: SuiviTabTabProps) => {
+const SuiviTab = ({ register, getValues, setvalue }: SuiviTabTabProps) => {
   const { kaizenStore } = useStore();
   const { addNote } = kaizenStore;
   const [note, setNote] = useState("");
@@ -19,6 +25,13 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
     console.log("note -----> ", note);
     await addNote(note);
     setNote("");
+  };
+
+  const isValidDate = (date: string) => {
+    if (date.startsWith("0001")) {
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -86,7 +99,22 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
                   Début
                 </label>
                 <div className="mt-2 text-sm text-gray-600">
-                  <h2>{new Date().toISOString().split("T")[0]}</h2>
+                  {isValidDate(getValues("debutDate")) ? (
+                    <input
+                      type="date"
+                      defaultValue={getValues("debutDate").split("T")[0]}
+                      onChange={(e) => {
+                        setvalue("debutDate", e.target.value);
+                      }}
+                      className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                  ) : (
+                    <input
+                      type="date"
+                      {...register("debutDate")}
+                      className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                  )}
                 </div>
               </div>
               <div>
@@ -97,11 +125,22 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
                   Procahain Suivi
                 </label>
                 <div className="mt-2">
-                  <input
-                    type="date"
-                    {...register("suiviDate")}
-                    className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  />
+                  {isValidDate(getValues("suiviDate")) ? (
+                    <input
+                      type="date"
+                      defaultValue={getValues("suiviDate").split("T")[0]}
+                      onChange={(e) => {
+                        setvalue("suiviDate", e.target.value);
+                      }}
+                      className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                  ) : (
+                    <input
+                      type="date"
+                      {...register("suiviDate")}
+                      className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -114,12 +153,23 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
                   Fin Planfié
                 </label>
                 <div className="mt-2">
-                  <input
-                    type="date"
-                    {...register("finPlaniFieDate")}
-                    className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  />
-                </div>{" "}
+                  {isValidDate(getValues("finPlaniFieDate")) ? (
+                    <input
+                      type="date"
+                      defaultValue={getValues("finPlaniFieDate").split("T")[0]}
+                      onChange={(e) => {
+                        setvalue("finPlaniFieDate", e.target.value);
+                      }}
+                      className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                  ) : (
+                    <input
+                      type="date"
+                      {...register("finPlaniFieDate")}
+                      className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                  )}
+                </div>
               </div>
               <div>
                 <label
@@ -129,11 +179,22 @@ const SuiviTab = ({ register }: SuiviTabTabProps) => {
                   Complété
                 </label>
                 <div className="mt-2">
-                  <input
-                    type="date"
-                    {...register("completeDate")}
-                    className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  />
+                  {isValidDate(getValues("completeDate")) ? (
+                    <input
+                      type="date"
+                      defaultValue={getValues("completeDate").split("T")[0]}
+                      onChange={(e) => {
+                        setvalue("completeDate", e.target.value);
+                      }}
+                      className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                  ) : (
+                    <input
+                      type="date"
+                      {...register("completeDate")}
+                      className="p-2 block w-xs rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                  )}
                 </div>
               </div>
             </div>

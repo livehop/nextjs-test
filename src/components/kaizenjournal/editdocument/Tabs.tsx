@@ -20,6 +20,7 @@ import { KaizenDocument, KaizenEditDocument } from "@/infra/models";
 type TabProps = {
   register: UseFormRegister<KaizenDocument>;
   getValues: UseFormGetValues<KaizenDocument>;
+  setValue: UseFormSetValue<KaizenDocument>;
   watch: UseFormWatch<KaizenDocument>;
 };
 
@@ -28,7 +29,7 @@ interface ITab {
   current: boolean;
 }
 
-const Tabs = ({ register, getValues, watch }: TabProps) => {
+const Tabs = ({ register, getValues, watch, setValue }: TabProps) => {
   const [tabs, setTabs] = useState<ITab[]>([
     { name: "Catégorisation", current: true },
     { name: "Solution", current: false },
@@ -74,7 +75,13 @@ const Tabs = ({ register, getValues, watch }: TabProps) => {
       case "Demandes":
         return <DemandesTab />;
       case "Suivi":
-        return <SuiviTab register={register} />;
+        return (
+          <SuiviTab
+            register={register}
+            getValues={getValues}
+            setvalue={setValue}
+          />
+        );
       case "Télécharger Documents":
         return <UploadDocumentsTab />;
       case "Historique":
