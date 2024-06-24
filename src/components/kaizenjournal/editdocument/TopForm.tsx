@@ -21,17 +21,17 @@ type TopFormProps = {
 };
 
 const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
-  const { kaizenStore, equipeStore, secteurStore, employeeStore } = useStore();
+  const { kaizenStore, equipeStore, secteurStore, employeeStore, etatStore } =
+    useStore();
 
-  const { editDocument, editDocumentId, loadEditDocument } = kaizenStore;
+  const { editDocument, editDocumentId } = kaizenStore;
 
   const [mailSent, setMailSent] = useState(false);
-
-  const [secteurValues, setSecteurValues] = useState<IdValue[]>([]);
 
   useEffect(() => {
     employeeStore.loadIdValues();
     equipeStore.loadIdValues();
+    etatStore.loadIdValues();
   }, [
     editDocumentId,
     employeeStore,
@@ -39,6 +39,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
     secteurStore,
     getValues,
     editDocument,
+    etatStore,
   ]);
 
   const equipeSelected = (equipeId: number) => {
@@ -66,15 +67,20 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
     <>
       <div className="space-y-12 bg-gray-100 p-2 rounded-sm">
         <div className="border-b border-gray-900/10 pb-2">
-          <div className="flex justify-end">
-            {/* <button
-              onClick={sendMail}
-              disabled={mailSent}
-              type="button"
-              className="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          <div className="flex justify-between items-center">
+            <select
+              {...register("etatId", { required: "Select an Etat" })}
+              className="ml-0 block w-48 rounded-md border-0 py-1.5 pl-2 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
             >
-              Send Mail
-            </button> */}
+              <option value="" disabled selected>
+                Sélectionner État
+              </option>
+              {etatStore.idValues.map((option, index) => (
+                <option key={index} value={option.id}>
+                  {option.value}
+                </option>
+              ))}
+            </select>
 
             <button
               onClick={sendMail}
@@ -134,8 +140,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
                 htmlFor="postal-code"
                 className="block text-xs font-medium text-gray-500"
               >
-                Équipe {getValues("equipeId")} {editDocument?.equipeId}{" "}
-                {equipeStore.idValues[0]?.value}
+                Équipe
               </label>
               <div className="mt-1">
                 <select

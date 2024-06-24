@@ -91,8 +91,7 @@ export function DocumentWidgetDropzone({
                 />
               </label>
               <p className="pl-1">
-                Tèlèchargez ou faites et dèposez un fichier ici jusqu&apos;à 20
-                Mo
+                Tèlèchargez ou dèposez un fichier ici jusqu&apos;à 20 Mo
               </p>
             </div>
           </div>

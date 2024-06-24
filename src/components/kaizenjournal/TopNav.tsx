@@ -29,7 +29,7 @@ type NavigationType = {
 // };
 const initNavigation: NavigationType[] = [
   { name: "Kaizen Dashboard", href: "/kaizenjournal", current: false },
-  { name: "Adminstration", href: "/administration", current: false },
+  { name: "Administration", href: "/administration", current: false },
   // { name: "Employee Search", href: "/employeesearch", current: false },
 ];
 const userNavigation = [

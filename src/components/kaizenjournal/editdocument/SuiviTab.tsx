@@ -122,7 +122,7 @@ const SuiviTab = ({ register, getValues, setvalue }: SuiviTabTabProps) => {
                   htmlFor="postal-code"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Procahain Suivi
+                  Prochain Suivi
                 </label>
                 <div className="mt-2">
                   {isValidDate(getValues("suiviDate")) ? (
@@ -150,7 +150,7 @@ const SuiviTab = ({ register, getValues, setvalue }: SuiviTabTabProps) => {
                   htmlFor="postal-code"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Fin Planfié
+                  Fin Planifié
                 </label>
                 <div className="mt-2">
                   {isValidDate(getValues("finPlaniFieDate")) ? (

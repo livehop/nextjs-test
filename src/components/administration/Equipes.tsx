@@ -6,8 +6,10 @@ import { observer } from "mobx-react-lite";
 import { Equipe } from "@/infra/models";
 import { useToast } from "../ui/use-toast";
 import ConfirmationDialog from "../uicomponents/ConfirmationDialog";
+import { useRouter } from "next/navigation";
 
 const Equipes = () => {
+  const router = useRouter();
   const { kaizenStore, equipeStore } = useStore();
   const { equipes } = kaizenStore;
   const { loadEquipe, saveEquipe } = equipeStore;
@@ -255,6 +257,13 @@ const Equipes = () => {
               onClick={() => reset()}
             >
               Réinitialiser
+            </button>
+            <button
+              type="button"
+              className="rounded-md bg-red-100 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={() => router.replace("/kaizenjournal")}
+            >
+              Fermer
             </button>
           </div>
         </div>

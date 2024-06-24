@@ -1,5 +1,4 @@
 "use client";
-import { IdValue } from "@/infra/models/IdValue";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
@@ -8,8 +7,10 @@ import ConfirmationDialog from "../uicomponents/ConfirmationDialog";
 import { useToast } from "../ui/use-toast";
 import { Projet } from "@/infra/models/Projet";
 import { set } from "date-fns";
+import { useRouter } from "next/navigation";
 
 const Projets = () => {
+  const router = useRouter();
   const { projetStore } = useStore();
   const { idValues, loadIdValues, loadProjet, saveProjet } = projetStore;
 
@@ -214,6 +215,13 @@ const Projets = () => {
               onClick={() => reset()}
             >
               Réinitialiser
+            </button>
+            <button
+              type="button"
+              className="rounded-md bg-red-100 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={() => router.replace("/kaizenjournal")}
+            >
+              Fermer
             </button>
           </div>
         </div>

@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import { Secteur, SousSecteur } from "@/infra/models";
 import { useToast } from "../ui/use-toast";
 import ConfirmationDialog from "../uicomponents/ConfirmationDialog";
+import { useRouter } from "next/navigation";
 
 type SecteurDto = {
   secteur: Secteur;
@@ -13,6 +14,7 @@ type SecteurDto = {
 };
 
 const SecteurForm = () => {
+  const router = useRouter();
   const { kaizenStore, secteurStore } = useStore();
   const { loadEquipes, equipes } = kaizenStore;
   const {
@@ -173,19 +175,17 @@ const SecteurForm = () => {
       >
         <div className="space-y-6 py-6 sm:space-y-0 sm:py-0">
           {/* Project name */}
-          <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
-            <div>
+          <div className="space-y-2 px-4">
+            <div className="flex items-center gap-20">
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
                 Équipes
               </label>
-            </div>
-            <div className="sm:col-span-2">
               <select
                 defaultValue={"Ajouter une nouvelle valeur"}
                 {...register("secteur.equipe.id", {
                   required: "Select an Equipe",
                 })}
-                className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
+                className="mt-2 block w-60 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
                 onChange={(e) => {
                   equipesSelected(parseInt(e.target.value));
                 }}
@@ -270,23 +270,27 @@ const SecteurForm = () => {
                     État
                   </label>
                 </div>
-                <div className="sm:col-span-2 pt-2">
-                  Actif :
-                  <input
-                    className="m-2"
-                    type="radio"
-                    value={0}
-                    checked={selectedSecteurOption === 0}
-                    onChange={() => setValue("secteur.desuet", 0)}
-                  />
-                  Inactif :{" "}
-                  <input
-                    className="m-2"
-                    type="radio"
-                    value={1}
-                    checked={selectedSecteurOption === 1}
-                    onChange={() => setValue("secteur.desuet", 1)}
-                  />
+                <div className="sm:col-span-2 pt-2 flex gap-6">
+                  <div>
+                    Actif :
+                    <input
+                      className="m-2"
+                      type="radio"
+                      value={0}
+                      checked={selectedSecteurOption === 0}
+                      onChange={() => setValue("secteur.desuet", 0)}
+                    />
+                  </div>
+                  <div>
+                    Inactif :{" "}
+                    <input
+                      className="m-2"
+                      type="radio"
+                      value={1}
+                      checked={selectedSecteurOption === 1}
+                      onChange={() => setValue("secteur.desuet", 1)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -359,7 +363,7 @@ const SecteurForm = () => {
                   </label>
                 </div>
 
-                <div className="sm:col-span-2 flex gap-6 pt-2">
+                <div className="sm:col-span-2 flex gap-8 pt-2">
                   <div>
                     <span className="mr-2">Actif :</span>
                     <input
@@ -403,6 +407,13 @@ const SecteurForm = () => {
               onClick={() => reset()}
             >
               Réinitialiser
+            </button>
+            <button
+              type="button"
+              className="rounded-md bg-red-100 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={() => router.replace("/kaizenjournal")}
+            >
+              Fermer
             </button>
           </div>
         </div>

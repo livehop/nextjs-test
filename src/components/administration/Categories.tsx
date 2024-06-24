@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import { Categorie, Equipe, SousCategorie } from "@/infra/models";
 import ConfirmationDialog from "../uicomponents/ConfirmationDialog";
 import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 
 type CategorieDto = {
   categorie: Categorie;
@@ -13,6 +14,7 @@ type CategorieDto = {
 };
 
 const Categories = () => {
+  const router = useRouter();
   const { kaizenStore, categoryStore } = useStore();
   const { equipes } = kaizenStore;
   const {
@@ -379,6 +381,13 @@ const Categories = () => {
               onClick={() => reset()}
             >
               Réinitialiser
+            </button>
+            <button
+              type="button"
+              className="rounded-md bg-red-100 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={() => router.replace("/kaizenjournal")}
+            >
+              Fermer
             </button>
           </div>
         </div>

@@ -38,8 +38,8 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
 
   useEffect(() => {
     loadMeta().then(() => {
-      setSelectedSecteurs(secteurs);
-      setSelectedSousCatetories(sousCategories);
+      setSelectedSecteurs([]);
+      setSelectedSousCatetories([]);
     });
     return () => {};
   }, [loadMeta, secteurs, sousCategories]);
@@ -52,7 +52,9 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
     getValues,
   } = useForm();
 
-  const inscritRegister = register("inscritpar");
+  const inscritRegister = register("inscritpar", {
+    required: "Inscrit par is required",
+  });
   const equipeRegister = register("equipe", { required: "Select an Équipe" });
   const secteurRegister = register("secteur", {
     required: "Select an Secteur",
@@ -165,7 +167,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                Inscrit par
+                Inscrit par<span className="text-red-600"> *</span>
               </label>
             </div>
             <div className="sm:col-span-2">
@@ -189,7 +191,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                Problème
+                Problème<span className="text-red-600"> *</span>
               </label>
             </div>
             <div className="sm:col-span-2">
@@ -212,7 +214,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
             </div>
             <div className="sm:col-span-2">
               <textarea
-                {...register("solution", { required: "Solution is required" })}
+                {...register("solution")}
                 rows={3}
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-200 sm:text-sm sm:leading-6"
                 defaultValue={""}
@@ -225,12 +227,11 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                Équipe
+                Équipe<span className="text-red-600"> *</span>
               </label>
             </div>
             <div className="sm:col-span-2">
               <select
-                defaultValue={"Sélectionner"}
                 {...equipeRegister}
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
                 onChange={(e) => {
@@ -238,7 +239,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                   equipeSelected(parseInt(e.target.value));
                 }}
               >
-                <option value="Sélectionner" disabled>
+                <option value="" disabled selected>
                   Sélectionner
                 </option>
                 {equipes.map((option, index) => (
@@ -255,12 +256,11 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                Secteur
+                Secteur<span className="text-red-600"> *</span>
               </label>
             </div>
             <div className="sm:col-span-2">
               <select
-                defaultValue={"Sélectionner"}
                 {...register("secteur", { required: "Select a Secteur" })}
                 onChange={(e) => {
                   secteurRegister.onChange(e);
@@ -268,11 +268,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                 }}
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
               >
-                <option
-                  value="Sélectionner"
-                  disabled
-                  defaultValue={"Sélectionner"}
-                >
+                <option disabled selected value="">
                   Sélectionner
                 </option>
 
@@ -291,7 +287,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
             <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                  Sous Secteur
+                  Sous Secteur<span className="text-red-600"> *</span>
                 </label>
               </div>
               <div className="sm:col-span-2">
@@ -301,7 +297,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                   })}
                   className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
                 >
-                  <option value="" disabled defaultValue={""}>
+                  <option value="" disabled selected>
                     Sélectionner
                   </option>
 
@@ -320,12 +316,11 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                Catégorie
+                Catégorie<span className="text-red-600"> *</span>
               </label>
             </div>
             <div className="sm:col-span-2">
               <select
-                defaultValue={"Sélectionner"}
                 {...categorieRegister}
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
                 onChange={(e) => {
@@ -333,11 +328,7 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
                   categorySelected(parseInt(e.target.value));
                 }}
               >
-                <option
-                  value="Sélectionner"
-                  disabled
-                  defaultValue={"Sélectionner"}
-                >
+                <option value="" disabled selected>
                   Sélectionner
                 </option>
 
@@ -355,22 +346,17 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
           <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                Sous-catégorie
+                Sous-catégorie<span className="text-red-600"> *</span>
               </label>
             </div>
             <div className="sm:col-span-2">
               <select
-                defaultValue={"Sélectionner"}
                 {...register("sousCategorie", {
                   required: "Select a Sous-catégorie",
                 })}
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
               >
-                <option
-                  value="Sélectionner"
-                  disabled
-                  defaultValue={"Sélectionner"}
-                >
+                <option value="" disabled selected>
                   Sélectionner
                 </option>
 

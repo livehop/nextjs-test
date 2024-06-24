@@ -124,6 +124,7 @@ export default class KaizenStore {
       const result = await agent.kaizen.update(document);
       runInAction(() => {
         this.savingData = false;
+        this.loadRecordMetrics();
         if (result === true) {
           if (
             this.kaizenDocuments !== null &&

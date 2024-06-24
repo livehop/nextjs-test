@@ -85,7 +85,11 @@ const DataBody = () => {
             )}
             {isColumnVisible(columns, "Équipe") && (
               <td className="pt-1 text-start whitespace-nowrap text-sm font-medium text-gray-900">
-                {kaizen.equipe.nomEquipe}
+                <span className="text-gray-900">
+                  {kaizen.equipe.numeroEquipe}
+                </span>
+                -
+                <span className="text-gray-600">{kaizen.equipe.nomEquipe}</span>
               </td>
             )}
             {isColumnVisible(columns, "Secteur") && (
