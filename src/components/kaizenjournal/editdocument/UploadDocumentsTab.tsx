@@ -33,7 +33,7 @@ const UploadDocumentsTab = () => {
 
   const uploadFiles = async () => {
     if (files) {
-      files.forEach(async (file) => {
+      files?.forEach(async (file) => {
         file.isProcessing = true;
         if (!file.id) {
           await uploadFile(file.data).then((id) => {
@@ -44,8 +44,8 @@ const UploadDocumentsTab = () => {
           });
         }
         file.isProcessing = false;
-        console.log("Files setting " + files);
-        setFiles(() => [...files]);
+        console.log("Files setting " + files.length);
+        setFiles(() => [...files!]);
       });
     }
   };
@@ -195,9 +195,6 @@ const UploadDocumentsTab = () => {
                     <Link
                       className="flex gap-2 items-center justify-center"
                       href="#"
-                      onClick={() => {
-                        uploadFiles();
-                      }}
                     >
                       <LuSaveAll size={15} color="white" />
                       Save All
