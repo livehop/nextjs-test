@@ -9,7 +9,7 @@ import DataBody from "./DataBody";
 import { isColumnVisible } from "@/lib/utils/arrayutils";
 
 const DataSticky = () => {
-  const { kaizenStore, columnStore } = useStore();
+  const { columnStore } = useStore();
   const { columns } = columnStore;
 
   //const { loadKaizenDocuments } = kaizenStore;

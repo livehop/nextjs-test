@@ -10,8 +10,6 @@ import {
 import { KaizenDocument } from "@/infra/models";
 import FocalPointSearch from "@/components/uicomponents/FocalPointSearch";
 import { SiMinutemailer } from "react-icons/si";
-import { IdValue } from "@/infra/models/IdValue";
-import Secteurs from "./dropdowns/Secteurs";
 import { toast } from "@/components/ui/use-toast";
 
 type TopFormProps = {
@@ -68,19 +66,24 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
       <div className="space-y-12 bg-gray-100 p-2 rounded-sm">
         <div className="border-b border-gray-900/10 pb-2">
           <div className="flex justify-between items-center">
-            <select
-              {...register("etatId", { required: "Select an Etat" })}
-              className="ml-0 block w-48 rounded-md border-0 py-1.5 pl-2 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
-            >
-              <option value="" disabled selected>
-                Sélectionner État
-              </option>
-              {etatStore.idValues.map((option, index) => (
-                <option key={index} value={option.id}>
-                  {option.value}
+            <div className="flex justify-center items-center">
+              <div className="mr-4 block text-xs font-medium text-gray-500">
+                Etat
+              </div>
+              <select
+                {...register("etatId", { required: "Select an Etat" })}
+                className="ml-0 block w-48 rounded-md border-0 py-1.5 pl-2 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
+              >
+                <option value="" disabled selected>
+                  Sélectionner État
                 </option>
-              ))}
-            </select>
+                {etatStore.idValues.map((option, index) => (
+                  <option key={index} value={option.id}>
+                    {option.value}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <button
               onClick={sendMail}

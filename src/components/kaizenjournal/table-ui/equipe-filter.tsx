@@ -12,6 +12,7 @@ import { useStore } from "@/infra/stores/Store";
 import { FaSearch } from "react-icons/fa";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { useSearchParams } from "next/navigation";
 
 const EquipeFilter = () => {
   const { equipeStore, searchStore } = useStore();
@@ -24,11 +25,24 @@ const EquipeFilter = () => {
     hasAnyCheckedItem,
     clearAllSelectedItems,
     selectedValues,
+    addSelectedValue,
   } = equipeStore;
   const [popoverOpen, setPopOverOpen] = useState(false);
 
+  const searchParams = useSearchParams();
+
   useEffect(() => {
-    loadIdValues();
+    const equipe = searchParams.get("equipe");
+    if (equipe) {
+      setEquipeFilter(equipe.split(",").map((v) => parseInt(v)));
+    }
+    loadIdValues().then(() => {
+      console.log("loadIdValues");
+      if (equipe) {
+        const values = equipe.split(",").map((v) => parseInt(v));
+        addSelectedValue(values[0]);
+      }
+    });
   }, [loadIdValues]);
 
   const togglePoppver = () => {

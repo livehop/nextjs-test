@@ -22,6 +22,14 @@ export default class EquipeStore {
     }
   };
 
+  addSelectedValue = (id: number) => {
+    const idvalue = this.idValues.find((v) => v.id === id);
+    if (!idvalue) return;
+    const index = this.selectedValues.findIndex((v) => v.id === idvalue.id);
+    if (index >= 0) return;
+    this.selectedValues.push(idvalue);
+  };
+
   hasAnyCheckedItem = () => {
     return this.selectedValues.length > 0;
   };
