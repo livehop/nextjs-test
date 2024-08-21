@@ -9,7 +9,7 @@ type SolutionTabProps = {
 };
 
 const SolutionTab = ({ register, getValues }: SolutionTabProps) => {
-  const { kaizenStore } = useStore();
+  const { kaizenStore, userStore } = useStore();
   const { editDocument } = kaizenStore;
 
   const [mySolGain, setMySolGain] = useState(editDocument?.solGain.toString());
@@ -51,6 +51,7 @@ const SolutionTab = ({ register, getValues }: SolutionTabProps) => {
           </label>
           <div className="mt-2">
             <textarea
+              disabled={!userStore.isEditable}
               {...register("solution")}
               rows={3}
               className="pl-2 block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-xs sm:leading-6"
@@ -67,6 +68,7 @@ const SolutionTab = ({ register, getValues }: SolutionTabProps) => {
           </label>
           <div className="mt-1">
             <select
+              disabled={!userStore.isEditable}
               {...register("solGain")}
               onChange={(event) => {
                 setMySolGain(event.target.value);
@@ -87,6 +89,7 @@ const SolutionTab = ({ register, getValues }: SolutionTabProps) => {
           </label>
           <div className="mt-1">
             <select
+              disabled={!userStore.isEditable}
               {...register("solCout")}
               onChange={(event) => {
                 setMySolCout(event.target.value);
@@ -106,6 +109,7 @@ const SolutionTab = ({ register, getValues }: SolutionTabProps) => {
           </label>
           <div className="mt-1">
             <select
+              disabled={!userStore.isEditable}
               {...register("solEff")}
               onChange={(event) => {
                 setMySolEff(event.target.value);
@@ -128,6 +132,7 @@ const SolutionTab = ({ register, getValues }: SolutionTabProps) => {
           </label>
           <div className="mt-1">
             <select
+              disabled={!userStore.isEditable}
               {...register("solRisq")}
               onChange={(event) => {
                 setMySolRisq(event.target.value);

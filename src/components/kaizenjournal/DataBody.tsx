@@ -7,6 +7,8 @@ import { FaCircle } from "react-icons/fa6";
 import { KaizenDocument } from "@/infra/models";
 import { useRouter } from "next/navigation";
 import { FaEdit } from "react-icons/fa";
+import { LuPanelLeftOpen } from "react-icons/lu";
+import { cn } from "@/lib/utils";
 
 const GetColoredText = (text: string, urgency: number) => {
   if (urgency === 1) return <span className="text-pink-700">{text}</span>;
@@ -73,38 +75,55 @@ const DataBody = () => {
 
   if (loading) return <SkeletonData />;
 
+  const getRowColor = (index: number) => {
+    if (index % 2 === 0) {
+      return "bg-gray-50";
+    }
+    return "bg-gray-200";
+  };
+
   return (
     <>
       {kaizenDocuments !== null &&
-        kaizenDocuments?.data.map((kaizen) => (
-          <tr key={kaizen.id} className="align-top text-start">
+        kaizenDocuments?.data.map((kaizen, index) => (
+          <tr
+            key={kaizen.id}
+            className={cn("align-top text-star", getRowColor(index))}
+          >
             {isColumnVisible(columns, "Id") && (
-              <td className="pt-1 text-center whitespace-nowrap text-sm text-gray-500">
+              <td
+                className={cn(
+                  "text-center whitespace-nowrap text-xs",
+                  getRowColor(index)
+                )}
+              >
                 {kaizen.id}
               </td>
             )}
             {isColumnVisible(columns, "Équipe") && (
-              <td className="pt-1 text-start whitespace-nowrap text-sm font-medium text-gray-900">
-                <span className="text-gray-900">
+              <td className="w-24  text-start whitespace-nowrap text-xs font-semibold text-black">
+                <span className="text-gray-900 text-xs">
                   {kaizen.equipe.numeroEquipe}
                 </span>
                 -
-                <span className="text-gray-600">{kaizen.equipe.nomEquipe}</span>
+                <span className="text-gray-900 text-xs">
+                  {kaizen.equipe.nomEquipe}
+                </span>
               </td>
             )}
             {isColumnVisible(columns, "Secteur") && (
-              <td className="pt-1 text-start text-xs text-gray-900 max-w-28 text-wrap">
+              <td className="text-start text-xs text-gray-900 max-w-28 text-wrap">
                 {kaizen.secteur.name}
               </td>
             )}
             {isColumnVisible(columns, "Problème") && (
-              <td className="pt-1 text-xs text-gray-500 max-w-[600px] line-clamp-3 min-w-48">
+              <td className="text-xs text-gray-500 max-w-[600px] line-clamp-3 min-w-48">
                 {kaizen.problematique}
               </td>
             )}
             {(isColumnVisible(columns, "Inscrit Par") ||
               isColumnVisible(columns, "Inscrit Date")) && (
-              <td className="pt-1 whitespace-nowrap text-xs text-gray-500 max-w-36 text-wrap">
+              <td className="whitespace-nowrap text-xs text-gray-500 max-w-36 text-wrap">
                 {isColumnVisible(columns, "Inscrit Par") && (
                   <>
                     {kaizen.inscritPar} <br />
@@ -117,7 +136,7 @@ const DataBody = () => {
             )}
             {(isColumnVisible(columns, "Catégorie") ||
               isColumnVisible(columns, "Sous-catégorie")) && (
-              <td className="pt-1 text-sm text-gray-500">
+              <td className="text-sm text-gray-500">
                 {isColumnVisible(columns, "Catégorie") && (
                   <>
                     {kaizen.categorie.name} <br />{" "}
@@ -130,7 +149,7 @@ const DataBody = () => {
             )}
             {(isColumnVisible(columns, "Indice") ||
               isColumnVisible(columns, "Cote Indice")) && (
-              <td className="pt-1 whitespace-nowrap text-xs text-gray-500">
+              <td className="whitespace-nowrap text-xs text-gray-500">
                 {isColumnVisible(columns, "Indice") && (
                   <div className="flex gap-1 items-center justify-start">
                     <FaCircle size={10} color={GetIndiceColor(kaizen)} />
@@ -146,12 +165,12 @@ const DataBody = () => {
               </td>
             )}
             {isColumnVisible(columns, "Solution") && (
-              <td className="pt-1 text-xs text-gray-500 max-w-[600px] line-clamp-3 min-w-48">
+              <td className="text-xs text-gray-500 max-w-[600px] line-clamp-4 min-w-48">
                 {kaizen.solution}
               </td>
             )}
             {isColumnVisible(columns, "Point Focal") && (
-              <td className="pt-1 text-center text-xs text-gray-500">
+              <td className="text-center text-xs text-gray-500">
                 {kaizen.focalContactName.length > 0 ? (
                   <>{kaizen.focalContactName}</>
                 ) : (
@@ -188,19 +207,19 @@ const DataBody = () => {
               </td>
             )}
             {isColumnVisible(columns, "État") && (
-              <td className="pt-1 text-center text-sm text-gray-500">
+              <td className="text-center text-sm text-gray-500">
                 {GetColoredText(kaizen.etat.name, kaizen.etat.etatPriorite)}
               </td>
             )}
 
-            <td className="pt-1 relative whitespace-nowrap text-right text-xs font-medium sm:pr-0">
+            <td className="relative whitespace-nowrap text-center text-xs font-medium">
               <button
                 onClick={() => {
                   loadDocumentToEdit(kaizen.id);
                 }}
                 className="text-green-800 hover:text-indigo-900"
               >
-                <FaEdit size={20} color="green" />
+                <LuPanelLeftOpen size={20} color="green" />
                 <span className="sr-only">, {kaizen.id}</span>
               </button>
             </td>

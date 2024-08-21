@@ -7,9 +7,12 @@ import TwoColHeader from "../ui/table/TwoColHeader";
 import FourColHeader from "../ui/table/FourColHeader";
 import DataBody from "./DataBody";
 import { isColumnVisible } from "@/lib/utils/arrayutils";
+import { Button } from "../ui/button";
+import { ArrowDownIcon } from "@heroicons/react/24/outline";
+import { DownloadToExcel } from "./DownloadToExcel";
 
 const DataSticky = () => {
-  const { columnStore } = useStore();
+  const { kaizenStore, columnStore } = useStore();
   const { columns } = columnStore;
 
   //const { loadKaizenDocuments } = kaizenStore;
@@ -20,9 +23,9 @@ const DataSticky = () => {
   // }, [loadKaizenDocuments]);
 
   return (
-    <div className="mt-4 border-2 border-grey-200 pr-4">
-      <table className="min-w-full border-separate border-spacing-0">
-        <thead>
+    <div className="mt-4 rounded-md">
+      <table className="min-w-full">
+        <thead className="bg-slate-50">
           <tr>
             <SingleColHeader title="Id" />
 
@@ -46,7 +49,7 @@ const DataSticky = () => {
             <SingleColHeader title="État" />
             <th
               scope="col"
-              className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-3 pr-4 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8"
+              className="sticky top-0 z-10 border-b border-gray-500 bg-slate-50 py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
             >
               <span className="sr-only">Edit</span>
             </th>

@@ -31,12 +31,12 @@ interface ITab {
 
 const Tabs = ({ register, getValues, watch, setValue }: TabProps) => {
   const [tabs, setTabs] = useState<ITab[]>([
-    { name: "Catégorisation", current: true },
+    { name: "Historique", current: true },
+    { name: "Catégorisation", current: false },
     { name: "Solution", current: false },
     { name: "Demandes", current: false },
     { name: "Suivi", current: false },
     { name: "Télécharger Documents", current: false },
-    { name: "Historique", current: false },
   ]);
 
   const changeTab = (tab: ITab) => {

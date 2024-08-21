@@ -20,6 +20,11 @@ export default class SecteurStore {
   sousSecteurs: SousSecteur[] = [];
   selectedSousSecteur: SousSecteur | null = null;
 
+  resetSecteurs = () => {
+    this.secteurs = [];
+    this.sousSecteurs = [];
+  };
+
   saveSecteur = async (secteur: Secteur) => {
     try {
       this.loading = true;

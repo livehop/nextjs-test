@@ -18,9 +18,9 @@ const SingleColHeader = ({ title }: SingleColHeaderProps) => {
     <>
       {isColumnVisible(columns, title) && (
         <th
-          className="sticky top-0 border-b border-gray-300 
-                    bg-white bg-opacity-75 text-left text-sm 
-                    font-semibold text-gray-900 backdrop-blur backdrop-filter"
+          className="sticky top-0 border-b border-gray-500  bg-slate-50
+                    text-left text-sm 
+                    font-semibold text-gray-900"
         >
           <ColumnHeader title={title} />
         </th>

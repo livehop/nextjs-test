@@ -12,12 +12,25 @@ import React from "react";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
 import { useStore } from "@/infra/stores/Store";
+import { DownloadToExcel } from "../DownloadToExcel";
+import { ArrowDownIcon } from "@heroicons/react/24/outline";
 
 const ColumnsFilter = () => {
-  const { columnStore } = useStore();
+  const { columnStore, kaizenStore } = useStore();
   const { columns, toggleColVisibility } = columnStore;
   return (
-    <>
+    <div className="flex row gap-2">
+      <Button
+        size={"sm"}
+        variant={"outline"}
+        onClick={() => {
+          DownloadToExcel(kaizenStore.kaizenDocuments?.data!);
+        }}
+      >
+        Excel
+        <ArrowDownIcon className="ml-2 h-4 w-4" />
+      </Button>
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -49,7 +62,7 @@ const ColumnsFilter = () => {
             })}
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+    </div>
   );
 };
 

@@ -7,6 +7,7 @@ import { Categorie, Equipe, SousCategorie } from "@/infra/models";
 import ConfirmationDialog from "../uicomponents/ConfirmationDialog";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa6";
 
 type CategorieDto = {
   categorie: Categorie;
@@ -15,19 +16,18 @@ type CategorieDto = {
 
 const Categories = () => {
   const router = useRouter();
-  const { kaizenStore, categoryStore } = useStore();
-  const { equipes } = kaizenStore;
+  const { categoryStore } = useStore();
   const {
     loadCategories,
     loadCategorie,
     categories,
     souscategories,
     selectedCategorie,
+    setSelectedCategorie,
     loadSousCategories,
     loadSousCategorie,
     saveCategorie,
     saveSousCategorie,
-    resetSousCategories,
   } = categoryStore;
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -112,6 +112,7 @@ const Categories = () => {
     console.log("Selected category Id " + categoryId);
     if (isNaN(categoryId) || categoryId === -1) {
       reset();
+      setSelectedCategorie(null);
       return;
     }
     loadCategorie(categoryId).then((data) => {
@@ -184,7 +185,7 @@ const Categories = () => {
                   <select
                     defaultValue={"Ajouter une nouvelle valeur"}
                     {...register("categorie.id", {
-                      required: "Select an Équipe",
+                      required: "Select an Categorie",
                     })}
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
                     onChange={(e) => {
@@ -269,97 +270,105 @@ const Categories = () => {
               </div>
             </div>
           </div>
-          <div className="flex-1">
-            {/* Header */}
-            <div className="px-4 py-2 sm:px-6">
-              <div className="flex items-start justify-between space-x-3">
-                <div className="space-y-1">
-                  <div className="text-base font-semibold leading-6 text-gray-900">
-                    Add / Update Sous Catégorie
+
+          {souscategories.length > 0 ? (
+            <div className="flex-1">
+              {/* Header */}
+              <div className="px-4 py-2 sm:px-6">
+                <div className="flex items-start justify-between space-x-3">
+                  <div className="space-y-1">
+                    <div className="text-base font-semibold leading-6 text-gray-900">
+                      Add / Update Sous Catégorie
+                    </div>
+                  </div>
+                  <div className="flex h-7 items-center"></div>
+                </div>
+              </div>
+
+              {/* Divider container */}
+              <div className="space-y-6 py-6 sm:space-y-0  sm:py-0">
+                {/* Project name */}
+                <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+                  <div>
+                    <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                      Sous Catégorie
+                    </label>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <select
+                      defaultValue={"Ajouter une nouvelle valeur"}
+                      {...register("sousCategorie.id", {
+                        required: "Select an Sous Category",
+                      })}
+                      className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
+                      onChange={(e) => {
+                        sousCategorySelected(parseInt(e.target.value));
+                      }}
+                    >
+                      <option value="0">Ajouter une nouvelle valeur</option>
+                      {souscategories.map((option, index) => (
+                        <option key={index} value={option.id}>
+                          {option.description}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
-                <div className="flex h-7 items-center"></div>
+
+                <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+                  <div>
+                    <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                      Description
+                    </label>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <input
+                      {...register("sousCategorie.description")}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-200 sm:text-sm sm:leading-6"
+                      defaultValue={""}
+                    />
+                    {errors.sousCategorie?.description && (
+                      <p className="pt-2 text-xs text-red-600">{`${errors.sousCategorie.description?.message}`}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
+                  <div>
+                    <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
+                      État
+                    </label>
+                  </div>
+
+                  <div className="sm:col-span-2 flex gap-6 pt-2">
+                    <div>
+                      <span className="mr-2">Actif :</span>
+                      <input
+                        type="radio"
+                        value={0}
+                        checked={selectedSousCategorieOption === 0}
+                        onChange={() => setValue("sousCategorie.desuet", 0)}
+                      />
+                    </div>
+                    <div>
+                      <span className="mr-2">Inactif :</span>
+                      <input
+                        type="radio"
+                        value={1}
+                        checked={selectedSousCategorieOption === 1}
+                        onChange={() => setValue("sousCategorie.desuet", 1)}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* Divider container */}
-            <div className="space-y-6 py-6 sm:space-y-0  sm:py-0">
-              {/* Project name */}
-              <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                    Sous Catégorie
-                  </label>
-                </div>
-                <div className="sm:col-span-2">
-                  <select
-                    defaultValue={"Ajouter une nouvelle valeur"}
-                    {...register("sousCategorie.id", {
-                      required: "Select an Sous Category",
-                    })}
-                    className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
-                    onChange={(e) => {
-                      sousCategorySelected(parseInt(e.target.value));
-                    }}
-                  >
-                    <option value="0">Ajouter une nouvelle valeur</option>
-                    {souscategories.map((option, index) => (
-                      <option key={index} value={option.id}>
-                        {option.description}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                    Description
-                  </label>
-                </div>
-                <div className="sm:col-span-2">
-                  <input
-                    {...register("sousCategorie.description")}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-200 sm:text-sm sm:leading-6"
-                    defaultValue={""}
-                  />
-                  {errors.sousCategorie?.description && (
-                    <p className="pt-2 text-xs text-red-600">{`${errors.sousCategorie.description?.message}`}</p>
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-2">
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
-                    État
-                  </label>
-                </div>
-
-                <div className="sm:col-span-2 flex gap-6 pt-2">
-                  <div>
-                    <span className="mr-2">Actif :</span>
-                    <input
-                      type="radio"
-                      value={0}
-                      checked={selectedSousCategorieOption === 0}
-                      onChange={() => setValue("sousCategorie.desuet", 0)}
-                    />
-                  </div>
-                  <div>
-                    <span className="mr-2">Inactif :</span>
-                    <input
-                      type="radio"
-                      value={1}
-                      checked={selectedSousCategorieOption === 1}
-                      onChange={() => setValue("sousCategorie.desuet", 1)}
-                    />
-                  </div>
-                </div>
-              </div>
+          ) : (
+            <div className="flex-1 flex justify-center gap-10 items-center h-48">
+              <FaArrowLeft size={40} color="gray" />
+              Sélectionnez d'abord une catégorie
             </div>
-          </div>
+          )}
         </div>
 
         {/* Action buttons */}
@@ -378,7 +387,10 @@ const Categories = () => {
             <button
               type="button"
               className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              onClick={() => reset()}
+              onClick={() => {
+                setSelectedCategorie(null);
+                reset();
+              }}
             >
               Réinitialiser
             </button>

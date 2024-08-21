@@ -7,6 +7,9 @@ import { FaUser } from "react-icons/fa";
 import { User } from "next-auth";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import UserStore from "@/infra/stores/UserStore";
+import { useStore } from "@/infra/stores/Store";
+import { observer } from "mobx-react-lite";
 
 const ICON_SIZE = 20;
 
@@ -43,6 +46,9 @@ type TopNavProps = {
 };
 
 const TopNav = ({ user }: TopNavProps) => {
+  const { userStore } = useStore();
+  const { isAdministrator, setRole } = userStore;
+
   const [open, setOpen] = useState(false);
   const [navigation, setNavigation] =
     useState<NavigationType[]>(initNavigation);
@@ -60,21 +66,27 @@ const TopNav = ({ user }: TopNavProps) => {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {navigation.map((item) => (
+                    <a
+                      href={"/kaizenjournal"}
+                      className={classNames(
+                        " text-white",
+                        "rounded-md px-3 py-2 text-sm font-medium"
+                      )}
+                    >
+                      Kaizen Dashboard
+                    </a>
+
+                    {isAdministrator && (
                       <a
-                        key={item.name}
-                        href={item.href}
+                        href={"/administration"}
                         className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          " text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
-                        aria-current={item.current ? "page" : undefined}
                       >
-                        {item.name}
+                        Administration
                       </a>
-                    ))}
+                    )}
                   </div>
                 </div>
               </div>
@@ -111,7 +123,7 @@ const TopNav = ({ user }: TopNavProps) => {
                         <Menu.Item key={"Mon Profil"}>
                           {({ active }) => (
                             <a
-                              href={"/session"}
+                              href={"/setupaccess"}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
@@ -139,6 +151,7 @@ const TopNav = ({ user }: TopNavProps) => {
                             <Link
                               href={"#"}
                               onClick={() => {
+                                setRole(null);
                                 signOut({ callbackUrl: "/kaizenjournal" });
                               }}
                               className={"px-4 py-1 text-sm text-gray-800"}
@@ -169,26 +182,34 @@ const TopNav = ({ user }: TopNavProps) => {
 
           <Disclosure.Panel className="md:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-              {navigation.map((item) => (
+              <Disclosure.Button
+                onClick={() => {
+                  setNavigation([...navigation]);
+                }}
+                as="a"
+                href={"/kaizenjournal"}
+                className={classNames(
+                  "bg-gray-900 text-white",
+                  "block rounded-md px-3 py-2 text-base font-medium"
+                )}
+              >
+                Kaizen Dashboard
+              </Disclosure.Button>
+              {isAdministrator && (
                 <Disclosure.Button
                   onClick={() => {
-                    item.current = true;
                     setNavigation([...navigation]);
                   }}
-                  key={item.name}
                   as="a"
-                  href={item.href}
+                  href={"/administration"}
                   className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "bg-gray-900 text-white",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
-                  aria-current={item.current ? "page" : undefined}
                 >
-                  {item.name}
+                  Administration
                 </Disclosure.Button>
-              ))}
+              )}
             </div>
             <div className="border-t border-gray-700 pb-3 pt-4">
               <div className="flex items-center px-5">
@@ -233,4 +254,4 @@ const TopNav = ({ user }: TopNavProps) => {
   );
 };
 
-export default TopNav;
+export default observer(TopNav);

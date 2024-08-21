@@ -19,7 +19,7 @@ const EditKaizenJournalForm = ({
 }: EditKaizenJournalFormProps) => {
   const [submitData, setSubmitData] = useState("");
 
-  const { kaizenStore } = useStore();
+  const { kaizenStore, userStore } = useStore();
   const { setEditDocumentId, updateKaizenDocument, loadEditDocument } =
     kaizenStore;
 
@@ -112,7 +112,7 @@ const EditKaizenJournalForm = ({
       <div className="flex-shrink-0 border-t border-gray-200 px-4 py-6 sm:px-6 bg-gray-100">
         <div className="flex justify-end space-x-3 ">
           <button
-            disabled={isSubmitting}
+            disabled={isSubmitting || !userStore.isEditable}
             type="submit"
             className="inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm 
                                         font-semibold text-white shadow-sm hover:bg-blue-500

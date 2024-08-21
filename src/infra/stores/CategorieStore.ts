@@ -23,6 +23,13 @@ export default class CategorieStore {
   souscategories: SousCategorie[] = [];
   selectedSousCategorie: SousCategorie | null = null;
 
+  setSelectedCategorie = (categorie: Categorie | null) => {
+    this.selectedCategorie = categorie;
+    if (categorie == null) {
+      this.souscategories = [];
+    }
+  };
+
   saveCategorie = async (categorie: Categorie) => {
     try {
       this.loading = true;

@@ -15,7 +15,8 @@ type CategorizationTabProps = {
 };
 
 const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
-  const { kaizenStore, categoryStore, secteurStore, projetStore } = useStore();
+  const { kaizenStore, categoryStore, secteurStore, projetStore, userStore } =
+    useStore();
   const { editDocument, loadEditDocument } = kaizenStore;
 
   const [myFreq, setMyFreq] = useState(editDocument?.catFreq.toString());
@@ -116,6 +117,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
           </label>
           <div className="mt-2">
             <select
+              disabled={!userStore.isEditable}
               {...register("categorieId")}
               onChange={(e) => {
                 categorySelected(parseInt(e.target.value));
@@ -140,6 +142,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
           </label>
           <div className="mt-2">
             <select
+              disabled={!userStore.isEditable}
               {...register("sousCategorieId")}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
@@ -161,7 +164,10 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
             Projet
           </label>
           <div className="mt-2">
-            <select className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6">
+            <select
+              disabled={!userStore.isEditable}
+              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            >
               {projetStore.idValues.map((idValue) => (
                 <option key={idValue.id}>{idValue.value}</option>
               ))}
@@ -175,6 +181,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
           </label>
           <div className="mt-2">
             <select
+              disabled={!userStore.isEditable}
               {...register("catFreq")}
               onChange={(event) => {
                 setMyFreq(event.target.value);
@@ -194,6 +201,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
           </label>
           <div className="mt-2">
             <select
+              disabled={!userStore.isEditable}
               {...register("catGrav")}
               onChange={(event) => {
                 setMyGrav(event.target.value);
@@ -216,6 +224,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
           </label>
           <div className="mt-2">
             <select
+              disabled={!userStore.isEditable}
               {...register("catProb")}
               onChange={(event) => {
                 setMyProb(event.target.value);
@@ -238,6 +247,7 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
           </label>
           <div className="mt-2">
             <select
+              disabled={!userStore.isEditable}
               {...register("catLegal")}
               onChange={(event) => {
                 setMyLegal(event.target.value);

@@ -29,7 +29,7 @@ const FourColHeader = ({
         isColumnVisible(columns, title4)) && (
         <th
           scope="col"
-          className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75  text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
+          className="sticky top-0 z-10 border-b border-gray-500 bg-slate-50 text-left text-sm font-semibold text-gray-900"
         >
           {isColumnVisible(columns, title1) && (
             <ColumnHeader title={title1} className={GetColoredTextClass(1)} />

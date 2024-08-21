@@ -1,6 +1,6 @@
 "use client";
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useStore } from "@/infra/stores/Store";
 import {
   UseFormGetValues,
@@ -19,8 +19,14 @@ type TopFormProps = {
 };
 
 const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
-  const { kaizenStore, equipeStore, secteurStore, employeeStore, etatStore } =
-    useStore();
+  const {
+    kaizenStore,
+    equipeStore,
+    secteurStore,
+    employeeStore,
+    etatStore,
+    userStore,
+  } = useStore();
 
   const { editDocument, editDocumentId } = kaizenStore;
 
@@ -71,8 +77,9 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
                 Etat
               </div>
               <select
+                disabled={!userStore.isEditable}
                 {...register("etatId", { required: "Select an Etat" })}
-                className="ml-0 block w-48 rounded-md border-0 py-1.5 pl-2 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
+                className=" ml-0 block w-32 rounded-md border-0 py-1 pl-1 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-red-200 sm:text-sm sm:leading-6"
               >
                 <option value="" disabled selected>
                   Sélectionner État
@@ -147,6 +154,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
               </label>
               <div className="mt-1">
                 <select
+                  disabled={!userStore.isEditable}
                   {...register("equipeId")}
                   onChange={(e) => {
                     equipeSelected(parseInt(e.target.value));
@@ -175,6 +183,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
               </label>
               <div className="mt-1">
                 <select
+                  disabled={!userStore.isEditable}
                   {...register("secteurId")}
                   className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-xs sm:leading-6"
                 >
@@ -194,7 +203,21 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
             {/* <Secteurs setValue={setValue} equipeId={getValues("equipeId")} /> */}
 
             <div className="sm:col-span-2">
-              <FocalPointSearch register={register} setValue={setValue} />
+              {userStore.isEditable ? (
+                <>
+                  <FocalPointSearch register={register} setValue={setValue} />
+                </>
+              ) : (
+                <div>
+                  <label
+                    htmlFor="postal-code"
+                    className="block text-xs font-medium text-gray-500"
+                  >
+                    Point focal
+                  </label>
+                  {kaizenStore.editDocument?.focalContactName}
+                </div>
+              )}
             </div>
 
             <div className="col-span-full">
@@ -206,6 +229,7 @@ const TopForm = ({ register, setValue, getValues }: TopFormProps) => {
               </label>
               <div className="mt-1">
                 <textarea
+                  disabled={!userStore.isEditable}
                   {...register("problematique")}
                   rows={3}
                   className="pl-2 block w-full rounded-md border-0 py-1.5 

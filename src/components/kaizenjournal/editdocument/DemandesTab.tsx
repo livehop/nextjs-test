@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 
 const DemandesTab = () => {
-  const { kaizenStore, ressourcesStore } = useStore();
+  const { kaizenStore, ressourcesStore, userStore } = useStore();
   const {
     resNecessaires,
     upsertResourceNessaicaires,
@@ -55,6 +55,7 @@ const DemandesTab = () => {
           </label>
           <div className="mt-2">
             <select
+              disabled={!userStore.isEditable}
               className="pl-2 block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
               onChange={(e) => setRessource(e.target.value)}
             >
@@ -73,6 +74,7 @@ const DemandesTab = () => {
           </label>
           <div className="mt-2">
             <select
+              disabled={!userStore.isEditable}
               className="pl-2 block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
               onChange={(e) => setTypeDemande(e.target.value)}
             >
@@ -91,6 +93,7 @@ const DemandesTab = () => {
           </label>
           <div className="mt-2">
             <input
+              disabled={!userStore.isEditable}
               className="pl-2 block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
               onChange={(e) => setDemandNo(e.target.value)}
             />
@@ -99,6 +102,7 @@ const DemandesTab = () => {
       </div>
       <div className="col-span-full flex justify-end mt-4">
         <button
+          disabled={!userStore.isEditable}
           onClick={updateRessources}
           type="button"
           className="inline-flex justify-center rounded-sm bg-gray-600 px-2 py-1 text-xs 

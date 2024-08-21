@@ -36,7 +36,7 @@ const ColumnHeader = ({ title, className }: ColumnHeaderProps) => {
           <Button
             variant="ghost"
             size="sm"
-            className="h-6 data-[state=open]:bg-accent"
+            className="h-4 data-[state=open]:bg-accent"
           >
             <span>{title}</span>
             {getSortedState(title) === DESC ? (
