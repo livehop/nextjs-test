@@ -7,9 +7,9 @@ import { FaUser } from "react-icons/fa";
 import { User } from "next-auth";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import UserStore from "@/infra/stores/UserStore";
 import { useStore } from "@/infra/stores/Store";
 import { observer } from "mobx-react-lite";
+import { useRouter } from "next/navigation";
 
 const ICON_SIZE = 20;
 
@@ -48,10 +48,16 @@ type TopNavProps = {
 const TopNav = ({ user }: TopNavProps) => {
   const { userStore } = useStore();
   const { isAdministrator, setRole } = userStore;
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [navigation, setNavigation] =
     useState<NavigationType[]>(initNavigation);
+
+  const handleNavigation = (mypath: string) => {
+    router.push(mypath);
+  };
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -67,7 +73,8 @@ const TopNav = ({ user }: TopNavProps) => {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     <a
-                      href={"/kaizenjournal"}
+                      href={"#"}
+                      onClick={() => handleNavigation("/kaizenjournal")}
                       className={classNames(
                         " text-white",
                         "rounded-md px-3 py-2 text-sm font-medium"
@@ -78,7 +85,8 @@ const TopNav = ({ user }: TopNavProps) => {
 
                     {isAdministrator && (
                       <a
-                        href={"/administration"}
+                        href={"#"}
+                        onClick={() => handleNavigation("/administration")}
                         className={classNames(
                           " text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
