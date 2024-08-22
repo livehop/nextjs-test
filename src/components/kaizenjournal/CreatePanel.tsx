@@ -135,9 +135,9 @@ const CreatePanel = ({ setOpen }: CreatePanelProps) => {
               <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
                 Ajout d&apos;un point Kaizen
               </Dialog.Title>
-              {/* <p className="text-sm text-gray-500">
-                                          Some Description
-                                      </p> */}
+              <p className="text-xs text-red-500">
+                * indique un champ obligatoire
+              </p>
             </div>
             <div className="flex h-7 items-center">
               <button

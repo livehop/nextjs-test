@@ -51,7 +51,7 @@ const KaizenJournal = () => {
                 Points Ouvert : <b>{recordMetrics.openRecords}</b>
               </h4>
               <h4 className="text-md tracking-tight text-green-700">
-                Points Fermé : <b>{recordMetrics.closedRecords}</b>
+                Fermé : <b>{recordMetrics.closedRecords}</b>
               </h4>
             </div>
           )}
