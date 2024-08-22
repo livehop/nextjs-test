@@ -25,7 +25,12 @@ Tèlèchargez ou faites et dèposez un fichier ici jusqu'à 10 Mo
 
 
 
-Pa$$w0rd@FirstAmerica
-Pa$$w0rd@FirstAmerica
+Indice = Frequence * Gravite * Probabilite * Legal
 
-vawrofo6rovog5St
+Indice = CAT_FREQ * CAT_GRAV * CAT_PROB * CAT_LEGAL
+
+ 
+
+Cote = (4 * Gain) + (4 - Cout) + (4 - Effort) + (4 - Risque) + Indice
+
+Cote = (4 * SOL_GAIN) + (4 - SOL_COUT) + (4 - SOL_EFF) + (4 - SOL_RISQ) + Indice
