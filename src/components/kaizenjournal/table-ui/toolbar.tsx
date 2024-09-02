@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { Suspense, use, useEffect, useState } from "react";
 import ColumnsFilter from "./column-filter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -68,7 +68,9 @@ const Toolbar = ({ openSidePanel }: ToolbarProps) => {
             onChange={(event) => setSearchSolution(event.target.value)}
             className="h-8 w-[150px] lg:w-[250px]"
           />
-          <EquipeFilter />
+          <Suspense fallback={<div>Loading ...</div>}>
+            <EquipeFilter />
+          </Suspense>
           <SecteurFilter />
           <CategoryFilter />
           <EtatFilter />

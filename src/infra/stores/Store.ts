@@ -15,6 +15,7 @@ import ProjetStore from "./ProjectStore";
 import RessourcesStore from "./RessourcesStore";
 import DocumentStore from "./DocumentStore";
 import SecteurStore from "./SecteurStore";
+import CotationConfigStore from "./CotationConfigStore";
 
 interface Store {
   commonStore: CommonStore;
@@ -32,6 +33,7 @@ interface Store {
   projetStore: ProjetStore;
   ressourcesStore: RessourcesStore;
   documentStore: DocumentStore;
+  cotationsStore: CotationConfigStore;
 }
 
 export const store: Store = {
@@ -50,6 +52,7 @@ export const store: Store = {
   projetStore: new ProjetStore(),
   ressourcesStore: new RessourcesStore(),
   documentStore: new DocumentStore(),
+  cotationsStore: new CotationConfigStore(),
 };
 
 export const StoreContext = createContext(store);

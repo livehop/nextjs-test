@@ -1,7 +1,9 @@
 import Categories from "@/components/administration/Categories";
+import CotationConfig from "@/components/administration/CotationConfig";
 import Equipes from "@/components/administration/Equipes";
 import Projets from "@/components/administration/Projets";
 import SecteurForm from "@/components/administration/SecteurForm";
+import UserAdministrationForm from "@/components/administration/UserAdministrationForm";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
@@ -20,6 +22,8 @@ const Adminstration = () => {
           </TabsTrigger>
           <TabsTrigger value="projets">Projets</TabsTrigger>
           <TabsTrigger value="secteurs">Secteurs</TabsTrigger>
+          <TabsTrigger value="cotationconfigs">Cotation Configs</TabsTrigger>
+          <TabsTrigger value="users">User Roles</TabsTrigger>
         </TabsList>
         <TabsContent value="equipes">
           <Equipes />
@@ -32,6 +36,12 @@ const Adminstration = () => {
         </TabsContent>
         <TabsContent value="secteurs">
           <SecteurForm />
+        </TabsContent>
+        <TabsContent value="cotationconfigs">
+          <CotationConfig />
+        </TabsContent>
+        <TabsContent value="users">
+          <UserAdministrationForm />
         </TabsContent>
       </Tabs>
     </div>

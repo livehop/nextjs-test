@@ -43,7 +43,7 @@ const EquipeFilter = () => {
         addSelectedValue(values[0]);
       }
     });
-  }, [loadIdValues]);
+  }, [loadIdValues, setEquipeFilter, searchParams, addSelectedValue]);
 
   const togglePoppver = () => {
     console.log("popover " + popoverOpen);

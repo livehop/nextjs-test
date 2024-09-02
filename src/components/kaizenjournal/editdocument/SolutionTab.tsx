@@ -9,7 +9,7 @@ type SolutionTabProps = {
 };
 
 const SolutionTab = ({ register, getValues }: SolutionTabProps) => {
-  const { kaizenStore, userStore } = useStore();
+  const { kaizenStore, userStore, cotationsStore } = useStore();
   const { editDocument } = kaizenStore;
 
   const [mySolGain, setMySolGain] = useState(editDocument?.solGain.toString());
@@ -31,11 +31,32 @@ const SolutionTab = ({ register, getValues }: SolutionTabProps) => {
   };
 
   const getCote = () => {
+    console.log("categorieId : ---> ", editDocument?.categorieId);
+    const categorieId = getValues("categorieId");
+    const gain = mySolGain !== undefined ? parseInt(mySolGain) : 0;
+    const cout = mySolCout !== undefined ? parseInt(mySolCout) : 0;
+    const eff = mySolEff !== undefined ? parseInt(mySolEff) : 0;
+    const risq = mySolRisq !== undefined ? parseInt(mySolRisq) : 0;
+
+    console.log(
+      "getIndice: called " +
+        cotationsStore.getTranslatedValue(categorieId, "SolGain", gain) +
+        " " +
+        cotationsStore.getTranslatedValue(categorieId, "SolCout", cout) +
+        " " +
+        cotationsStore.getTranslatedValue(categorieId, "SolEff", eff) +
+        " " +
+        cotationsStore.getTranslatedValue(categorieId, "SolRisq", risq)
+    );
+
     return (
-      4 * toNumber(mySolGain) +
-      (4 - toNumber(mySolCout)) +
-      (4 - toNumber(mySolEff)) +
-      (4 - toNumber(mySolRisq))
+      4 * cotationsStore.getTranslatedValue(categorieId, "SolGain", gain) +
+      4 -
+      cotationsStore.getTranslatedValue(categorieId, "SolCout", cout) +
+      4 -
+      cotationsStore.getTranslatedValue(categorieId, "SolEff", eff) +
+      4 -
+      cotationsStore.getTranslatedValue(categorieId, "SolRisq", risq)
     );
   };
 

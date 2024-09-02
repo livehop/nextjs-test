@@ -15,6 +15,7 @@ import {
   Categorie,
   CreateKaizenDocument,
   Employee,
+  EmployeeData,
   Equipe,
   Etat,
   KaizenDocument,
@@ -35,8 +36,9 @@ import {
 import { KaizenAttachmentDetail } from "../models/Document";
 import { EmailDetails } from "../models/Email";
 import { Projet } from "../models/Projet";
+import { CotationConfig } from "../models/CotationConfig";
 
-export const token_key = "Brisk_JWT";
+export const token_key = "Kaizen_JWT";
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
@@ -189,6 +191,12 @@ const employees = {
   list: (): Promise<Employee[]> => requests.get("/employees"),
   valuelist: (query: string): Promise<IdValue[]> =>
     requests.get(`/employees/valuelist?search=${query}`),
+  searchemployees: (query: string): Promise<EmployeeData[]> =>
+    requests.get(`/employees/lookup?search=${query}`),
+  details: (id: string): Promise<EmployeeData> =>
+    requests.get(`/employees/details?focalId=${id}`),
+  save: (focalId: string, accessLevel: string): Promise<EmployeeData> =>
+    requests.post(`/employees/save`, { focalId, accessLevel }),
 };
 
 const equipement = {
@@ -258,6 +266,12 @@ const notes = {
   add: (note: AddNote): Promise<any> => requests.post("/notes", note),
 };
 
+const cotationConfigs = {
+  list: (): Promise<CotationConfig[]> => requests.get(`/cotationconfig/list`),
+  upsert: (config: CotationConfig): Promise<any> =>
+    requests.post("/cotationconfig", config),
+};
+
 const catlegallookup = {
   list: (categorieId: number): Promise<CatLegalLookup[]> =>
     requests.get(`/catlegallookup?categorieId=${categorieId}`),
@@ -305,6 +319,7 @@ const apis = {
   document,
   catlegallookup,
   sendmail,
+  cotationConfigs,
 };
 
 export default apis;

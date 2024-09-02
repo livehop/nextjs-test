@@ -15,8 +15,14 @@ type CategorizationTabProps = {
 };
 
 const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
-  const { kaizenStore, categoryStore, secteurStore, projetStore, userStore } =
-    useStore();
+  const {
+    kaizenStore,
+    categoryStore,
+    secteurStore,
+    projetStore,
+    userStore,
+    cotationsStore,
+  } = useStore();
   const { editDocument, loadEditDocument } = kaizenStore;
 
   const [myFreq, setMyFreq] = useState(editDocument?.catFreq.toString());
@@ -104,6 +110,23 @@ const CategorizationTab = ({ register, getValues }: CategorizationTabProps) => {
   };
 
   const getIndice = () => {
+    const categorieId = getValues("categorieId");
+    const freq = myFreq !== undefined ? parseInt(myFreq) : 0;
+    const grav = myGrav !== undefined ? parseInt(myGrav) : 0;
+    const prob = myProb !== undefined ? parseInt(myProb) : 0;
+    const legal = myLegal !== undefined ? parseInt(myLegal) : 0;
+
+    console.log(
+      "getIndice: called " +
+        cotationsStore.getTranslatedValue(categorieId, "CatFreq", freq) +
+        " " +
+        cotationsStore.getTranslatedValue(categorieId, "CatGrav", grav) +
+        " " +
+        cotationsStore.getTranslatedValue(categorieId, "CatProb", prob) +
+        " " +
+        cotationsStore.getTranslatedValue(categorieId, "CatLegal", legal)
+    );
+
     return (
       toNumber(myFreq) * toNumber(myGrav) * toNumber(myProb) * toNumber(myLegal)
     );

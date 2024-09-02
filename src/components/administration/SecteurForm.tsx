@@ -221,7 +221,7 @@ const SecteurForm = () => {
           <div className="flex items-start justify-center">
             <div className="ml-20 flex-1 flex flex-col justify-center gap-6 items-center h-48">
               <FaArrowUp size={40} color="gray" />
-              Sélectionnez d'abord l'équipe
+              Sélectionnez d&apos;abord l&apos;équipe
             </div>
             <div className="flex-1"></div>
           </div>

@@ -16,16 +16,18 @@ function EditKaizenFallback() {
 }
 
 const KaizenJournal = () => {
-  const { kaizenStore } = useStore();
+  const { kaizenStore, cotationsStore } = useStore();
+  const { loadCotationConfigs } = cotationsStore;
   const { loadRecordMetrics, recordMetrics } = kaizenStore;
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
+    loadCotationConfigs();
     loadRecordMetrics();
     router.replace("kaizenjournal", undefined);
-  }, [loadRecordMetrics, router]);
+  }, [loadRecordMetrics, router, loadCotationConfigs]);
 
   const openSidePanel = (openPanel: boolean) => {
     console.log("openSidePanel---------------" + openPanel);

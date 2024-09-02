@@ -1,6 +1,6 @@
 version: "3.4"
 services:
-  briskmfgweb:
+  kaizenweb:
     container_name: gekaizen
     image: ge/kaizen:latest
     build:

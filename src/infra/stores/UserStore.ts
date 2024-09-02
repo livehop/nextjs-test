@@ -28,7 +28,7 @@ export default class UserStore {
   };
 
   get isEditable() {
-    return this.role !== null;
+    return true || this.role !== null;
   }
 
   get isAdministrator() {

@@ -64,10 +64,11 @@ const ConfirmationDialog = ({
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          This action will update all the information (inclusive
-                          of all related records). This action cannot be undone,
-                          you will need to re-modify the value to the earlier
-                          one incase you want undo your changes.
+                          Cette action mettra à jour toutes les informations (y
+                          compris de tous les enregistrements associés). Cette
+                          action ne peut pas être annulée, vous devrez modifier
+                          à nouveau la valeur à la valeur précédente au cas où
+                          vous voudriez annuler vos modifications.
                         </p>
                       </div>
                     </div>

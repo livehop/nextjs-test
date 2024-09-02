@@ -366,7 +366,7 @@ const Categories = () => {
           ) : (
             <div className="flex-1 flex justify-center gap-10 items-center h-48">
               <FaArrowLeft size={40} color="gray" />
-              Sélectionnez d'abord une catégorie
+              Sélectionnez d&apos;abord une catégorie
             </div>
           )}
         </div>
